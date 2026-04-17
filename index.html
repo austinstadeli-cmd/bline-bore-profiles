@@ -360,6 +360,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_oaB6D1OSU9N6FzQG25ZWUg_PVKBO1fk';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const ADMIN_PIN = '1234';
+const GOOGLE_MAPS_KEY = 'AIzaSyBf3H0wMo7tQI07VjFw1aAaKlzEUGsph7o';
 let lang = 'en';
 let crossings = [];
 let crossingCount = 0;
@@ -774,10 +775,7 @@ function showDetail(id) {
       <div class="stat-box"><div class="stat-lbl">Ground type</div><div class="stat-val">${p.ground_type||'—'}</div></div>
     </div>
     ${crossRows?`<div class="card"><div class="card-title">Utility crossings</div>${crossRows}</div>`:''}
-    ${p.latitude?`<div class="card"><div class="card-title">Location</div>
-      <div style="font-size:12px;color:#888;">Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}</div>
-      ${p.pit_latitude?`<div style="font-size:12px;color:#888;margin-top:4px;">Pit: ${p.pit_latitude.toFixed(5)}, ${p.pit_longitude.toFixed(5)}</div>`:''}
-    </div>`:''}
+    ${p.latitude ? buildMapCard(p) : ''}
     ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
     <div class="admin-bar">
@@ -817,7 +815,63 @@ async function confirmDelete() {
   showScreen('profiles');
 }
 
-function setLang(l) {
+function buildMapCard(p) {
+  const hasPit = p.pit_latitude && p.pit_longitude;
+  const centerLat = hasPit ? (p.latitude + p.pit_latitude) / 2 : p.latitude;
+  const centerLng = hasPit ? (p.longitude + p.pit_longitude) / 2 : p.longitude;
+
+  const utColors = {
+    'gas': '0xFB923C',
+    'water': '0x2DD4BF',
+    'electric': '0xF87171',
+    'fiber': '0xA78BFA',
+    'sewer': '0x4ADE80',
+    'telecom': '0x60A5FA',
+    'unknown': '0x9CA3AF'
+  };
+
+  let markers = '';
+  markers += `&markers=color:0x166534|label:M|${p.latitude},${p.longitude}`;
+  if(hasPit) markers += `&markers=color:0x166534|label:P|${p.pit_latitude},${p.pit_longitude}`;
+
+  (p.crossings||[]).forEach((c,i) => {
+    if(!c.dist || !p.total_footage) return;
+    const frac = parseFloat(c.dist) / parseFloat(p.total_footage);
+    const lat = p.latitude + (p.pit_latitude - p.latitude) * frac;
+    const lng = p.longitude + (p.pit_longitude - p.longitude) * frac;
+    const type = (c.type||'unknown').toLowerCase();
+    const color = utColors[type] || utColors['unknown'];
+    markers += `&markers=color:${color}|label:${(i+1).toString()}|${lat.toFixed(6)},${lng.toFixed(6)}`;
+  });
+
+  let path = '';
+  if(hasPit) {
+    path = `&path=color:0x1a56dbcc|weight:3|${p.latitude},${p.longitude}|${p.pit_latitude},${p.pit_longitude}`;
+  }
+
+  const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=17&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
+
+  const coordText = `Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}${hasPit?' &nbsp;·&nbsp; Pit: '+p.pit_latitude.toFixed(5)+', '+p.pit_longitude.toFixed(5):''}`;
+
+  const legend = (p.crossings||[]).filter(c=>c.type).map((c,i) => {
+    const type = (c.type||'unknown').toLowerCase();
+    const colorHex = { gas:'#FB923C', water:'#2DD4BF', electric:'#F87171', fiber:'#A78BFA', sewer:'#4ADE80', telecom:'#60A5FA', unknown:'#9CA3AF' };
+    const color = colorHex[type] || colorHex['unknown'];
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#555;">
+      <div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0;"></div>
+      ${i+1}. ${c.type}${c.dist?' @ '+c.dist+'ft':''}
+    </div>`;
+  }).join('');
+
+  return `<div class="card">
+    <div class="card-title">Bore Location</div>
+    <img src="${mapUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;" alt="Bore location map" />
+    ${legend ? `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">${legend}</div>` : ''}
+    <div style="font-size:10px;color:#aaa;">${coordText}</div>
+  </div>`;
+}
+
+  function setLang(l) {
   lang=l;
   document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
 }
