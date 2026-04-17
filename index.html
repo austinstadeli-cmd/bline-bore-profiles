@@ -11,9 +11,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .header { background: #fff; padding: 12px 16px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
 .header-title { font-size: 15px; font-weight: 600; color: #111; }
 .header-sub { font-size: 11px; color: #888; }
+.header-right { display: flex; align-items: center; gap: 10px; }
 .lang-toggle { display: flex; border: 1px solid #e5e5e5; border-radius: 6px; overflow: hidden; }
 .lang-btn { padding: 4px 10px; font-size: 11px; background: none; border: none; cursor: pointer; color: #888; }
 .lang-btn.active { background: #1a56db; color: #fff; }
+.gear-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 2px 4px; color: #888; }
 .nav { display: flex; background: #fff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 57px; z-index: 99; }
 .nav-btn { flex: 1; padding: 10px 4px; font-size: 12px; color: #888; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; }
 .nav-btn.active { color: #1a56db; border-bottom-color: #1a56db; font-weight: 600; }
@@ -101,7 +103,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .delete-btn { padding: 10px 16px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
 .pin-coords { font-size: 10px; color: #888; margin-bottom: 8px; text-align: center; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; }
-.modal { background: #fff; border-radius: 12px; padding: 20px; width: 300px; }
+.modal { background: #fff; border-radius: 12px; padding: 20px; width: 320px; max-height: 88vh; overflow-y: auto; }
 .modal-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111; }
 .modal-input { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: 4px; }
 .modal-btns { display: flex; gap: 8px; }
@@ -111,6 +113,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .path-wrap { overflow-x: auto; background: #f9fafb; border-radius: 8px; padding: 8px; margin-bottom: 10px; }
 .col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 6px; padding: 0 2px; }
 .col-header { font-size: 10px; color: #888; font-weight: 600; }
+.crew-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+.crew-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.crew-name { font-size: 14px; font-weight: 600; color: #111; }
+.crew-num { font-size: 11px; color: #888; margin-top: 2px; }
+.crew-meta { font-size: 12px; color: #555; margin-top: 6px; }
+.crew-actions { display: flex; gap: 6px; margin-top: 10px; }
+.crew-edit-btn { flex: 1; padding: 7px; background: #fff; border: 1px solid #1a56db; color: #1a56db; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.crew-del-btn { padding: 7px 12px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.section-title { font-size: 13px; font-weight: 600; color: #111; }
+.add-crew-btn { padding: 7px 12px; background: #1a56db; color: #fff; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
+.kpi-box { background: #f9fafb; border-radius: 6px; padding: 8px; text-align: center; }
+.kpi-val { font-size: 16px; font-weight: 600; color: #111; }
+.kpi-lbl { font-size: 10px; color: #888; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -120,9 +137,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="header-title">B-Line Bore Profiles</div>
     <div class="header-sub">Phoenix, AZ</div>
   </div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <button class="gear-btn" onclick="openAdmin()" title="Admin">⚙️</button>
   </div>
 </div>
 
@@ -150,34 +170,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="card">
       <div class="card-title">Project Information</div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Date</label>
-          <input class="form-input" type="date" id="f-date" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Job no.</label>
-          <input class="form-input" id="f-jobno" placeholder="Optional" />
-        </div>
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="f-date" /></div>
+        <div class="form-group"><label class="form-label">Job no.</label><input class="form-input" id="f-jobno" placeholder="Optional" /></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Customer</label>
-        <input class="form-input" id="f-customer" placeholder="Customer name" />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Address / Location</label>
-        <input class="form-input" id="f-address" placeholder="e.g. 4450 E Sunset Dr" />
-      </div>
+      <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="f-customer" placeholder="Customer name" /></div>
+      <div class="form-group"><label class="form-label">Address / Location</label><input class="form-input" id="f-address" placeholder="e.g. 4450 E Sunset Dr" /></div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Foreman</label>
-          <select class="form-input" id="f-foreman">
-            <option>Andres</option><option>Miguel</option><option>Carlos</option><option>Other</option>
-          </select>
+          <label class="form-label">Crew / Foreman</label>
+          <select class="form-input" id="f-foreman"></select>
         </div>
-        <div class="form-group">
-          <label class="form-label">811 Ticket #</label>
-          <input class="form-input" id="f-811" placeholder="#" />
-        </div>
+        <div class="form-group"><label class="form-label">811 Ticket #</label><input class="form-input" id="f-811" placeholder="#" /></div>
       </div>
     </div>
 
@@ -207,20 +210,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Product installed</label>
-          <input class="form-input" id="f-product" placeholder='e.g. 1-3"' />
-        </div>
+        <div class="form-group"><label class="form-label">Product installed</label><input class="form-input" id="f-product" placeholder='e.g. 1-3"' /></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Direction</label>
+        <div class="form-group"><label class="form-label">Direction</label>
           <select class="form-input" id="f-direction">
             <option>N to S</option><option>S to N</option><option>E to W</option><option>W to E</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Ground type</label>
+        <div class="form-group"><label class="form-label">Ground type</label>
           <select class="form-input" id="f-ground">
             <option>Caliche</option><option>Sandy</option><option>Rocky</option><option>Clay</option><option>Mixed</option>
           </select>
@@ -291,14 +289,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Bit size</label>
-          <input class="form-input" id="f-bitsize" placeholder='e.g. 4"' />
+          <label class="form-label">Reamer size</label>
+          <select class="form-input" id="f-reamersize">
+            <option value="">Select...</option>
+            <option>Head</option>
+            <option>6"</option><option>8"</option><option>10"</option><option>12"</option>
+            <option>14"</option><option>16"</option><option>18"</option><option>20"</option>
+            <option>22"</option><option>24"</option>
+          </select>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Notes / issues</label>
-        <textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea>
-      </div>
+      <div class="form-group"><label class="form-label">Notes / issues</label><textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea></div>
     </div>
     <div class="card">
       <div class="card-title">Bore Path Preview</div>
@@ -317,14 +318,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div id="detailContent"></div>
 </div>
 
+<!-- ADMIN -->
+<div id="screen-admin" class="screen">
+  <button class="back-btn" onclick="showScreen('profiles')">← Back</button>
+  <div class="section-header">
+    <div class="section-title">Crew Management</div>
+    <button class="add-crew-btn" onclick="openCrewModal()">+ Add Crew</button>
+  </div>
+  <div id="crewList"><div class="loading">Loading crews...</div></div>
+</div>
+
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
   <div class="modal">
     <div class="modal-title" id="pinModalTitle">Capturing location...</div>
     <div style="font-size:13px;color:#888;text-align:center;padding:10px 0;" id="pinModalMsg">Please wait</div>
-    <div class="modal-btns">
-      <button class="modal-btn modal-cancel" onclick="closePinModal()">Cancel</button>
-    </div>
+    <div class="modal-btns"><button class="modal-btn modal-cancel" onclick="closePinModal()">Cancel</button></div>
   </div>
 </div>
 
@@ -355,18 +364,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = 'https://aanzqnvgfchcyvmnyfqd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_oaB6D1OSU9N6FzQG25ZWUg_PVKBO1fk';
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const GOOGLE_MAPS_KEY = 'YOUR_GOOGLE_MAPS_KEY';
+const ADMIN_PIN = '1234';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const ADMIN_PIN = '1234';
-const GOOGLE_MAPS_KEY = 'AIzaSyBf3H0wMo7tQI07VjFw1aAaKlzEUGsph7o';
 let lang = 'en';
 let crossings = [];
 let crossingCount = 0;
 let currentStage = 1;
 let prevScreen = 'profiles';
 let allProfiles = [];
+let allCrews = [];
 let currentProfileId = null;
 let adminAction = null;
 let machineLat = null, machineLng = null, pitLat = null, pitLng = null;
@@ -396,6 +406,7 @@ function showScreen(name) {
   const idx = ['profiles','new'].indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
+  if(name==='admin') loadCrews();
   if(name!=='detail') prevScreen=name;
 }
 
@@ -409,6 +420,12 @@ function showToast(msg) {
 
 function setDate() {
   document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+}
+
+function openAdmin() {
+  adminAction = 'admin';
+  document.getElementById('adminPinInput').value='';
+  document.getElementById('adminModal').style.display='flex';
 }
 
 function getPin(side) {
@@ -425,22 +442,30 @@ function getPin(side) {
       machineLat=lat; machineLng=lng;
       const btn = document.getElementById('pinMachineBtn');
       btn.classList.add('pinned');
-      btn.textContent = '✓ Machine location captured';
-      document.getElementById('machineCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
+      btn.textContent='✓ Machine location captured';
+      document.getElementById('machineCoords').textContent=lat.toFixed(5)+', '+lng.toFixed(5);
     } else {
       pitLat=lat; pitLng=lng;
       const btn = document.getElementById('pinPitBtn');
       btn.classList.add('pinned');
-      btn.textContent = '✓ Pit location captured';
-      document.getElementById('pitCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
+      btn.textContent='✓ Pit location captured';
+      document.getElementById('pitCoords').textContent=lat.toFixed(5)+', '+lng.toFixed(5);
     }
     closePinModal();
   }, () => {
-    document.getElementById('pinModalMsg').textContent = 'Could not get location. Check GPS settings.';
+    document.getElementById('pinModalMsg').textContent='Could not get location. Check GPS settings.';
   });
 }
 
 function closePinModal() { document.getElementById('pinModal').style.display='none'; }
+
+function populateCrewDropdown() {
+  const sel = document.getElementById('f-foreman');
+  if(!sel) return;
+  sel.innerHTML = allCrews.length
+    ? allCrews.map(c=>`<option value="${c.id}">${c.crew_number ? 'Crew '+c.crew_number+' — ' : ''}${c.foreman_name}</option>`).join('')
+    : '<option value="">No crews — add in admin</option>';
+}
 
 function addCrossing() {
   crossingCount++;
@@ -475,16 +500,16 @@ function addCrossing() {
 function removeCrossing(i) {
   const block = document.getElementById('pb'+i);
   if(block) block.remove();
-  if(crossings[i-1]) crossings[i-1] = null;
+  if(crossings[i-1]) crossings[i-1]=null;
 }
 
 function updateCrossing(i) {
   if(!crossings[i-1]) return;
   crossings[i-1] = {
-    type: document.getElementById('ut'+i)?.value || 'Unknown',
-    top: document.getElementById('top'+i)?.value || '',
-    bot: document.getElementById('bot'+i)?.value || '',
-    dist: document.getElementById('dist'+i)?.value || ''
+    type: document.getElementById('ut'+i)?.value||'Unknown',
+    top: document.getElementById('top'+i)?.value||'',
+    bot: document.getElementById('bot'+i)?.value||'',
+    dist: document.getElementById('dist'+i)?.value||''
   };
 }
 
@@ -529,14 +554,8 @@ function calcFinalizeClearance(idx, botStr) {
     return;
   }
   const clr = boreDepth - bot;
-  if(badge) {
-    badge.textContent = clr+'" clear';
-    badge.className = 'clearance-badge '+(clr>=24?'badge-ok':'badge-bad');
-  }
-  if(detail) {
-    detail.textContent = clr>=24 ? '✓ Good' : '⚠ Under 24"';
-    detail.style.color = clr>=24 ? '#166534' : '#991b1b';
-  }
+  if(badge) { badge.textContent=clr+'" clear'; badge.className='clearance-badge '+(clr>=24?'badge-ok':'badge-bad'); }
+  if(detail) { detail.textContent=clr>=24?'✓ Good':'⚠ Under 24"'; detail.style.color=clr>=24?'#166534':'#991b1b'; }
   updatePathViz();
 }
 
@@ -547,72 +566,50 @@ function updatePathViz() {
   const active = crossings.filter(c=>c&&c.type);
   const wrap = document.getElementById('pathVizWrap');
   if(!wrap) return;
-
-  const W=360, H=110, padL=32, padR=16, padT=10, padB=24;
-  const drawW = W-padL-padR;
-  const drawH = H-padT-padB;
-
+  const W=360,H=110,padL=32,padR=16,padT=10,padB=24;
+  const drawW=W-padL-padR, drawH=H-padT-padB;
   const points = [];
-  points.push({ x:0, d:entryIn, label:null });
+  points.push({x:0,d:entryIn,label:null});
   active.forEach((c,i) => {
     const boreEl = document.getElementById('fbore'+i);
-    const boreDepth = boreEl ? parseFloat(boreEl.value)||null : null;
+    const boreDepth = boreEl?parseFloat(boreEl.value)||null:null;
     const dist = parseFloat(c.dist)||null;
-    const xFrac = dist && totalFt ? dist/totalFt : (i+1)/(active.length+1);
-    points.push({
-      x: Math.min(xFrac,1),
-      d: boreDepth || (parseFloat(c.bot)||0)+24,
-      label: c.type,
-      bot: parseFloat(c.bot)||0,
-      dist: c.dist,
-      actualBore: boreDepth
-    });
+    const xFrac = dist&&totalFt?Math.min(dist/totalFt,1):(i+1)/(active.length+1);
+    points.push({x:xFrac,d:boreDepth||(parseFloat(c.bot)||0)+24,label:c.type,bot:parseFloat(c.bot)||0,dist:c.dist,actualBore:boreDepth});
   });
-  points.push({ x:1, d:exitIn, label:null });
-
-  const maxD = Math.max(...points.map(p=>p.d), 24)+12;
-
-  const toSvgX = xFrac => padL + xFrac*drawW;
-  const toSvgY = d => padT + (d/maxD)*drawH;
-
+  points.push({x:1,d:exitIn,label:null});
+  const maxD = Math.max(...points.map(p=>p.d),24)+12;
+  const toSvgX = f => padL+f*drawW;
+  const toSvgY = d => padT+(d/maxD)*drawH;
   const polyPts = points.map(p=>`${toSvgX(p.x)},${toSvgY(p.d)}`).join(' ');
-
-  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
-
-  [0.25,0.5,0.75,1].forEach(f => {
-    const d = Math.round(f*maxD);
-    const y = toSvgY(d);
-    svg += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#e5e5e5" stroke-width="0.5"/>`;
-    svg += `<text x="2" y="${y+3}" font-size="8" fill="#aaa">${d}"</text>`;
+  let svg=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const d=Math.round(f*maxD),y=toSvgY(d);
+    svg+=`<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#e5e5e5" stroke-width="0.5"/>`;
+    svg+=`<text x="2" y="${y+3}" font-size="8" fill="#aaa">${d}"</text>`;
   });
-
-  svg += `<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
-
-  points.forEach(p => {
+  svg+=`<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
+  points.forEach(p=>{
     if(!p.label) return;
-    const cx = toSvgX(p.x);
-    const boreY = toSvgY(p.d);
-    const botY = toSvgY(p.bot);
-    const ok = p.actualBore ? (p.actualBore - p.bot)>=24 : true;
-    svg += `<line x1="${cx}" y1="${botY}" x2="${cx}" y2="${boreY}" stroke="${ok?'#86efac':'#fca5a5'}" stroke-width="2" stroke-dasharray="3,2"/>`;
-    svg += `<circle cx="${cx}" cy="${botY}" r="4" fill="#ef4444"/>`;
-    svg += `<circle cx="${cx}" cy="${boreY}" r="4" fill="#1a56db"/>`;
-    const labelX = cx > W-60 ? cx-30 : cx-12;
-    svg += `<text x="${labelX}" y="${Math.max(botY-8,padT+8)}" font-size="8" fill="#555">${p.label}${p.dist?' @'+p.dist+'ft':''}</text>`;
+    const cx=toSvgX(p.x),boreY=toSvgY(p.d),botY=toSvgY(p.bot);
+    const ok=p.actualBore?(p.actualBore-p.bot)>=24:true;
+    svg+=`<line x1="${cx}" y1="${botY}" x2="${cx}" y2="${boreY}" stroke="${ok?'#86efac':'#fca5a5'}" stroke-width="2" stroke-dasharray="3,2"/>`;
+    svg+=`<circle cx="${cx}" cy="${botY}" r="4" fill="#ef4444"/>`;
+    svg+=`<circle cx="${cx}" cy="${boreY}" r="4" fill="#1a56db"/>`;
+    const lx=cx>W-60?cx-30:cx-12;
+    svg+=`<text x="${lx}" y="${Math.max(botY-8,padT+8)}" font-size="8" fill="#555">${p.label}${p.dist?' @'+p.dist+'ft':''}</text>`;
   });
-
-  svg += `<text x="${padL}" y="${H-4}" font-size="8" fill="#888">Machine</text>`;
-  svg += `<text x="${W-padR-18}" y="${H-4}" font-size="8" fill="#888">Pit</text>`;
-  svg += `<circle cx="${padL}" cy="${toSvgY(entryIn)}" r="4" fill="#166534"/>`;
-  svg += `<circle cx="${W-padR}" cy="${toSvgY(exitIn)}" r="4" fill="#166534"/>`;
-  svg += '</svg>';
-
-  wrap.innerHTML = svg;
+  svg+=`<text x="${padL}" y="${H-4}" font-size="8" fill="#888">Machine</text>`;
+  svg+=`<text x="${W-padR-18}" y="${H-4}" font-size="8" fill="#888">Pit</text>`;
+  svg+=`<circle cx="${padL}" cy="${toSvgY(entryIn)}" r="4" fill="#166534"/>`;
+  svg+=`<circle cx="${W-padR}" cy="${toSvgY(exitIn)}" r="4" fill="#166534"/>`;
+  svg+='</svg>';
+  wrap.innerHTML=svg;
 }
 
 function goToStage(n) {
   const pill = document.getElementById('sp'+n);
-  if(!pill || pill.classList.contains('locked')) return;
+  if(!pill||pill.classList.contains('locked')) return;
   if(n===3) buildFinalizeList();
   for(let i=1;i<=3;i++) {
     const s=document.getElementById('stage'+i);
@@ -622,12 +619,12 @@ function goToStage(n) {
 }
 
 function advanceStage(n) {
-  currentStage = Math.max(currentStage, n);
+  currentStage=Math.max(currentStage,n);
   for(let i=1;i<=3;i++) {
     const p=document.getElementById('sp'+i);
     if(!p) continue;
     p.classList.remove('active','done','locked');
-    if(i < n) p.classList.add('done');
+    if(i<n) p.classList.add('done');
     else if(i===n) p.classList.add('active');
     else if(i<=currentStage) p.classList.add('done');
     else p.classList.add('locked');
@@ -641,18 +638,21 @@ function resetForm() {
   document.getElementById('potholeList').innerHTML='';
   document.getElementById('finalizeList').innerHTML='';
   ['f-date','f-jobno','f-customer','f-address','f-footage','f-product',
-   'f-entrydepth','f-exitdepth','f-actualdepth','f-bitsize','f-notes'].forEach(id=>{
+   'f-entrydepth','f-exitdepth','f-actualdepth','f-notes'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
+  const rs = document.getElementById('f-reamersize');
+  if(rs) rs.value='';
   ['pinMachineBtn','pinPitBtn'].forEach(id=>{
     const el=document.getElementById(id);
     if(!el) return;
     el.classList.remove('pinned');
-    el.textContent = id==='pinMachineBtn' ? '📍 Tap to capture machine location' : '📍 Tap to capture pit location';
+    el.textContent=id==='pinMachineBtn'?'📍 Tap to capture machine location':'📍 Tap to capture pit location';
   });
   document.getElementById('machineCoords').textContent='';
   document.getElementById('pitCoords').textContent='';
   setDate();
+  populateCrewDropdown();
   for(let i=1;i<=3;i++) {
     const p=document.getElementById('sp'+i);
     if(p) { p.classList.remove('active','done','locked'); p.classList.add(i===1?'active':'locked'); }
@@ -666,16 +666,21 @@ async function saveProfile() {
   const btn = document.querySelector('.save-btn');
   btn.textContent='Saving...'; btn.disabled=true;
   const active = crossings.filter(c=>c&&c.type);
-  const finalCrossings = active.map((c,i) => ({
+  const finalCrossings = active.map((c,i)=>({
     ...c,
     bore_depth_at_crossing: parseFloat(document.getElementById('fbore'+i)?.value)||null
   }));
+  const foremanSel = document.getElementById('f-foreman');
+  const selectedCrew = allCrews.find(c=>c.id===foremanSel.value) || allCrews.find(c=>c.id===parseInt(foremanSel.value));
+  const foremanDisplay = selectedCrew
+    ? (selectedCrew.crew_number?'Crew '+selectedCrew.crew_number+' — ':'')+selectedCrew.foreman_name
+    : foremanSel.options[foremanSel.selectedIndex]?.text||'';
   const profile = {
     date: document.getElementById('f-date').value,
     job_number: document.getElementById('f-jobno').value,
     customer: document.getElementById('f-customer').value,
     address: document.getElementById('f-address').value,
-    foreman: document.getElementById('f-foreman').value,
+    foreman: foremanDisplay,
     ticket_811: document.getElementById('f-811').value,
     total_footage: parseFloat(document.getElementById('f-footage').value)||null,
     product: document.getElementById('f-product').value,
@@ -683,7 +688,7 @@ async function saveProfile() {
     ground_type: document.getElementById('f-ground').value,
     planned_depth: toInches(document.getElementById('f-entrydepth').value,'entry'),
     actual_depth: toInches(document.getElementById('f-actualdepth').value,'actual'),
-    bit_size: document.getElementById('f-bitsize').value,
+    bit_size: document.getElementById('f-reamersize').value,
     notes: document.getElementById('f-notes').value,
     stage: 'complete',
     crossings: finalCrossings,
@@ -705,6 +710,14 @@ async function loadProfiles() {
   if(error) return;
   allProfiles=data||[];
   renderProfiles(allProfiles);
+}
+
+async function loadCrews() {
+  const { data, error } = await sb.from('crews').select('*').order('crew_number',{ascending:true});
+  if(error) { renderCrews([]); return; }
+  allCrews=data||[];
+  renderCrews(allCrews);
+  populateCrewDropdown();
 }
 
 function filterProfiles() {
@@ -747,15 +760,112 @@ function renderProfiles(profiles) {
   }).join('');
 }
 
+function renderCrews(crews) {
+  const list=document.getElementById('crewList');
+  if(!crews||!crews.length) {
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">👷</div><div class="empty-text">No crews yet</div><div class="empty-sub">Tap + Add Crew to get started</div></div>`;
+    return;
+  }
+  const crewStats = {};
+  allProfiles.forEach(p => {
+    const key = p.foreman||'';
+    crews.forEach(c => {
+      const label = (c.crew_number?'Crew '+c.crew_number+' — ':'')+c.foreman_name;
+      if(key===label) {
+        if(!crewStats[c.id]) crewStats[c.id]={bores:0,footage:0};
+        crewStats[c.id].bores++;
+        crewStats[c.id].footage += parseFloat(p.total_footage)||0;
+      }
+    });
+  });
+  list.innerHTML=crews.map(c=>{
+    const stats=crewStats[c.id]||{bores:0,footage:0};
+    return `<div class="crew-card">
+      <div class="crew-card-top">
+        <div>
+          <div class="crew-name">${c.foreman_name}</div>
+          <div class="crew-num">${c.crew_number?'Crew '+c.crew_number:''} ${c.machine_type?'· '+c.machine_type:''}</div>
+        </div>
+      </div>
+      ${c.phone?`<div class="crew-meta">📞 ${c.phone}</div>`:''}
+      ${c.hire_date?`<div class="crew-meta">Started: ${c.hire_date}</div>`:''}
+      <div class="kpi-grid">
+        <div class="kpi-box"><div class="kpi-val">${stats.bores}</div><div class="kpi-lbl">Bores</div></div>
+        <div class="kpi-box"><div class="kpi-val">${stats.footage}</div><div class="kpi-lbl">Total ft</div></div>
+        <div class="kpi-box"><div class="kpi-val">${stats.bores?Math.round(stats.footage/stats.bores):0}</div><div class="kpi-lbl">Avg ft</div></div>
+      </div>
+      <div class="crew-actions">
+        <button class="crew-edit-btn" onclick="openCrewModal('${c.id}')">Edit</button>
+        <button class="crew-del-btn" onclick="deleteCrew('${c.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openCrewModal(id) {
+  const c = id ? allCrews.find(x=>x.id==id) : null;
+  const modal = document.createElement('div');
+  modal.className='modal-overlay';
+  modal.id='crewModal';
+  modal.innerHTML=`
+    <div class="modal">
+      <div class="modal-title">${c?'Edit Crew':'Add Crew'}</div>
+      <div class="form-group"><label class="form-label">Crew number</label><input class="form-input" id="crew-num" placeholder="e.g. 1" value="${c?.crew_number||''}" /></div>
+      <div class="form-group"><label class="form-label">Foreman name</label><input class="form-input" id="crew-name" placeholder="Full name" value="${c?.foreman_name||''}" /></div>
+      <div class="form-group"><label class="form-label">Phone number</label><input class="form-input" id="crew-phone" placeholder="Optional" value="${c?.phone||''}" /></div>
+      <div class="form-group"><label class="form-label">Hire date</label><input class="form-input" type="date" id="crew-hire" value="${c?.hire_date||''}" /></div>
+      <div class="form-group"><label class="form-label">Machine type</label><input class="form-input" id="crew-machine" placeholder="e.g. Vermeer D24x40" value="${c?.machine_type||''}" /></div>
+      <div class="modal-btns" style="margin-top:8px;">
+        <button class="modal-btn modal-cancel" onclick="closeCrewModal()">Cancel</button>
+        <button class="modal-btn modal-confirm" onclick="saveCrew('${id||''}')">${c?'Save changes':'Add crew'}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function closeCrewModal() {
+  const m=document.getElementById('crewModal');
+  if(m) m.remove();
+}
+
+async function saveCrew(id) {
+  const btn=document.querySelector('#crewModal .modal-confirm');
+  btn.textContent='Saving...'; btn.disabled=true;
+  const data={
+    crew_number: parseInt(document.getElementById('crew-num').value)||null,
+    foreman_name: document.getElementById('crew-name').value,
+    phone: document.getElementById('crew-phone').value,
+    hire_date: document.getElementById('crew-hire').value||null,
+    machine_type: document.getElementById('crew-machine').value,
+  };
+  let error;
+  if(id) {
+    ({error}=await sb.from('crews').update(data).eq('id',id));
+  } else {
+    ({error}=await sb.from('crews').insert([data]));
+  }
+  btn.textContent=id?'Save changes':'Add crew'; btn.disabled=false;
+  if(error) { showToast('Error saving crew'); return; }
+  showToast(id?'Crew updated':'Crew added');
+  closeCrewModal();
+  await loadCrews();
+}
+
+async function deleteCrew(id) {
+  if(!confirm('Delete this crew?')) return;
+  const {error}=await sb.from('crews').delete().eq('id',id);
+  if(error) { showToast('Error deleting crew'); return; }
+  showToast('Crew deleted');
+  await loadCrews();
+}
+
 function showDetail(id) {
   const p=allProfiles.find(x=>x.id===id);
   if(!p) return;
   currentProfileId=id;
   const crossRows=(p.crossings||[]).map((c,i)=>{
-    const clr = c.bore_depth_at_crossing&&c.bot ? parseFloat(c.bore_depth_at_crossing)-parseFloat(c.bot) : null;
-    const clrHtml = clr!==null
-      ? `<div class="cr-clearance ${clr>=24?'clearance-ok':'clearance-bad'}">${clr>=24?'✓':'⚠'} ${clr}" clear</div>`
-      : '';
+    const clr=c.bore_depth_at_crossing&&c.bot?parseFloat(c.bore_depth_at_crossing)-parseFloat(c.bot):null;
+    const clrHtml=clr!==null?`<div class="cr-clearance ${clr>=24?'clearance-ok':'clearance-bad'}">${clr>=24?'✓':'⚠'} ${clr}" clear</div>`:'';
     return `<div class="crossing-row">
       <div>
         <div class="cr-type">${c.type||'Unknown'}${c.dist?' @ '+c.dist+' ft':''}</div>
@@ -772,20 +882,57 @@ function showDetail(id) {
       <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage?p.total_footage+' ft':'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Product</div><div class="stat-val">${p.product||'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Max bore depth</div><div class="stat-val">${p.actual_depth?p.actual_depth+'"':'—'}</div></div>
-      <div class="stat-box"><div class="stat-lbl">Ground type</div><div class="stat-val">${p.ground_type||'—'}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Reamer size</div><div class="stat-val">${p.bit_size||'—'}</div></div>
     </div>
     ${crossRows?`<div class="card"><div class="card-title">Utility crossings</div>${crossRows}</div>`:''}
-    ${p.latitude ? buildMapCard(p) : ''}
+    ${p.latitude?buildMapCard(p):''}
     ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
     <div class="admin-bar">
       <button class="edit-btn" onclick="requireAdmin('edit')">Edit Profile</button>
       <button class="delete-btn" onclick="requireAdmin('delete')">Delete</button>
     </div>`;
-
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-detail').classList.add('active');
   window.scrollTo(0,0);
+}
+
+function buildMapCard(p) {
+  const hasPit=p.pit_latitude&&p.pit_longitude;
+  const centerLat=hasPit?(p.latitude+p.pit_latitude)/2:p.latitude;
+  const centerLng=hasPit?(p.longitude+p.pit_longitude)/2:p.longitude;
+  const utColors={'gas':'0xFB923C','water':'0x2DD4BF','electric':'0xF87171','fiber':'0xA78BFA','sewer':'0x4ADE80','telecom':'0x60A5FA','unknown':'0x9CA3AF'};
+  let markers=`&markers=color:0x166534|label:M|${p.latitude},${p.longitude}`;
+  if(hasPit) markers+=`&markers=color:0x166534|label:P|${p.pit_latitude},${p.pit_longitude}`;
+  (p.crossings||[]).forEach((c,i)=>{
+    if(!c.dist||!p.total_footage) return;
+    const frac=parseFloat(c.dist)/parseFloat(p.total_footage);
+    const lat=p.latitude+(p.pit_latitude-p.latitude)*frac;
+    const lng=p.longitude+(p.pit_longitude-p.longitude)*frac;
+    const color=utColors[(c.type||'unknown').toLowerCase()]||utColors['unknown'];
+    markers+=`&markers=color:${color}|label:${i+1}|${lat.toFixed(6)},${lng.toFixed(6)}`;
+  });
+  const path=hasPit?`&path=color:0x1a56dbcc|weight:3|${p.latitude},${p.longitude}|${p.pit_latitude},${p.pit_longitude}`:'';
+  const mapUrl=`https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=17&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
+  const streetViewUrl=`https://www.google.com/maps?q=&layer=c&cbll=${p.latitude},${p.longitude}`;
+  const colorHex={gas:'#FB923C',water:'#2DD4BF',electric:'#F87171',fiber:'#A78BFA',sewer:'#4ADE80',telecom:'#60A5FA',unknown:'#9CA3AF'};
+  const legend=(p.crossings||[]).filter(c=>c.type).map((c,i)=>{
+    const color=colorHex[(c.type||'unknown').toLowerCase()]||colorHex['unknown'];
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#555;">
+      <div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0;"></div>
+      ${i+1}. ${c.type}${c.dist?' @ '+c.dist+'ft':''}
+    </div>`;
+  }).join('');
+  const coordText=`Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}${hasPit?' · Pit: '+p.pit_latitude.toFixed(5)+', '+p.pit_longitude.toFixed(5):''}`;
+  return `<div class="card">
+    <div class="card-title">Bore Location</div>
+    <img src="${mapUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;" alt="Bore location map" />
+    ${legend?`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">${legend}</div>`:''}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+      <div style="font-size:10px;color:#aaa;">${coordText}</div>
+      <a href="${streetViewUrl}" target="_blank" style="font-size:12px;font-weight:600;color:#1a56db;text-decoration:none;padding:6px 12px;border:1px solid #1a56db;border-radius:6px;white-space:nowrap;">Street View</a>
+    </div>
+  </div>`;
 }
 
 function requireAdmin(action) {
@@ -803,86 +950,17 @@ function confirmAdminPin() {
   closeAdminModal();
   if(adminAction==='delete') document.getElementById('deleteModal').style.display='flex';
   if(adminAction==='edit') openEditModal();
+  if(adminAction==='admin') showScreen('admin');
 }
 
-async function confirmDelete() {
-  closeDeleteModal();
-  const { error } = await sb.from('profiles').delete().eq('id',currentProfileId);
-  if(error) { showToast('Error deleting'); return; }
-  showToast('Profile deleted');
-  allProfiles=allProfiles.filter(p=>p.id!==currentProfileId);
-  renderProfiles(allProfiles);
-  showScreen('profiles');
-}
-
-function buildMapCard(p) {
-  const hasPit = p.pit_latitude && p.pit_longitude;
-  const centerLat = hasPit ? (p.latitude + p.pit_latitude) / 2 : p.latitude;
-  const centerLng = hasPit ? (p.longitude + p.pit_longitude) / 2 : p.longitude;
-
-  const utColors = {
-    'gas': '0xFB923C',
-    'water': '0x2DD4BF',
-    'electric': '0xF87171',
-    'fiber': '0xA78BFA',
-    'sewer': '0x4ADE80',
-    'telecom': '0x60A5FA',
-    'unknown': '0x9CA3AF'
-  };
-
-  let markers = '';
-  markers += `&markers=color:0x166534|label:M|${p.latitude},${p.longitude}`;
-  if(hasPit) markers += `&markers=color:0x166534|label:P|${p.pit_latitude},${p.pit_longitude}`;
-
-  (p.crossings||[]).forEach((c,i) => {
-    if(!c.dist || !p.total_footage) return;
-    const frac = parseFloat(c.dist) / parseFloat(p.total_footage);
-    const lat = p.latitude + (p.pit_latitude - p.latitude) * frac;
-    const lng = p.longitude + (p.pit_longitude - p.longitude) * frac;
-    const type = (c.type||'unknown').toLowerCase();
-    const color = utColors[type] || utColors['unknown'];
-    markers += `&markers=color:${color}|label:${(i+1).toString()}|${lat.toFixed(6)},${lng.toFixed(6)}`;
-  });
-
-  let path = '';
-  if(hasPit) {
-    path = `&path=color:0x1a56dbcc|weight:3|${p.latitude},${p.longitude}|${p.pit_latitude},${p.pit_longitude}`;
-  }
-
-  const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=17&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
-
-  const streetViewUrl = `https://www.google.com/maps?q=&layer=c&cbll=${p.latitude},${p.longitude}`;
-  const coordText = `Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}${hasPit?' &nbsp;·&nbsp; Pit: '+p.pit_latitude.toFixed(5)+', '+p.pit_longitude.toFixed(5):''}`;
-  
-  const legend = (p.crossings||[]).filter(c=>c.type).map((c,i) => {
-    const type = (c.type||'unknown').toLowerCase();
-    const colorHex = { gas:'#FB923C', water:'#2DD4BF', electric:'#F87171', fiber:'#A78BFA', sewer:'#4ADE80', telecom:'#60A5FA', unknown:'#9CA3AF' };
-    const color = colorHex[type] || colorHex['unknown'];
-    return `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#555;">
-      <div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0;"></div>
-      ${i+1}. ${c.type}${c.dist?' @ '+c.dist+'ft':''}
-    </div>`;
-  }).join('');
-
-  return `<div class="card">
-    <div class="card-title">Bore Location</div>
-    <img src="${mapUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;" alt="Bore location map" />
-    ${legend ? `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">${legend}</div>` : ''}
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-      <div style="font-size:10px;color:#aaa;">${coordText}</div>
-      <a href="${streetViewUrl}" target="_blank" style="font-size:12px;font-weight:600;color:#1a56db;text-decoration:none;padding:6px 12px;border:1px solid #1a56db;border-radius:6px;white-space:nowrap;">Street View</a>
-    </div>
-  </div>`;
-}
-
-  function openEditModal() {
-  const p = allProfiles.find(x=>x.id===currentProfileId);
+function openEditModal() {
+  const p=allProfiles.find(x=>x.id===currentProfileId);
   if(!p) return;
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay';
-  modal.id = 'editModal';
-  modal.innerHTML = `
-    <div class="modal" style="width:340px;max-height:85vh;overflow-y:auto;">
+  const modal=document.createElement('div');
+  modal.className='modal-overlay';
+  modal.id='editModal';
+  modal.innerHTML=`
+    <div class="modal">
       <div class="modal-title">Edit Profile</div>
       <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="edit-date" value="${p.date||''}" /></div>
       <div class="form-group"><label class="form-label">Job no.</label><input class="form-input" id="edit-jobno" value="${p.job_number||''}" /></div>
@@ -910,7 +988,22 @@ function buildMapCard(p) {
         </select>
       </div>
       <div class="form-group"><label class="form-label">Max bore depth (in)</label><input class="form-input" type="number" id="edit-actualdepth" value="${p.actual_depth||''}" /></div>
-      <div class="form-group"><label class="form-label">Bit size</label><input class="form-input" id="edit-bitsize" value="${p.bit_size||''}" /></div>
+      <div class="form-group"><label class="form-label">Reamer size</label>
+        <select class="form-input" id="edit-reamersize">
+          <option value="">Select...</option>
+          <option ${p.bit_size==='Head'?'selected':''}>Head</option>
+          <option ${p.bit_size==='6"'?'selected':''}>6"</option>
+          <option ${p.bit_size==='8"'?'selected':''}>8"</option>
+          <option ${p.bit_size==='10"'?'selected':''}>10"</option>
+          <option ${p.bit_size==='12"'?'selected':''}>12"</option>
+          <option ${p.bit_size==='14"'?'selected':''}>14"</option>
+          <option ${p.bit_size==='16"'?'selected':''}>16"</option>
+          <option ${p.bit_size==='18"'?'selected':''}>18"</option>
+          <option ${p.bit_size==='20"'?'selected':''}>20"</option>
+          <option ${p.bit_size==='22"'?'selected':''}>22"</option>
+          <option ${p.bit_size==='24"'?'selected':''}>24"</option>
+        </select>
+      </div>
       <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="3" id="edit-notes">${p.notes||''}</textarea></div>
       <div class="modal-btns" style="margin-top:8px;">
         <button class="modal-btn modal-cancel" onclick="closeEditModal()">Cancel</button>
@@ -921,14 +1014,14 @@ function buildMapCard(p) {
 }
 
 function closeEditModal() {
-  const m = document.getElementById('editModal');
+  const m=document.getElementById('editModal');
   if(m) m.remove();
 }
 
 async function saveEdit() {
-  const btn = document.querySelector('#editModal .modal-confirm');
+  const btn=document.querySelector('#editModal .modal-confirm');
   btn.textContent='Saving...'; btn.disabled=true;
-  const updates = {
+  const updates={
     date: document.getElementById('edit-date').value,
     job_number: document.getElementById('edit-jobno').value,
     customer: document.getElementById('edit-customer').value,
@@ -940,20 +1033,30 @@ async function saveEdit() {
     direction: document.getElementById('edit-direction').value,
     ground_type: document.getElementById('edit-ground').value,
     actual_depth: parseFloat(document.getElementById('edit-actualdepth').value)||null,
-    bit_size: document.getElementById('edit-bitsize').value,
+    bit_size: document.getElementById('edit-reamersize').value,
     notes: document.getElementById('edit-notes').value,
   };
-  const { error } = await sb.from('profiles').update(updates).eq('id', currentProfileId);
+  const {error}=await sb.from('profiles').update(updates).eq('id',currentProfileId);
   btn.textContent='Save changes'; btn.disabled=false;
   if(error) { showToast('Error saving — try again'); return; }
-  const idx = allProfiles.findIndex(x=>x.id===currentProfileId);
-  if(idx>=0) allProfiles[idx] = { ...allProfiles[idx], ...updates };
+  const idx=allProfiles.findIndex(x=>x.id===currentProfileId);
+  if(idx>=0) allProfiles[idx]={...allProfiles[idx],...updates};
   closeEditModal();
   showToast('Profile updated');
   showDetail(currentProfileId);
 }
 
-  function setLang(l) {
+async function confirmDelete() {
+  closeDeleteModal();
+  const {error}=await sb.from('profiles').delete().eq('id',currentProfileId);
+  if(error) { showToast('Error deleting'); return; }
+  showToast('Profile deleted');
+  allProfiles=allProfiles.filter(p=>p.id!==currentProfileId);
+  renderProfiles(allProfiles);
+  showScreen('profiles');
+}
+
+function setLang(l) {
   lang=l;
   document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
 }
@@ -961,6 +1064,7 @@ async function saveEdit() {
 setDate();
 addCrossing();
 loadProfiles();
+loadCrews();
 </script>
 </body>
 </html>
