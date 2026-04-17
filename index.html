@@ -27,13 +27,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
 .form-group { margin-bottom: 8px; }
 .stage-bar { display: flex; gap: 4px; margin-bottom: 12px; }
-.stage-pill { flex: 1; padding: 7px 2px; border-radius: 6px; font-size: 10px; text-align: center; font-weight: 600; border: 1px solid #e5e5e5; cursor: pointer; background: #fff; color: #888; }
-.stage-pill.done { background: #f0fdf4; color: #166534; border-color: #86efac; }
-.stage-pill.active { background: #1a56db; color: #fff; border-color: #1a56db; }
+.stage-pill { flex: 1; padding: 7px 2px; border-radius: 6px; font-size: 10px; text-align: center; font-weight: 600; border: 1px solid #e5e5e5; background: #fff; color: #888; cursor: default; }
+.stage-pill.done { background: #f0fdf4; color: #166534; border-color: #86efac; cursor: pointer; }
+.stage-pill.done:hover { background: #dcfce7; }
+.stage-pill.active { background: #1a56db; color: #fff; border-color: #1a56db; cursor: default; }
 .stage-pill.locked { opacity: 0.4; cursor: default; }
-.pin-btn { width: 100%; padding: 12px; border-radius: 10px; border: 2px dashed #93c5fd; background: #eff6ff; font-size: 13px; font-weight: 600; color: #1a56db; cursor: pointer; margin-bottom: 8px; text-align: center; }
+.pin-btn { width: 100%; padding: 12px; border-radius: 10px; border: 2px dashed #93c5fd; background: #eff6ff; font-size: 13px; font-weight: 600; color: #1a56db; cursor: pointer; margin-bottom: 4px; text-align: center; }
 .pin-btn.pinned { background: #f0fdf4; border-color: #86efac; border-style: solid; color: #166534; }
-.depth-input-wrap { display: flex; gap: 0; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
+.depth-input-wrap { display: flex; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
 .depth-input-wrap input { flex: 1; padding: 9px 10px; font-size: 14px; border: none; background: #fff; color: #111; min-width: 0; }
 .depth-input-wrap input:focus { outline: none; }
 .unit-toggle { display: flex; }
@@ -43,8 +44,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .pothole-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .pothole-num { font-size: 12px; font-weight: 600; color: #111; }
 .del-btn { font-size: 11px; color: #ef4444; background: none; border: none; cursor: pointer; padding: 2px 6px; }
-.depth-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; }
-.depth-row input, .depth-row select { font-size: 13px; padding: 8px 6px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; width: 100%; -webkit-appearance: none; }
+.crossing-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+.crossing-fields input, .crossing-fields select { font-size: 13px; padding: 8px 6px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; width: 100%; -webkit-appearance: none; }
+.dist-field { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+.dist-field input { flex: 1; font-size: 13px; padding: 7px 8px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; -webkit-appearance: none; }
+.dist-label { font-size: 11px; color: #888; white-space: nowrap; }
 .add-btn { width: 100%; padding: 9px; font-size: 13px; color: #1a56db; background: none; border: 2px dashed #93c5fd; border-radius: 8px; cursor: pointer; margin-top: 4px; }
 .next-btn { width: 100%; padding: 13px; background: #1a56db; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
 .next-btn:active { opacity: 0.85; }
@@ -74,6 +78,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .cr-type { font-size: 13px; font-weight: 600; color: #111; }
 .cr-depths { font-size: 11px; color: #888; margin-top: 2px; }
 .cr-clearance { font-size: 12px; font-weight: 600; }
+.clearance-ok { color: #166534; }
+.clearance-bad { color: #991b1b; }
 .empty-state { text-align: center; padding: 40px 20px; color: #888; }
 .empty-icon { font-size: 32px; margin-bottom: 8px; }
 .empty-text { font-size: 14px; font-weight: 600; color: #555; }
@@ -81,11 +87,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .loading { text-align: center; padding: 30px; color: #888; font-size: 13px; }
 .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-.clearance-ok { color: #166534; font-weight: 600; }
-.clearance-bad { color: #991b1b; font-weight: 600; }
 .finalize-crossing { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
-.finalize-crossing-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.finalize-crossing-title { font-size: 12px; font-weight: 600; color: #111; }
+.finalize-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.finalize-title { font-size: 12px; font-weight: 600; color: #111; }
 .clearance-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
 .badge-ok { background: #f0fdf4; color: #166534; }
 .badge-bad { background: #fef2f2; color: #991b1b; }
@@ -95,7 +99,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .admin-bar { display: flex; gap: 8px; margin-top: 12px; }
 .edit-btn { flex: 1; padding: 10px; background: #fff; border: 1px solid #1a56db; color: #1a56db; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
 .delete-btn { padding: 10px 16px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
-.pin-coords { font-size: 10px; color: #888; margin-top: 3px; text-align: center; }
+.pin-coords { font-size: 10px; color: #888; margin-bottom: 8px; text-align: center; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; }
 .modal { background: #fff; border-radius: 12px; padding: 20px; width: 300px; }
 .modal-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111; }
@@ -105,6 +109,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .modal-cancel { background: #f3f4f6; color: #111; }
 .modal-confirm { background: #1a56db; color: #fff; }
 .path-wrap { overflow-x: auto; background: #f9fafb; border-radius: 8px; padding: 8px; margin-bottom: 10px; }
+.col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 6px; padding: 0 2px; }
+.col-header { font-size: 10px; color: #888; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -134,50 +140,66 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <!-- NEW PROFILE -->
 <div id="screen-new" class="screen">
   <div class="stage-bar">
-    <div class="stage-pill active" id="sp1">1. Project Info</div>
-    <div class="stage-pill locked" id="sp2">2. Potholes</div>
-    <div class="stage-pill locked" id="sp3">3. Finalize</div>
+    <div class="stage-pill active" id="sp1" onclick="goToStage(1)">1. Project Info</div>
+    <div class="stage-pill locked" id="sp2" onclick="goToStage(2)">2. Potholes</div>
+    <div class="stage-pill locked" id="sp3" onclick="goToStage(3)">3. Finalize</div>
   </div>
 
-  <!-- Stage 1: Project Information -->
+  <!-- Stage 1 -->
   <div id="stage1">
     <div class="card">
-      <div class="card-title" id="t-projinfo">Project Information</div>
+      <div class="card-title">Project Information</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="f-date" /></div>
-        <div class="form-group"><label class="form-label" id="t-jobno">Job no.</label><input class="form-input" id="f-jobno" placeholder="Optional" /></div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input class="form-input" type="date" id="f-date" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Job no.</label>
+          <input class="form-input" id="f-jobno" placeholder="Optional" />
+        </div>
       </div>
-      <div class="form-group"><label class="form-label" id="t-customer">Customer</label><input class="form-input" id="f-customer" placeholder="Customer name" /></div>
-      <div class="form-group"><label class="form-label" id="t-address">Address / Location</label><input class="form-input" id="f-address" placeholder="e.g. 4450 E Sunset Dr" /></div>
+      <div class="form-group">
+        <label class="form-label">Customer</label>
+        <input class="form-input" id="f-customer" placeholder="Customer name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address / Location</label>
+        <input class="form-input" id="f-address" placeholder="e.g. 4450 E Sunset Dr" />
+      </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" id="t-foreman">Foreman</label>
+        <div class="form-group">
+          <label class="form-label">Foreman</label>
           <select class="form-input" id="f-foreman">
             <option>Andres</option><option>Miguel</option><option>Carlos</option><option>Other</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">811 Ticket #</label><input class="form-input" id="f-811" placeholder="#" /></div>
+        <div class="form-group">
+          <label class="form-label">811 Ticket #</label>
+          <input class="form-input" id="f-811" placeholder="#" />
+        </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">GPS Pins</div>
       <div class="form-group">
-        <label class="form-label" id="t-machinepin">Machine side (start)</label>
+        <label class="form-label">Machine side (start)</label>
         <button class="pin-btn" id="pinMachineBtn" onclick="getPin('machine')">📍 Tap to capture machine location</button>
         <div class="pin-coords" id="machineCoords"></div>
       </div>
       <div class="form-group">
-        <label class="form-label" id="t-pitpin">Pit side (end)</label>
+        <label class="form-label">Pit side (end)</label>
         <button class="pin-btn" id="pinPitBtn" onclick="getPin('pit')">📍 Tap to capture pit location</button>
         <div class="pin-coords" id="pitCoords"></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title" id="t-boredetails">Bore Details</div>
+      <div class="card-title">Bore Details</div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" id="t-footage">Total footage</label>
+          <label class="form-label">Total footage</label>
           <div class="depth-input-wrap">
             <input type="number" id="f-footage" placeholder="0" />
             <div class="unit-toggle">
@@ -185,15 +207,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
             </div>
           </div>
         </div>
-        <div class="form-group"><label class="form-label" id="t-product">Product</label><input class="form-input" id="f-product" placeholder='e.g. 1-3"' /></div>
+        <div class="form-group">
+          <label class="form-label">Product installed</label>
+          <input class="form-input" id="f-product" placeholder='e.g. 1-3"' />
+        </div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" id="t-direction">Direction</label>
+        <div class="form-group">
+          <label class="form-label">Direction</label>
           <select class="form-input" id="f-direction">
             <option>N to S</option><option>S to N</option><option>E to W</option><option>W to E</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label" id="t-ground">Ground type</label>
+        <div class="form-group">
+          <label class="form-label">Ground type</label>
           <select class="form-input" id="f-ground">
             <option>Caliche</option><option>Sandy</option><option>Rocky</option><option>Clay</option><option>Mixed</option>
           </select>
@@ -201,7 +228,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" id="t-entrydepth">Entry depth</label>
+          <label class="form-label">Entry depth</label>
           <div class="depth-input-wrap">
             <input type="number" id="f-entrydepth" placeholder="0" />
             <div class="unit-toggle">
@@ -211,7 +238,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" id="t-exitdepth">Exit depth</label>
+          <label class="form-label">Exit depth</label>
           <div class="depth-input-wrap">
             <input type="number" id="f-exitdepth" placeholder="0" />
             <div class="unit-toggle">
@@ -226,16 +253,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div style="height:16px;"></div>
   </div>
 
-  <!-- Stage 2: Potholes -->
+  <!-- Stage 2 -->
   <div id="stage2" style="display:none;">
     <div class="card">
       <div class="card-title">Utility Crossings — Pothole Log</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;" id="t-potholeInstr">Log each utility in order from machine to pit. Top and bottom depths in inches.</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 24px;gap:6px;margin-bottom:6px;padding:0 2px;">
-        <div style="font-size:10px;color:#888;font-weight:600;">UTILITY TYPE</div>
-        <div style="font-size:10px;color:#888;font-weight:600;">TOP (in)</div>
-        <div style="font-size:10px;color:#888;font-weight:600;">BOT (in)</div>
-        <div></div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;">Log each utility in order from machine to pit. Enter depths in inches and distance from machine in feet.</div>
+      <div class="col-headers">
+        <div class="col-header">UTILITY TYPE</div>
+        <div class="col-header">TOP (in)</div>
+        <div class="col-header">BOT (in)</div>
       </div>
       <div id="potholeList"></div>
       <button class="add-btn" onclick="addCrossing()">+ Add utility crossing</button>
@@ -244,34 +270,40 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div style="height:16px;"></div>
   </div>
 
-  <!-- Stage 3: Finalize -->
+  <!-- Stage 3 -->
   <div id="stage3" style="display:none;">
     <div class="card">
-      <div class="card-title">Bore Path</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;">Enter the actual bore depth at each utility crossing. Clearance is calculated automatically.</div>
+      <div class="card-title">Bore Depth at Each Crossing</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;">Enter the actual bore depth at each utility crossing. Minimum 24" clearance required from bottom of utility.</div>
       <div id="finalizeList"></div>
     </div>
     <div class="card">
       <div class="card-title">As-Built</div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Actual bore depth</label>
+          <label class="form-label">Max bore depth</label>
           <div class="depth-input-wrap">
             <input type="number" id="f-actualdepth" placeholder="0" oninput="updatePathViz()" />
             <div class="unit-toggle">
-              <button class="unit-btn" id="actualUnitIn" onclick="setUnit('actual','in')">in</button>
-              <button class="unit-btn active" id="actualUnitFt" onclick="setUnit('actual','ft')">ft</button>
+              <button class="unit-btn active" id="actualUnitIn" onclick="setUnit('actual','in')">in</button>
+              <button class="unit-btn" id="actualUnitFt" onclick="setUnit('actual','ft')">ft</button>
             </div>
           </div>
         </div>
-        <div class="form-group"><label class="form-label">Bit size</label><input class="form-input" id="f-bitsize" placeholder='e.g. 4"' /></div>
+        <div class="form-group">
+          <label class="form-label">Bit size</label>
+          <input class="form-input" id="f-bitsize" placeholder='e.g. 4"' />
+        </div>
       </div>
-      <div class="form-group"><label class="form-label">Notes / issues</label><textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label">Notes / issues</label>
+        <textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea>
+      </div>
     </div>
     <div class="card">
       <div class="card-title">Bore Path Preview</div>
       <div class="path-wrap" id="pathVizWrap">
-        <div style="font-size:11px;color:#888;text-align:center;padding:20px;">Enter depths above to see bore path</div>
+        <div style="font-size:11px;color:#888;text-align:center;padding:20px;">Enter crossing depths above to preview bore path</div>
       </div>
     </div>
     <button class="save-btn" onclick="saveProfile()">Save Complete Profile</button>
@@ -285,7 +317,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div id="detailContent"></div>
 </div>
 
-<!-- PIN Modal -->
+<!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
   <div class="modal">
     <div class="modal-title" id="pinModalTitle">Capturing location...</div>
@@ -337,20 +369,23 @@ let allProfiles = [];
 let currentProfileId = null;
 let adminAction = null;
 let machineLat = null, machineLng = null, pitLat = null, pitLng = null;
-let unitStates = { footage:'ft', entry:'ft', exit:'ft', actual:'ft' };
+let unitStates = { footage:'ft', entry:'ft', exit:'ft', actual:'in' };
 
 function setUnit(field, unit) {
   unitStates[field] = unit;
   ['in','ft'].forEach(u => {
-    const btn = document.getElementById(field+'Unit'+u.charAt(0).toUpperCase()+u.slice(1));
+    const id = field+'Unit'+u.charAt(0).toUpperCase()+u.slice(1);
+    const btn = document.getElementById(id);
     if(btn) btn.classList.toggle('active', u===unit);
   });
   if(field==='actual') updatePathViz();
 }
 
 function toInches(val, field) {
-  if(!val) return null;
-  return unitStates[field]==='ft' ? parseFloat(val)*12 : parseFloat(val);
+  if(!val && val!==0) return null;
+  const n = parseFloat(val);
+  if(isNaN(n)) return null;
+  return unitStates[field]==='ft' ? n*12 : n;
 }
 
 function showScreen(name) {
@@ -387,17 +422,19 @@ function getPin(side) {
     const lat = pos.coords.latitude, lng = pos.coords.longitude;
     if(side==='machine') {
       machineLat=lat; machineLng=lng;
-      document.getElementById('pinMachineBtn').classList.add('pinned');
-      document.getElementById('pinMachineBtn').textContent = '✓ Machine location captured';
+      const btn = document.getElementById('pinMachineBtn');
+      btn.classList.add('pinned');
+      btn.textContent = '✓ Machine location captured';
       document.getElementById('machineCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
     } else {
       pitLat=lat; pitLng=lng;
-      document.getElementById('pinPitBtn').classList.add('pinned');
-      document.getElementById('pinPitBtn').textContent = '✓ Pit location captured';
+      const btn = document.getElementById('pinPitBtn');
+      btn.classList.add('pinned');
+      btn.textContent = '✓ Pit location captured';
       document.getElementById('pitCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
     }
     closePinModal();
-  }, err => {
+  }, () => {
     document.getElementById('pinModalMsg').textContent = 'Could not get location. Check GPS settings.';
   });
 }
@@ -407,7 +444,7 @@ function closePinModal() { document.getElementById('pinModal').style.display='no
 function addCrossing() {
   crossingCount++;
   const i = crossingCount;
-  crossings.push({ type:'', top:'', bot:'' });
+  crossings.push({ type:'', top:'', bot:'', dist:'' });
   const list = document.getElementById('potholeList');
   const block = document.createElement('div');
   block.className='pothole-block';
@@ -417,7 +454,7 @@ function addCrossing() {
       <div class="pothole-num">Crossing ${i}</div>
       <button class="del-btn" onclick="removeCrossing(${i})">✕ Remove</button>
     </div>
-    <div class="depth-row">
+    <div class="crossing-fields">
       <select id="ut${i}" onchange="updateCrossing(${i})">
         <option value="">Type...</option>
         <option>Gas</option><option>Water</option><option>Electric</option>
@@ -425,6 +462,11 @@ function addCrossing() {
       </select>
       <input type="number" id="top${i}" placeholder='e.g. 18' onchange="updateCrossing(${i})" />
       <input type="number" id="bot${i}" placeholder='e.g. 24' onchange="updateCrossing(${i})" />
+    </div>
+    <div class="dist-field">
+      <span class="dist-label">Distance from machine:</span>
+      <input type="number" id="dist${i}" placeholder="0" onchange="updateCrossing(${i})" />
+      <span class="dist-label">ft</span>
     </div>`;
   list.appendChild(block);
 }
@@ -432,41 +474,43 @@ function addCrossing() {
 function removeCrossing(i) {
   const block = document.getElementById('pb'+i);
   if(block) block.remove();
-  crossings[i-1] = null;
+  if(crossings[i-1]) crossings[i-1] = null;
 }
 
 function updateCrossing(i) {
+  if(!crossings[i-1]) return;
   crossings[i-1] = {
     type: document.getElementById('ut'+i)?.value || 'Unknown',
     top: document.getElementById('top'+i)?.value || '',
-    bot: document.getElementById('bot'+i)?.value || ''
+    bot: document.getElementById('bot'+i)?.value || '',
+    dist: document.getElementById('dist'+i)?.value || ''
   };
 }
 
 function buildFinalizeList() {
   const list = document.getElementById('finalizeList');
-  list.innerHTML = '';
+  list.innerHTML='';
   const active = crossings.filter(c=>c&&c.type);
   if(!active.length) {
-    list.innerHTML = '<div style="font-size:13px;color:#888;text-align:center;padding:12px;">No utility crossings logged</div>';
+    list.innerHTML='<div style="font-size:13px;color:#888;text-align:center;padding:12px;">No utility crossings logged in potholes tab</div>';
     return;
   }
   active.forEach((c,idx) => {
     const block = document.createElement('div');
     block.className='finalize-crossing';
     block.innerHTML=`
-      <div class="finalize-crossing-header">
-        <div class="finalize-crossing-title">Crossing ${idx+1} — ${c.type}</div>
-        <div class="clearance-badge badge-neutral" id="fclr${idx}">— clearance</div>
+      <div class="finalize-header">
+        <div class="finalize-title">Crossing ${idx+1} — ${c.type}${c.dist?' @ '+c.dist+'ft':''}</div>
+        <div class="clearance-badge badge-neutral" id="fclr${idx}">— clear</div>
       </div>
-      <div style="font-size:11px;color:#888;margin-bottom:8px;">Potholed: Top ${c.top||'—'}" · Bottom ${c.bot||'—'}"</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="font-size:11px;color:#888;margin-bottom:8px;">Potholed top: ${c.top||'—'}" &nbsp;·&nbsp; Bottom: ${c.bot||'—'}"</div>
+      <div class="form-row" style="margin-bottom:0;">
         <div>
           <label class="form-label">Bore depth at crossing (in)</label>
           <input class="form-input" type="number" id="fbore${idx}" placeholder="inches" oninput="calcFinalizeClearance(${idx},'${c.bot}')" />
         </div>
         <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
-          <div id="fclrdetail${idx}" style="font-size:12px;color:#888;">Enter depth above</div>
+          <div id="fclrdetail${idx}" style="font-size:12px;color:#888;">Enter depth</div>
         </div>
       </div>`;
     list.appendChild(block);
@@ -479,78 +523,115 @@ function calcFinalizeClearance(idx, botStr) {
   const badge = document.getElementById('fclr'+idx);
   const detail = document.getElementById('fclrdetail'+idx);
   if(isNaN(boreDepth)||isNaN(bot)) {
-    if(badge) { badge.textContent='— clearance'; badge.className='clearance-badge badge-neutral'; }
+    if(badge) { badge.textContent='— clear'; badge.className='clearance-badge badge-neutral'; }
+    if(detail) { detail.textContent='Enter depth'; detail.style.color='#888'; }
     return;
   }
   const clr = boreDepth - bot;
   if(badge) {
-    badge.textContent = clr+'" clearance';
+    badge.textContent = clr+'" clear';
     badge.className = 'clearance-badge '+(clr>=24?'badge-ok':'badge-bad');
   }
   if(detail) {
-    detail.textContent = clr>=24 ? '✓ Good clearance' : '⚠ Under 24" minimum';
+    detail.textContent = clr>=24 ? '✓ Good' : '⚠ Under 24"';
     detail.style.color = clr>=24 ? '#166534' : '#991b1b';
   }
   updatePathViz();
 }
 
 function updatePathViz() {
-  const entry = toInches(document.getElementById('f-entrydepth')?.value,'entry')||0;
-  const exit = toInches(document.getElementById('f-exitdepth')?.value,'exit')||0;
+  const entryIn = toInches(document.getElementById('f-entrydepth')?.value,'entry')||0;
+  const exitIn = toInches(document.getElementById('f-exitdepth')?.value,'exit')||0;
+  const totalFt = parseFloat(document.getElementById('f-footage')?.value)||100;
   const active = crossings.filter(c=>c&&c.type);
   const wrap = document.getElementById('pathVizWrap');
   if(!wrap) return;
-  const W=360, H=100, pad=30;
+
+  const W=360, H=110, padL=32, padR=16, padT=10, padB=24;
+  const drawW = W-padL-padR;
+  const drawH = H-padT-padB;
+
   const points = [];
-  points.push({x:pad, d:entry});
+  points.push({ x:0, d:entryIn, label:null });
   active.forEach((c,i) => {
     const boreEl = document.getElementById('fbore'+i);
     const boreDepth = boreEl ? parseFloat(boreEl.value)||null : null;
-    const x = pad + ((i+1)/(active.length+1))*(W-2*pad);
-    points.push({x, d:boreDepth||parseFloat(c.bot)||0, label:c.type, bot:parseFloat(c.bot)||0});
+    const dist = parseFloat(c.dist)||null;
+    const xFrac = dist && totalFt ? dist/totalFt : (i+1)/(active.length+1);
+    points.push({
+      x: Math.min(xFrac,1),
+      d: boreDepth || (parseFloat(c.bot)||0)+24,
+      label: c.type,
+      bot: parseFloat(c.bot)||0,
+      dist: c.dist,
+      actualBore: boreDepth
+    });
   });
-  points.push({x:W-pad, d:exit});
-  const maxD = Math.max(...points.map(p=>p.d), 12)+12;
-  const scaleY = p => pad/2 + (p.d/maxD)*(H-pad);
-  const polyPts = points.map(p=>`${p.x},${scaleY(p)}`).join(' ');
-  let svgContent = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  points.push({ x:1, d:exitIn, label:null });
+
+  const maxD = Math.max(...points.map(p=>p.d), 24)+12;
+
+  const toSvgX = xFrac => padL + xFrac*drawW;
+  const toSvgY = d => padT + (d/maxD)*drawH;
+
+  const polyPts = points.map(p=>`${toSvgX(p.x)},${toSvgY(p.d)}`).join(' ');
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+
   [0.25,0.5,0.75,1].forEach(f => {
-    const y = pad/2 + f*(H-pad);
     const d = Math.round(f*maxD);
-    svgContent += `<line x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}" stroke="#e5e5e5" stroke-width="0.5"/>`;
-    svgContent += `<text x="2" y="${y+4}" font-size="8" fill="#aaa">${d}"</text>`;
+    const y = toSvgY(d);
+    svg += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#e5e5e5" stroke-width="0.5"/>`;
+    svg += `<text x="2" y="${y+3}" font-size="8" fill="#aaa">${d}"</text>`;
   });
-  svgContent += `<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
-  points.forEach((p,i) => {
-    if(p.label) {
-      const y = scaleY(p);
-      const botY = pad/2 + (p.bot/maxD)*(H-pad);
-      svgContent += `<circle cx="${p.x}" cy="${botY}" r="4" fill="#ef4444"/>`;
-      svgContent += `<text x="${p.x-12}" y="${botY-7}" font-size="8" fill="#555">${p.label}</text>`;
-      svgContent += `<circle cx="${p.x}" cy="${y}" r="4" fill="#1a56db"/>`;
-    }
+
+  svg += `<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
+
+  points.forEach(p => {
+    if(!p.label) return;
+    const cx = toSvgX(p.x);
+    const boreY = toSvgY(p.d);
+    const botY = toSvgY(p.bot);
+    const ok = p.actualBore ? (p.actualBore - p.bot)>=24 : true;
+    svg += `<line x1="${cx}" y1="${botY}" x2="${cx}" y2="${boreY}" stroke="${ok?'#86efac':'#fca5a5'}" stroke-width="2" stroke-dasharray="3,2"/>`;
+    svg += `<circle cx="${cx}" cy="${botY}" r="4" fill="#ef4444"/>`;
+    svg += `<circle cx="${cx}" cy="${boreY}" r="4" fill="#1a56db"/>`;
+    const labelX = cx > W-60 ? cx-30 : cx-12;
+    svg += `<text x="${labelX}" y="${Math.max(botY-8,padT+8)}" font-size="8" fill="#555">${p.label}${p.dist?' @'+p.dist+'ft':''}</text>`;
   });
-  svgContent += `<text x="${pad}" y="${H-4}" font-size="8" fill="#aaa">Machine</text>`;
-  svgContent += `<text x="${W-pad-18}" y="${H-4}" font-size="8" fill="#aaa">Pit</text>`;
-  svgContent += '</svg>';
-  wrap.innerHTML = svgContent;
+
+  svg += `<text x="${padL}" y="${H-4}" font-size="8" fill="#888">Machine</text>`;
+  svg += `<text x="${W-padR-18}" y="${H-4}" font-size="8" fill="#888">Pit</text>`;
+  svg += `<circle cx="${padL}" cy="${toSvgY(entryIn)}" r="4" fill="#166534"/>`;
+  svg += `<circle cx="${W-padR}" cy="${toSvgY(exitIn)}" r="4" fill="#166534"/>`;
+  svg += '</svg>';
+
+  wrap.innerHTML = svg;
 }
 
-function advanceStage(n) {
-  currentStage = Math.max(currentStage,n);
+function goToStage(n) {
+  const pill = document.getElementById('sp'+n);
+  if(!pill || pill.classList.contains('locked')) return;
   if(n===3) buildFinalizeList();
   for(let i=1;i<=3;i++) {
     const s=document.getElementById('stage'+i);
     if(s) s.style.display=i===n?'block':'none';
-    const p=document.getElementById('sp'+i);
-    if(p) {
-      p.classList.remove('active','done','locked');
-      if(i<n) p.classList.add('done');
-      else if(i===n) p.classList.add('active');
-      else p.classList.add('locked');
-    }
   }
   window.scrollTo(0,0);
+}
+
+function advanceStage(n) {
+  currentStage = Math.max(currentStage, n);
+  for(let i=1;i<=3;i++) {
+    const p=document.getElementById('sp'+i);
+    if(!p) continue;
+    p.classList.remove('active','done','locked');
+    if(i < n) p.classList.add('done');
+    else if(i===n) p.classList.add('active');
+    else if(i<=currentStage) p.classList.add('done');
+    else p.classList.add('locked');
+  }
+  goToStage(n);
 }
 
 function resetForm() {
@@ -564,12 +645,19 @@ function resetForm() {
   });
   ['pinMachineBtn','pinPitBtn'].forEach(id=>{
     const el=document.getElementById(id);
-    if(el) { el.classList.remove('pinned'); el.textContent=id==='pinMachineBtn'?'📍 Tap to capture machine location':'📍 Tap to capture pit location'; }
+    if(!el) return;
+    el.classList.remove('pinned');
+    el.textContent = id==='pinMachineBtn' ? '📍 Tap to capture machine location' : '📍 Tap to capture pit location';
   });
   document.getElementById('machineCoords').textContent='';
   document.getElementById('pitCoords').textContent='';
   setDate();
-  advanceStage(1);
+  for(let i=1;i<=3;i++) {
+    const p=document.getElementById('sp'+i);
+    if(p) { p.classList.remove('active','done','locked'); p.classList.add(i===1?'active':'locked'); }
+    const s=document.getElementById('stage'+i);
+    if(s) s.style.display=i===1?'block':'none';
+  }
   addCrossing();
 }
 
@@ -588,7 +676,7 @@ async function saveProfile() {
     address: document.getElementById('f-address').value,
     foreman: document.getElementById('f-foreman').value,
     ticket_811: document.getElementById('f-811').value,
-    total_footage: toInches(document.getElementById('f-footage').value,'footage'),
+    total_footage: parseFloat(document.getElementById('f-footage').value)||null,
     product: document.getElementById('f-product').value,
     direction: document.getElementById('f-direction').value,
     ground_type: document.getElementById('f-ground').value,
@@ -614,12 +702,12 @@ async function saveProfile() {
 async function loadProfiles() {
   const { data, error } = await sb.from('profiles').select('*').order('created_at',{ascending:false});
   if(error) return;
-  allProfiles = data||[];
+  allProfiles=data||[];
   renderProfiles(allProfiles);
 }
 
 function filterProfiles() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
+  const q=document.getElementById('searchInput').value.toLowerCase();
   renderProfiles(allProfiles.filter(p=>
     (p.address||'').toLowerCase().includes(q)||
     (p.customer||'').toLowerCase().includes(q)||
@@ -631,26 +719,26 @@ function filterProfiles() {
 function getTagClass(type) {
   const t=(type||'').toLowerCase();
   if(t.includes('gas')) return 't-amber';
-  if(t.includes('water')||t.includes('agua')) return 't-teal';
+  if(t.includes('water')) return 't-teal';
   if(t.includes('electric')) return 't-red';
-  if(t.includes('fiber')||t.includes('fibra')) return 't-purple';
+  if(t.includes('fiber')) return 't-purple';
   if(t.includes('sewer')) return 't-green';
   return 't-gray';
 }
 
 function renderProfiles(profiles) {
-  const list = document.getElementById('profilesList');
+  const list=document.getElementById('profilesList');
   if(!profiles||!profiles.length) {
     list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No profiles yet</div><div class="empty-sub">Tap + New to create your first bore profile</div></div>`;
     return;
   }
-  list.innerHTML = profiles.map(p=>{
-    const tags = (p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
+  list.innerHTML=profiles.map(p=>{
+    const tags=(p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
     return `<div class="profile-card" onclick="showDetail('${p.id}')">
       <div class="pc-top"><div class="pc-addr">${p.address||'No address'}</div><div class="pc-date">${p.date||''}</div></div>
       <div class="pc-tags">
         <span class="tag t-gray">${p.foreman||''}</span>
-        ${p.total_footage?`<span class="tag t-gray">${Math.round(p.total_footage/12)} ft</span>`:''}
+        ${p.total_footage?`<span class="tag t-gray">${p.total_footage} ft</span>`:''}
         ${p.product?`<span class="tag t-gray">${p.product}</span>`:''}
         ${tags}
       </div>
@@ -659,15 +747,19 @@ function renderProfiles(profiles) {
 }
 
 function showDetail(id) {
-  const p = allProfiles.find(x=>x.id===id);
+  const p=allProfiles.find(x=>x.id===id);
   if(!p) return;
-  currentProfileId = id;
-  const crossRows = (p.crossings||[]).map((c,i)=>{
-    const clr = c.bore_depth_at_crossing && c.bot ? parseFloat(c.bore_depth_at_crossing)-parseFloat(c.bot) : null;
-    const clrHtml = clr!==null ? `<div class="cr-clearance ${clr>=24?'clearance-ok':'clearance-bad'}">${clr>=24?'✓':'⚠'} ${clr}" clear</div>` : '';
+  currentProfileId=id;
+  const crossRows=(p.crossings||[]).map((c,i)=>{
+    const clr = c.bore_depth_at_crossing&&c.bot ? parseFloat(c.bore_depth_at_crossing)-parseFloat(c.bot) : null;
+    const clrHtml = clr!==null
+      ? `<div class="cr-clearance ${clr>=24?'clearance-ok':'clearance-bad'}">${clr>=24?'✓':'⚠'} ${clr}" clear</div>`
+      : '';
     return `<div class="crossing-row">
-      <div><div class="cr-type">${c.type||'Unknown'}</div>
-      <div class="cr-depths">Top ${c.top||'—'}" · Bot ${c.bot||'—'}" · Crossing ${i+1}</div></div>
+      <div>
+        <div class="cr-type">${c.type||'Unknown'}${c.dist?' @ '+c.dist+' ft':''}</div>
+        <div class="cr-depths">Top ${c.top||'—'}" · Bot ${c.bot||'—'}"${c.bore_depth_at_crossing?' · Bore '+c.bore_depth_at_crossing+'"':''}</div>
+      </div>
       <div>${clrHtml}</div>
     </div>`;
   }).join('');
@@ -676,26 +768,30 @@ function showDetail(id) {
     <div style="font-size:16px;font-weight:600;color:#111;margin-bottom:2px;">${p.address||'No address'}</div>
     <div style="font-size:12px;color:#888;margin-bottom:12px;">${[p.customer,p.foreman,p.date,p.job_number?'#'+p.job_number:''].filter(Boolean).join(' · ')}</div>
     <div class="stat-grid">
-      <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage?Math.round(p.total_footage/12)+' ft':'—'}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage?p.total_footage+' ft':'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Product</div><div class="stat-val">${p.product||'—'}</div></div>
-      <div class="stat-box"><div class="stat-lbl">Bore depth</div><div class="stat-val">${p.actual_depth||p.planned_depth||'—'}"</div></div>
+      <div class="stat-box"><div class="stat-lbl">Max bore depth</div><div class="stat-val">${p.actual_depth?p.actual_depth+'"':'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Ground type</div><div class="stat-val">${p.ground_type||'—'}</div></div>
     </div>
     ${crossRows?`<div class="card"><div class="card-title">Utility crossings</div>${crossRows}</div>`:''}
-    ${p.latitude?`<div class="card"><div class="card-title">Location</div><div style="font-size:12px;color:#888;">Machine: ${p.latitude?.toFixed(5)}, ${p.longitude?.toFixed(5)}</div>${p.pit_latitude?`<div style="font-size:12px;color:#888;margin-top:4px;">Pit: ${p.pit_latitude?.toFixed(5)}, ${p.pit_longitude?.toFixed(5)}</div>`:''}</div>`:''}
+    ${p.latitude?`<div class="card"><div class="card-title">Location</div>
+      <div style="font-size:12px;color:#888;">Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}</div>
+      ${p.pit_latitude?`<div style="font-size:12px;color:#888;margin-top:4px;">Pit: ${p.pit_latitude.toFixed(5)}, ${p.pit_longitude.toFixed(5)}</div>`:''}
+    </div>`:''}
     ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
     <div class="admin-bar">
       <button class="edit-btn" onclick="requireAdmin('edit')">Edit Profile</button>
       <button class="delete-btn" onclick="requireAdmin('delete')">Delete</button>
     </div>`;
+
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-detail').classList.add('active');
   window.scrollTo(0,0);
 }
 
 function requireAdmin(action) {
-  adminAction = action;
+  adminAction=action;
   document.getElementById('adminPinInput').value='';
   document.getElementById('adminModal').style.display='flex';
 }
@@ -704,21 +800,21 @@ function closeAdminModal() { document.getElementById('adminModal').style.display
 function closeDeleteModal() { document.getElementById('deleteModal').style.display='none'; }
 
 function confirmAdminPin() {
-  const pin = document.getElementById('adminPinInput').value;
-  if(pin !== ADMIN_PIN) { showToast('Incorrect PIN'); return; }
+  const pin=document.getElementById('adminPinInput').value;
+  if(pin!==ADMIN_PIN) { showToast('Incorrect PIN'); return; }
   closeAdminModal();
-  if(adminAction==='delete') { document.getElementById('deleteModal').style.display='flex'; }
-  if(adminAction==='edit') { showToast('Edit coming soon — contact developer'); }
+  if(adminAction==='delete') document.getElementById('deleteModal').style.display='flex';
+  if(adminAction==='edit') showToast('Edit coming soon');
 }
 
 async function confirmDelete() {
   closeDeleteModal();
-  const { error } = await sb.from('profiles').delete().eq('id', currentProfileId);
+  const { error } = await sb.from('profiles').delete().eq('id',currentProfileId);
   if(error) { showToast('Error deleting'); return; }
   showToast('Profile deleted');
-  allProfiles = allProfiles.filter(p=>p.id!==currentProfileId);
-  showScreen('profiles');
+  allProfiles=allProfiles.filter(p=>p.id!==currentProfileId);
   renderProfiles(allProfiles);
+  showScreen('profiles');
 }
 
 function setLang(l) {
