@@ -31,18 +31,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .stage-pill.done { background: #f0fdf4; color: #166534; border-color: #86efac; }
 .stage-pill.active { background: #1a56db; color: #fff; border-color: #1a56db; }
 .stage-pill.locked { opacity: 0.4; cursor: default; }
-.pin-area { background: #eff6ff; border: 2px dashed #93c5fd; border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 10px; cursor: pointer; }
-.pin-area.pinned { background: #f0fdf4; border-color: #86efac; border-style: solid; }
-.pin-text { font-size: 13px; font-weight: 600; color: #1a56db; margin-top: 4px; }
-.pin-area.pinned .pin-text { color: #166534; }
-.pin-sub { font-size: 11px; color: #888; margin-top: 3px; }
+.pin-btn { width: 100%; padding: 12px; border-radius: 10px; border: 2px dashed #93c5fd; background: #eff6ff; font-size: 13px; font-weight: 600; color: #1a56db; cursor: pointer; margin-bottom: 8px; text-align: center; }
+.pin-btn.pinned { background: #f0fdf4; border-color: #86efac; border-style: solid; color: #166534; }
+.depth-input-wrap { display: flex; gap: 0; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
+.depth-input-wrap input { flex: 1; padding: 9px 10px; font-size: 14px; border: none; background: #fff; color: #111; min-width: 0; }
+.depth-input-wrap input:focus { outline: none; }
+.unit-toggle { display: flex; }
+.unit-btn { padding: 9px 10px; font-size: 12px; font-weight: 600; border: none; background: #f3f4f6; color: #888; cursor: pointer; border-left: 1px solid #e5e5e5; }
+.unit-btn.active { background: #1a56db; color: #fff; }
 .pothole-block { border: 1px solid #e5e5e5; border-radius: 8px; padding: 10px; margin-bottom: 8px; background: #fafafa; }
 .pothole-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .pothole-num { font-size: 12px; font-weight: 600; color: #111; }
-.clearance-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; background: #f3f4f6; color: #888; }
-.clearance-ok { background: #f0fdf4; color: #166534; }
-.clearance-warn { background: #fefce8; color: #854d0e; }
-.clearance-bad { background: #fef2f2; color: #991b1b; }
+.del-btn { font-size: 11px; color: #ef4444; background: none; border: none; cursor: pointer; padding: 2px 6px; }
 .depth-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; }
 .depth-row input, .depth-row select { font-size: 13px; padding: 8px 6px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; width: 100%; -webkit-appearance: none; }
 .add-btn { width: 100%; padding: 9px; font-size: 13px; color: #1a56db; background: none; border: 2px dashed #93c5fd; border-radius: 8px; cursor: pointer; margin-top: 4px; }
@@ -79,12 +79,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .empty-text { font-size: 14px; font-weight: 600; color: #555; }
 .empty-sub { font-size: 12px; margin-top: 4px; }
 .loading { text-align: center; padding: 30px; color: #888; font-size: 13px; }
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-.plan-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
-.plan-row:last-child { border-bottom: none; }
+.clearance-ok { color: #166534; font-weight: 600; }
+.clearance-bad { color: #991b1b; font-weight: 600; }
+.finalize-crossing { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+.finalize-crossing-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.finalize-crossing-title { font-size: 12px; font-weight: 600; color: #111; }
+.clearance-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+.badge-ok { background: #f0fdf4; color: #166534; }
+.badge-bad { background: #fef2f2; color: #991b1b; }
+.badge-neutral { background: #f3f4f6; color: #888; }
 .search-input { width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid #e5e5e5; border-radius: 10px; background: #fff; color: #111; margin-bottom: 10px; -webkit-appearance: none; }
 .search-input:focus { outline: none; border-color: #1a56db; }
+.admin-bar { display: flex; gap: 8px; margin-top: 12px; }
+.edit-btn { flex: 1; padding: 10px; background: #fff; border: 1px solid #1a56db; color: #1a56db; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.delete-btn { padding: 10px 16px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.pin-coords { font-size: 10px; color: #888; margin-top: 3px; text-align: center; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; }
+.modal { background: #fff; border-radius: 12px; padding: 20px; width: 300px; }
+.modal-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111; }
+.modal-input { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: 4px; }
+.modal-btns { display: flex; gap: 8px; }
+.modal-btn { flex: 1; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; }
+.modal-cancel { background: #f3f4f6; color: #111; }
+.modal-confirm { background: #1a56db; color: #fff; }
+.path-wrap { overflow-x: auto; background: #f9fafb; border-radius: 8px; padding: 8px; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -92,7 +112,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <div class="header">
   <div>
     <div class="header-title">B-Line Bore Profiles</div>
-    <div class="header-sub" id="hSub">Phoenix, AZ</div>
+    <div class="header-sub">Phoenix, AZ</div>
   </div>
   <div class="lang-toggle">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -101,36 +121,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('profiles')" id="nav-profiles">Profiles</button>
-  <button class="nav-btn" onclick="showScreen('new')" id="nav-new">+ New</button>
+  <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
+  <button class="nav-btn" onclick="showScreen('new')">+ New</button>
 </div>
 
-<!-- PROFILES SCREEN -->
+<!-- PROFILES -->
 <div id="screen-profiles" class="screen active">
   <input class="search-input" id="searchInput" placeholder="Search address, customer, foreman..." oninput="filterProfiles()" />
   <div id="profilesList"><div class="loading">Loading profiles...</div></div>
 </div>
 
-<!-- NEW PROFILE SCREEN -->
+<!-- NEW PROFILE -->
 <div id="screen-new" class="screen">
   <div class="stage-bar">
-    <div class="stage-pill active" id="sp1">1. 811</div>
+    <div class="stage-pill active" id="sp1">1. Project Info</div>
     <div class="stage-pill locked" id="sp2">2. Potholes</div>
-    <div class="stage-pill locked" id="sp3">3. Plan</div>
-    <div class="stage-pill locked" id="sp4">4. As-built</div>
+    <div class="stage-pill locked" id="sp3">3. Finalize</div>
   </div>
 
-  <!-- Stage 1 -->
+  <!-- Stage 1: Project Information -->
   <div id="stage1">
-    <div class="pin-area" id="pinArea" onclick="getLocation()">
-      <div style="font-size:24px;">📍</div>
-      <div class="pin-text" id="pinText">Tap to capture job site location</div>
-      <div class="pin-sub" id="pinSub">Uses your phone's GPS</div>
-    </div>
     <div class="card">
-      <div class="card-title" id="t-jobinfo">Job info</div>
+      <div class="card-title" id="t-projinfo">Project Information</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" id="t-date">Date</label><input class="form-input" type="date" id="f-date" /></div>
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="f-date" /></div>
         <div class="form-group"><label class="form-label" id="t-jobno">Job no.</label><input class="form-input" id="f-jobno" placeholder="Optional" /></div>
       </div>
       <div class="form-group"><label class="form-label" id="t-customer">Customer</label><input class="form-input" id="f-customer" placeholder="Customer name" /></div>
@@ -141,14 +155,37 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
             <option>Andres</option><option>Miguel</option><option>Carlos</option><option>Other</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label" id="t-811">811 Ticket #</label><input class="form-input" id="f-811" placeholder="#" /></div>
+        <div class="form-group"><label class="form-label">811 Ticket #</label><input class="form-input" id="f-811" placeholder="#" /></div>
       </div>
     </div>
+
     <div class="card">
-      <div class="card-title" id="t-boredetails">Bore details</div>
+      <div class="card-title">GPS Pins</div>
+      <div class="form-group">
+        <label class="form-label" id="t-machinepin">Machine side (start)</label>
+        <button class="pin-btn" id="pinMachineBtn" onclick="getPin('machine')">📍 Tap to capture machine location</button>
+        <div class="pin-coords" id="machineCoords"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="t-pitpin">Pit side (end)</label>
+        <button class="pin-btn" id="pinPitBtn" onclick="getPin('pit')">📍 Tap to capture pit location</button>
+        <div class="pin-coords" id="pitCoords"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" id="t-boredetails">Bore Details</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" id="t-footage">Total footage</label><input class="form-input" type="number" id="f-footage" placeholder="ft" /></div>
-        <div class="form-group"><label class="form-label" id="t-product">Product installed</label><input class="form-input" id="f-product" placeholder='e.g. 1-3"' /></div>
+        <div class="form-group">
+          <label class="form-label" id="t-footage">Total footage</label>
+          <div class="depth-input-wrap">
+            <input type="number" id="f-footage" placeholder="0" />
+            <div class="unit-toggle">
+              <button class="unit-btn active" id="footageUnitFt" onclick="setUnit('footage','ft')">ft</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label" id="t-product">Product</label><input class="form-input" id="f-product" placeholder='e.g. 1-3"' /></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label" id="t-direction">Direction</label>
@@ -162,58 +199,125 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
           </select>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="t-entrydepth">Entry depth</label>
+          <div class="depth-input-wrap">
+            <input type="number" id="f-entrydepth" placeholder="0" />
+            <div class="unit-toggle">
+              <button class="unit-btn" id="entryUnitIn" onclick="setUnit('entry','in')">in</button>
+              <button class="unit-btn active" id="entryUnitFt" onclick="setUnit('entry','ft')">ft</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="t-exitdepth">Exit depth</label>
+          <div class="depth-input-wrap">
+            <input type="number" id="f-exitdepth" placeholder="0" />
+            <div class="unit-toggle">
+              <button class="unit-btn" id="exitUnitIn" onclick="setUnit('exit','in')">in</button>
+              <button class="unit-btn active" id="exitUnitFt" onclick="setUnit('exit','ft')">ft</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="next-btn" onclick="advanceStage(2)" id="t-next1">Next — Log potholes →</button>
+    <button class="next-btn" onclick="advanceStage(2)">Next — Log Potholes →</button>
+    <div style="height:16px;"></div>
   </div>
 
-  <!-- Stage 2 -->
+  <!-- Stage 2: Potholes -->
   <div id="stage2" style="display:none;">
     <div class="card">
-      <div class="card-title" id="t-potholelog">Utility crossings — pothole log</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;" id="t-potholeInstr">Log each utility in order from machine to pit. Enter top and bottom depths in inches.</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:6px;">
-        <div style="font-size:10px;color:#888;font-weight:600;" id="t-coltype">UTILITY TYPE</div>
-        <div style="font-size:10px;color:#888;font-weight:600;" id="t-coltop">TOP (in)</div>
-        <div style="font-size:10px;color:#888;font-weight:600;" id="t-colbot">BOT (in)</div>
+      <div class="card-title">Utility Crossings — Pothole Log</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;" id="t-potholeInstr">Log each utility in order from machine to pit. Top and bottom depths in inches.</div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 24px;gap:6px;margin-bottom:6px;padding:0 2px;">
+        <div style="font-size:10px;color:#888;font-weight:600;">UTILITY TYPE</div>
+        <div style="font-size:10px;color:#888;font-weight:600;">TOP (in)</div>
+        <div style="font-size:10px;color:#888;font-weight:600;">BOT (in)</div>
+        <div></div>
       </div>
       <div id="potholeList"></div>
-      <button class="add-btn" onclick="addCrossing()" id="t-addcross">+ Add utility crossing</button>
+      <button class="add-btn" onclick="addCrossing()">+ Add utility crossing</button>
     </div>
-    <button class="next-btn" onclick="advanceStage(3)" id="t-next2">Next — Plan bore path →</button>
+    <button class="next-btn" onclick="advanceStage(3)">Next — Finalize Profile →</button>
+    <div style="height:16px;"></div>
   </div>
 
-  <!-- Stage 3 -->
+  <!-- Stage 3: Finalize -->
   <div id="stage3" style="display:none;">
     <div class="card">
-      <div class="card-title" id="t-planpath">Planned bore path</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;" id="t-planInstr">Enter your planned bore depth. Clearance from each utility is calculated automatically. Minimum 24" required.</div>
-      <div class="form-group">
-        <label class="form-label" id="t-plandepth">Planned bore depth (inches)</label>
-        <input class="form-input" type="number" id="f-plandepth" placeholder="e.g. 60" oninput="recalcClearances()" />
-      </div>
-      <div id="clearanceList"></div>
+      <div class="card-title">Bore Path</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;">Enter the actual bore depth at each utility crossing. Clearance is calculated automatically.</div>
+      <div id="finalizeList"></div>
     </div>
-    <button class="next-btn" onclick="advanceStage(4)" id="t-next3">Bore approved — Log as-built →</button>
-  </div>
-
-  <!-- Stage 4 -->
-  <div id="stage4" style="display:none;">
     <div class="card">
-      <div class="card-title" id="t-asbuilt">As-built — actual results</div>
+      <div class="card-title">As-Built</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" id="t-actualdepth">Actual bore depth (in)</label><input class="form-input" type="number" id="f-actualdepth" placeholder="inches" /></div>
-        <div class="form-group"><label class="form-label" id="t-bitsize">Bit size (in)</label><input class="form-input" id="f-bitsize" placeholder='e.g. 4"' /></div>
+        <div class="form-group">
+          <label class="form-label">Actual bore depth</label>
+          <div class="depth-input-wrap">
+            <input type="number" id="f-actualdepth" placeholder="0" oninput="updatePathViz()" />
+            <div class="unit-toggle">
+              <button class="unit-btn" id="actualUnitIn" onclick="setUnit('actual','in')">in</button>
+              <button class="unit-btn active" id="actualUnitFt" onclick="setUnit('actual','ft')">ft</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Bit size</label><input class="form-input" id="f-bitsize" placeholder='e.g. 4"' /></div>
       </div>
-      <div class="form-group"><label class="form-label" id="t-notes">Notes / issues</label><textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea></div>
+      <div class="form-group"><label class="form-label">Notes / issues</label><textarea class="form-input" rows="4" id="f-notes" placeholder="Conditions, deviations, anything notable..."></textarea></div>
     </div>
-    <button class="save-btn" onclick="saveProfile()" id="t-save">Save complete profile</button>
+    <div class="card">
+      <div class="card-title">Bore Path Preview</div>
+      <div class="path-wrap" id="pathVizWrap">
+        <div style="font-size:11px;color:#888;text-align:center;padding:20px;">Enter depths above to see bore path</div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="saveProfile()">Save Complete Profile</button>
+    <div style="height:16px;"></div>
   </div>
 </div>
 
-<!-- DETAIL SCREEN -->
+<!-- DETAIL -->
 <div id="screen-detail" class="screen">
-  <button class="back-btn" onclick="goBack()">← <span id="t-back">Back</span></button>
+  <button class="back-btn" onclick="goBack()">← Back</button>
   <div id="detailContent"></div>
+</div>
+
+<!-- PIN Modal -->
+<div class="modal-overlay" id="pinModal" style="display:none;">
+  <div class="modal">
+    <div class="modal-title" id="pinModalTitle">Capturing location...</div>
+    <div style="font-size:13px;color:#888;text-align:center;padding:10px 0;" id="pinModalMsg">Please wait</div>
+    <div class="modal-btns">
+      <button class="modal-btn modal-cancel" onclick="closePinModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin PIN Modal -->
+<div class="modal-overlay" id="adminModal" style="display:none;">
+  <div class="modal">
+    <div class="modal-title">Admin PIN</div>
+    <input class="modal-input" type="password" id="adminPinInput" placeholder="••••" maxlength="4" />
+    <div class="modal-btns">
+      <button class="modal-btn modal-cancel" onclick="closeAdminModal()">Cancel</button>
+      <button class="modal-btn modal-confirm" onclick="confirmAdminPin()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="deleteModal" style="display:none;">
+  <div class="modal">
+    <div class="modal-title">Delete profile?</div>
+    <div style="font-size:13px;color:#888;margin-bottom:16px;">This cannot be undone.</div>
+    <div class="modal-btns">
+      <button class="modal-btn modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+      <button class="modal-btn" style="background:#ef4444;color:#fff;" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -223,211 +327,226 @@ const SUPABASE_URL = 'https://aanzqnvgfchcyvmnyfqd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_oaB6D1OSU9N6FzQG25ZWUg_PVKBO1fk';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const ADMIN_PIN = '1234';
 let lang = 'en';
+let crossings = [];
 let crossingCount = 0;
 let currentStage = 1;
 let prevScreen = 'profiles';
 let allProfiles = [];
-let currentProfile = null;
-let gpsLat = null;
-let gpsLng = null;
-let gpsAddress = null;
+let currentProfileId = null;
+let adminAction = null;
+let machineLat = null, machineLng = null, pitLat = null, pitLng = null;
+let unitStates = { footage:'ft', entry:'ft', exit:'ft', actual:'ft' };
 
-const translations = {
-  en: {
-    'nav-profiles':'Profiles','nav-new':'+ New',
-    'hSub':'Phoenix, AZ',
-    'pinText':'Tap to capture job site location','pinSub':"Uses your phone's GPS",
-    'pinnedText':'Location captured','pinnedSub':'Tap to update',
-    't-jobinfo':'Job info','t-date':'Date','t-jobno':'Job no.','t-customer':'Customer',
-    't-address':'Address / Location','t-foreman':'Foreman','t-811':'811 Ticket #',
-    't-boredetails':'Bore details','t-footage':'Total footage','t-product':'Product installed',
-    't-direction':'Direction','t-ground':'Ground type',
-    't-next1':'Next — Log potholes →',
-    't-potholelog':'Utility crossings — pothole log',
-    't-potholeInstr':'Log each utility in order from machine to pit. Enter top and bottom depths in inches.',
-    't-coltype':'UTILITY TYPE','t-coltop':'TOP (in)','t-colbot':'BOT (in)',
-    't-addcross':'+ Add utility crossing','t-next2':'Next — Plan bore path →',
-    't-planpath':'Planned bore path',
-    't-planInstr':'Enter your planned bore depth. Clearance from each utility is calculated automatically. Minimum 24" required.',
-    't-plandepth':'Planned bore depth (inches)','t-next3':'Bore approved — Log as-built →',
-    't-asbuilt':'As-built — actual results','t-actualdepth':'Actual bore depth (in)',
-    't-bitsize':'Bit size (in)','t-notes':'Notes / issues','t-save':'Save complete profile',
-    't-back':'Back',
-    'sp1':'1. 811','sp2':'2. Potholes','sp3':'3. Plan','sp4':'4. As-built',
-    'crossing':'Crossing','clearance':'clearance','unknown':'Unknown',
-    'noProfiles':'No profiles yet','noProfilesSub':'Tap + New to create your first bore profile',
-    'saving':'Saving...','saved':'Profile saved!','error':'Error saving — try again',
-    'utTypes':['Gas','Water','Electric','Fiber','Sewer','Telecom','Unknown'],
-    'clear':'clearance','tooClose':'TOO CLOSE',
-  },
-  es: {
-    'nav-profiles':'Perfiles','nav-new':'+ Nuevo',
-    'hSub':'Phoenix, AZ',
-    'pinText':'Toca para capturar ubicación','pinSub':'Usa el GPS de tu teléfono',
-    'pinnedText':'Ubicación capturada','pinnedSub':'Toca para actualizar',
-    't-jobinfo':'Info del trabajo','t-date':'Fecha','t-jobno':'No. trabajo','t-customer':'Cliente',
-    't-address':'Dirección / Ubicación','t-foreman':'Capataz','t-811':'No. boleta 811',
-    't-boredetails':'Detalles del barreno','t-footage':'Pies totales','t-product':'Producto instalado',
-    't-direction':'Dirección','t-ground':'Tipo de suelo',
-    't-next1':'Siguiente — Registrar calicatas →',
-    't-potholelog':'Cruces de servicios — calicatas',
-    't-potholeInstr':'Registra cada servicio en orden de la máquina al pozo. Profundidades en pulgadas.',
-    't-coltype':'TIPO DE SERVICIO','t-coltop':'TOPE (pulg)','t-colbot':'FONDO (pulg)',
-    't-addcross':'+ Agregar cruce','t-next2':'Siguiente — Planear ruta →',
-    't-planpath':'Ruta planeada del barreno',
-    't-planInstr':'Ingresa la profundidad planeada. La separación de cada servicio se calcula automáticamente. Mínimo 24 pulgadas.',
-    't-plandepth':'Profundidad planeada (pulgadas)','t-next3':'Barreno aprobado — Registrar as-built →',
-    't-asbuilt':'As-built — resultados reales','t-actualdepth':'Profundidad real (pulg)',
-    't-bitsize':'Tamaño de broca (pulg)','t-notes':'Notas / problemas','t-save':'Guardar perfil completo',
-    't-back':'Regresar',
-    'sp1':'1. 811','sp2':'2. Calicatas','sp3':'3. Plan','sp4':'4. As-built',
-    'crossing':'Cruce','clearance':'separación','unknown':'Desconocido',
-    'noProfiles':'Sin perfiles aún','noProfilesSub':'Toca + Nuevo para crear tu primer perfil de barreno',
-    'saving':'Guardando...','saved':'¡Perfil guardado!','error':'Error al guardar — intenta de nuevo',
-    'utTypes':['Gas','Agua','Eléctrico','Fibra','Drenaje','Telecom','Desconocido'],
-    'clear':'separación','tooClose':'MUY CERCA',
-  }
-};
+function setUnit(field, unit) {
+  unitStates[field] = unit;
+  ['in','ft'].forEach(u => {
+    const btn = document.getElementById(field+'Unit'+u.charAt(0).toUpperCase()+u.slice(1));
+    if(btn) btn.classList.toggle('active', u===unit);
+  });
+  if(field==='actual') updatePathViz();
+}
 
-function tx(key) { return translations[lang][key] || key; }
-
-function setLang(l) {
-  lang = l;
-  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
-  const ids = ['nav-profiles','nav-new','hSub','pinText','pinSub','t-jobinfo','t-date','t-jobno',
-    't-customer','t-address','t-foreman','t-811','t-boredetails','t-footage','t-product',
-    't-direction','t-ground','t-next1','t-potholelog','t-potholeInstr','t-coltype','t-coltop',
-    't-colbot','t-addcross','t-next2','t-planpath','t-planInstr','t-plandepth','t-next3',
-    't-asbuilt','t-actualdepth','t-bitsize','t-notes','t-save','t-back','sp1','sp2','sp3','sp4'];
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.textContent = tx(id); });
-  rebuildCrossings();
-  recalcClearances();
-  renderProfiles(allProfiles);
+function toInches(val, field) {
+  if(!val) return null;
+  return unitStates[field]==='ft' ? parseFloat(val)*12 : parseFloat(val);
 }
 
 function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   const idx = ['profiles','new'].indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
-  if(name!=='detail') prevScreen = name;
+  if(name!=='detail') prevScreen=name;
 }
 
 function goBack() { showScreen(prevScreen); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
 function setDate() {
-  const d = new Date();
-  const str = d.toISOString().split('T')[0];
-  document.getElementById('f-date').value = str;
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
 }
 
-function getLocation() {
-  const area = document.getElementById('pinArea');
-  const ptxt = document.getElementById('pinText');
-  const psub = document.getElementById('pinSub');
-  ptxt.textContent = 'Getting location...';
-  if(!navigator.geolocation) { ptxt.textContent = tx('pinText'); return; }
+function getPin(side) {
+  document.getElementById('pinModal').style.display='flex';
+  document.getElementById('pinModalTitle').textContent = side==='machine' ? 'Capturing machine location...' : 'Capturing pit location...';
+  document.getElementById('pinModalMsg').textContent = 'Please wait';
+  if(!navigator.geolocation) {
+    document.getElementById('pinModalMsg').textContent = 'GPS not available on this device';
+    return;
+  }
   navigator.geolocation.getCurrentPosition(pos => {
-    gpsLat = pos.coords.latitude;
-    gpsLng = pos.coords.longitude;
-    area.classList.add('pinned');
-    ptxt.textContent = tx('pinnedText') + ' (' + gpsLat.toFixed(4) + ', ' + gpsLng.toFixed(4) + ')';
-    psub.textContent = tx('pinnedSub');
+    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+    if(side==='machine') {
+      machineLat=lat; machineLng=lng;
+      document.getElementById('pinMachineBtn').classList.add('pinned');
+      document.getElementById('pinMachineBtn').textContent = '✓ Machine location captured';
+      document.getElementById('machineCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
+    } else {
+      pitLat=lat; pitLng=lng;
+      document.getElementById('pinPitBtn').classList.add('pinned');
+      document.getElementById('pinPitBtn').textContent = '✓ Pit location captured';
+      document.getElementById('pitCoords').textContent = lat.toFixed(5)+', '+lng.toFixed(5);
+    }
+    closePinModal();
   }, err => {
-    ptxt.textContent = tx('pinText');
-    psub.textContent = 'Could not get location — enter address manually';
+    document.getElementById('pinModalMsg').textContent = 'Could not get location. Check GPS settings.';
   });
 }
 
-let crossings = [];
+function closePinModal() { document.getElementById('pinModal').style.display='none'; }
 
 function addCrossing() {
   crossingCount++;
   const i = crossingCount;
   crossings.push({ type:'', top:'', bot:'' });
   const list = document.getElementById('potholeList');
-  const utOpts = tx('utTypes').map(u=>`<option>${u}</option>`).join('');
   const block = document.createElement('div');
-  block.className = 'pothole-block';
-  block.id = 'pb'+i;
-  block.innerHTML = `
+  block.className='pothole-block';
+  block.id='pb'+i;
+  block.innerHTML=`
     <div class="pothole-header">
-      <div class="pothole-num">${tx('crossing')} ${i}</div>
-      <div class="clearance-badge" id="clr${i}">—</div>
+      <div class="pothole-num">Crossing ${i}</div>
+      <button class="del-btn" onclick="removeCrossing(${i})">✕ Remove</button>
     </div>
     <div class="depth-row">
-      <select id="ut${i}" onchange="updateCrossing(${i})"><option value="">Type...</option>${utOpts}</select>
+      <select id="ut${i}" onchange="updateCrossing(${i})">
+        <option value="">Type...</option>
+        <option>Gas</option><option>Water</option><option>Electric</option>
+        <option>Fiber</option><option>Sewer</option><option>Telecom</option><option>Unknown</option>
+      </select>
       <input type="number" id="top${i}" placeholder='e.g. 18' onchange="updateCrossing(${i})" />
       <input type="number" id="bot${i}" placeholder='e.g. 24' onchange="updateCrossing(${i})" />
     </div>`;
   list.appendChild(block);
 }
 
-function rebuildCrossings() {
-  const list = document.getElementById('potholeList');
-  list.innerHTML = '';
-  const count = crossingCount;
-  crossingCount = 0;
-  for(let i=0;i<count;i++) addCrossing();
+function removeCrossing(i) {
+  const block = document.getElementById('pb'+i);
+  if(block) block.remove();
+  crossings[i-1] = null;
 }
 
 function updateCrossing(i) {
-  const ut = document.getElementById('ut'+i)?.value || '';
-  const top = document.getElementById('top'+i)?.value || '';
-  const bot = document.getElementById('bot'+i)?.value || '';
-  if(crossings[i-1]) crossings[i-1] = { type: ut||tx('unknown'), top, bot };
-  const badge = document.getElementById('clr'+i);
-  if(badge && bot) { badge.textContent = bot+'"'; badge.className='clearance-badge'; }
-  recalcClearances();
+  crossings[i-1] = {
+    type: document.getElementById('ut'+i)?.value || 'Unknown',
+    top: document.getElementById('top'+i)?.value || '',
+    bot: document.getElementById('bot'+i)?.value || ''
+  };
 }
 
-function recalcClearances() {
-  const boreDepth = parseFloat(document.getElementById('f-plandepth')?.value);
-  const list = document.getElementById('clearanceList');
-  if(!list) return;
+function buildFinalizeList() {
+  const list = document.getElementById('finalizeList');
   list.innerHTML = '';
-  crossings.forEach((c,idx) => {
-    if(!c.bot) return;
-    const bot = parseFloat(c.bot);
-    const row = document.createElement('div');
-    row.className = 'plan-row';
-    const label = document.createElement('div');
-    label.style.fontSize = '13px';
-    label.style.color = '#111';
-    label.textContent = (c.type||tx('unknown')) + ' — bot: '+bot+'"';
-    const badge = document.createElement('div');
-    badge.style.cssText = 'font-size:12px;font-weight:600;padding:3px 10px;border-radius:6px;';
-    if(!isNaN(boreDepth)) {
-      const clr = boreDepth - bot;
-      if(clr >= 24) { badge.textContent = clr+'" ✓'; badge.style.background='#f0fdf4'; badge.style.color='#166534'; }
-      else if(clr >= 0) { badge.textContent = clr+'" ⚠ '+tx('tooClose'); badge.style.background='#fef2f2'; badge.style.color='#991b1b'; }
-      else { badge.textContent = tx('tooClose'); badge.style.background='#fef2f2'; badge.style.color='#991b1b'; }
-    } else { badge.textContent = '—'; badge.style.color='#888'; }
-    row.appendChild(label); row.appendChild(badge);
-    list.appendChild(row);
+  const active = crossings.filter(c=>c&&c.type);
+  if(!active.length) {
+    list.innerHTML = '<div style="font-size:13px;color:#888;text-align:center;padding:12px;">No utility crossings logged</div>';
+    return;
+  }
+  active.forEach((c,idx) => {
+    const block = document.createElement('div');
+    block.className='finalize-crossing';
+    block.innerHTML=`
+      <div class="finalize-crossing-header">
+        <div class="finalize-crossing-title">Crossing ${idx+1} — ${c.type}</div>
+        <div class="clearance-badge badge-neutral" id="fclr${idx}">— clearance</div>
+      </div>
+      <div style="font-size:11px;color:#888;margin-bottom:8px;">Potholed: Top ${c.top||'—'}" · Bottom ${c.bot||'—'}"</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div>
+          <label class="form-label">Bore depth at crossing (in)</label>
+          <input class="form-input" type="number" id="fbore${idx}" placeholder="inches" oninput="calcFinalizeClearance(${idx},'${c.bot}')" />
+        </div>
+        <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
+          <div id="fclrdetail${idx}" style="font-size:12px;color:#888;">Enter depth above</div>
+        </div>
+      </div>`;
+    list.appendChild(block);
   });
 }
 
+function calcFinalizeClearance(idx, botStr) {
+  const bot = parseFloat(botStr);
+  const boreDepth = parseFloat(document.getElementById('fbore'+idx)?.value);
+  const badge = document.getElementById('fclr'+idx);
+  const detail = document.getElementById('fclrdetail'+idx);
+  if(isNaN(boreDepth)||isNaN(bot)) {
+    if(badge) { badge.textContent='— clearance'; badge.className='clearance-badge badge-neutral'; }
+    return;
+  }
+  const clr = boreDepth - bot;
+  if(badge) {
+    badge.textContent = clr+'" clearance';
+    badge.className = 'clearance-badge '+(clr>=24?'badge-ok':'badge-bad');
+  }
+  if(detail) {
+    detail.textContent = clr>=24 ? '✓ Good clearance' : '⚠ Under 24" minimum';
+    detail.style.color = clr>=24 ? '#166534' : '#991b1b';
+  }
+  updatePathViz();
+}
+
+function updatePathViz() {
+  const entry = toInches(document.getElementById('f-entrydepth')?.value,'entry')||0;
+  const exit = toInches(document.getElementById('f-exitdepth')?.value,'exit')||0;
+  const active = crossings.filter(c=>c&&c.type);
+  const wrap = document.getElementById('pathVizWrap');
+  if(!wrap) return;
+  const W=360, H=100, pad=30;
+  const points = [];
+  points.push({x:pad, d:entry});
+  active.forEach((c,i) => {
+    const boreEl = document.getElementById('fbore'+i);
+    const boreDepth = boreEl ? parseFloat(boreEl.value)||null : null;
+    const x = pad + ((i+1)/(active.length+1))*(W-2*pad);
+    points.push({x, d:boreDepth||parseFloat(c.bot)||0, label:c.type, bot:parseFloat(c.bot)||0});
+  });
+  points.push({x:W-pad, d:exit});
+  const maxD = Math.max(...points.map(p=>p.d), 12)+12;
+  const scaleY = p => pad/2 + (p.d/maxD)*(H-pad);
+  const polyPts = points.map(p=>`${p.x},${scaleY(p)}`).join(' ');
+  let svgContent = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  [0.25,0.5,0.75,1].forEach(f => {
+    const y = pad/2 + f*(H-pad);
+    const d = Math.round(f*maxD);
+    svgContent += `<line x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}" stroke="#e5e5e5" stroke-width="0.5"/>`;
+    svgContent += `<text x="2" y="${y+4}" font-size="8" fill="#aaa">${d}"</text>`;
+  });
+  svgContent += `<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
+  points.forEach((p,i) => {
+    if(p.label) {
+      const y = scaleY(p);
+      const botY = pad/2 + (p.bot/maxD)*(H-pad);
+      svgContent += `<circle cx="${p.x}" cy="${botY}" r="4" fill="#ef4444"/>`;
+      svgContent += `<text x="${p.x-12}" y="${botY-7}" font-size="8" fill="#555">${p.label}</text>`;
+      svgContent += `<circle cx="${p.x}" cy="${y}" r="4" fill="#1a56db"/>`;
+    }
+  });
+  svgContent += `<text x="${pad}" y="${H-4}" font-size="8" fill="#aaa">Machine</text>`;
+  svgContent += `<text x="${W-pad-18}" y="${H-4}" font-size="8" fill="#aaa">Pit</text>`;
+  svgContent += '</svg>';
+  wrap.innerHTML = svgContent;
+}
+
 function advanceStage(n) {
-  currentStage = Math.max(currentStage, n);
-  for(let i=1;i<=4;i++) {
-    const s = document.getElementById('stage'+i);
-    if(s) s.style.display = i===n?'block':'none';
-    const p = document.getElementById('sp'+i);
+  currentStage = Math.max(currentStage,n);
+  if(n===3) buildFinalizeList();
+  for(let i=1;i<=3;i++) {
+    const s=document.getElementById('stage'+i);
+    if(s) s.style.display=i===n?'block':'none';
+    const p=document.getElementById('sp'+i);
     if(p) {
       p.classList.remove('active','done','locked');
       if(i<n) p.classList.add('done');
       else if(i===n) p.classList.add('active');
-      else if(i<=currentStage) p.classList.add('done');
       else p.classList.add('locked');
     }
   }
@@ -435,23 +554,33 @@ function advanceStage(n) {
 }
 
 function resetForm() {
-  crossings = []; crossingCount = 0; currentStage = 1; gpsLat = null; gpsLng = null;
-  document.getElementById('potholeList').innerHTML = '';
-  document.getElementById('clearanceList').innerHTML = '';
-  ['f-date','f-jobno','f-customer','f-address','f-footage','f-product','f-actualdepth','f-bitsize','f-notes','f-plandepth'].forEach(id=>{
-    const el = document.getElementById(id); if(el) el.value='';
+  crossings=[]; crossingCount=0; currentStage=1;
+  machineLat=null; machineLng=null; pitLat=null; pitLng=null;
+  document.getElementById('potholeList').innerHTML='';
+  document.getElementById('finalizeList').innerHTML='';
+  ['f-date','f-jobno','f-customer','f-address','f-footage','f-product',
+   'f-entrydepth','f-exitdepth','f-actualdepth','f-bitsize','f-notes'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
   });
-  document.getElementById('pinArea').classList.remove('pinned');
-  document.getElementById('pinText').textContent = tx('pinText');
-  document.getElementById('pinSub').textContent = tx('pinSub');
+  ['pinMachineBtn','pinPitBtn'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) { el.classList.remove('pinned'); el.textContent=id==='pinMachineBtn'?'📍 Tap to capture machine location':'📍 Tap to capture pit location'; }
+  });
+  document.getElementById('machineCoords').textContent='';
+  document.getElementById('pitCoords').textContent='';
   setDate();
   advanceStage(1);
   addCrossing();
 }
 
 async function saveProfile() {
-  const btn = document.getElementById('t-save');
-  btn.textContent = tx('saving'); btn.disabled = true;
+  const btn = document.querySelector('.save-btn');
+  btn.textContent='Saving...'; btn.disabled=true;
+  const active = crossings.filter(c=>c&&c.type);
+  const finalCrossings = active.map((c,i) => ({
+    ...c,
+    bore_depth_at_crossing: parseFloat(document.getElementById('fbore'+i)?.value)||null
+  }));
   const profile = {
     date: document.getElementById('f-date').value,
     job_number: document.getElementById('f-jobno').value,
@@ -459,128 +588,142 @@ async function saveProfile() {
     address: document.getElementById('f-address').value,
     foreman: document.getElementById('f-foreman').value,
     ticket_811: document.getElementById('f-811').value,
-    total_footage: parseFloat(document.getElementById('f-footage').value)||null,
+    total_footage: toInches(document.getElementById('f-footage').value,'footage'),
     product: document.getElementById('f-product').value,
     direction: document.getElementById('f-direction').value,
     ground_type: document.getElementById('f-ground').value,
-    planned_depth: parseFloat(document.getElementById('f-plandepth').value)||null,
-    actual_depth: parseFloat(document.getElementById('f-actualdepth').value)||null,
+    planned_depth: toInches(document.getElementById('f-entrydepth').value,'entry'),
+    actual_depth: toInches(document.getElementById('f-actualdepth').value,'actual'),
     bit_size: document.getElementById('f-bitsize').value,
     notes: document.getElementById('f-notes').value,
-    stage: 'as-built',
-    crossings: crossings,
-    latitude: gpsLat,
-    longitude: gpsLng,
+    stage: 'complete',
+    crossings: finalCrossings,
+    latitude: machineLat,
+    longitude: machineLng,
+    pit_latitude: pitLat,
+    pit_longitude: pitLng,
   };
   const { error } = await sb.from('profiles').insert([profile]);
-  btn.textContent = tx('t-save'); btn.disabled = false;
-  if(error) { showToast(tx('error')); return; }
-  showToast(tx('saved'));
+  btn.textContent='Save Complete Profile'; btn.disabled=false;
+  if(error) { showToast('Error saving — try again'); return; }
+  showToast('Profile saved!');
   await loadProfiles();
   showScreen('profiles');
 }
 
 async function loadProfiles() {
-  const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+  const { data, error } = await sb.from('profiles').select('*').order('created_at',{ascending:false});
   if(error) return;
-  allProfiles = data || [];
+  allProfiles = data||[];
   renderProfiles(allProfiles);
 }
 
 function filterProfiles() {
   const q = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = allProfiles.filter(p =>
-    (p.address||'').toLowerCase().includes(q) ||
-    (p.customer||'').toLowerCase().includes(q) ||
-    (p.foreman||'').toLowerCase().includes(q) ||
+  renderProfiles(allProfiles.filter(p=>
+    (p.address||'').toLowerCase().includes(q)||
+    (p.customer||'').toLowerCase().includes(q)||
+    (p.foreman||'').toLowerCase().includes(q)||
     (p.notes||'').toLowerCase().includes(q)
-  );
-  renderProfiles(filtered);
+  ));
 }
 
-function getUtilityTagClass(type) {
-  const t = (type||'').toLowerCase();
+function getTagClass(type) {
+  const t=(type||'').toLowerCase();
   if(t.includes('gas')) return 't-amber';
   if(t.includes('water')||t.includes('agua')) return 't-teal';
-  if(t.includes('electric')||t.includes('eléc')) return 't-red';
+  if(t.includes('electric')) return 't-red';
   if(t.includes('fiber')||t.includes('fibra')) return 't-purple';
-  if(t.includes('sewer')||t.includes('drenaje')) return 't-green';
-  return 't-gray';
-}
-
-function stageColor(stage) {
-  if(stage==='as-built') return 't-green';
-  if(stage==='plan') return 't-blue';
-  if(stage==='potholes') return 't-amber';
+  if(t.includes('sewer')) return 't-green';
   return 't-gray';
 }
 
 function renderProfiles(profiles) {
   const list = document.getElementById('profilesList');
-  if(!profiles||profiles.length===0) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${tx('noProfiles')}</div><div class="empty-sub">${tx('noProfilesSub')}</div></div>`;
+  if(!profiles||!profiles.length) {
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No profiles yet</div><div class="empty-sub">Tap + New to create your first bore profile</div></div>`;
     return;
   }
-  list.innerHTML = profiles.map(p => {
-    const crossTags = (p.crossings||[]).slice(0,3).map(c =>
-      `<span class="tag ${getUtilityTagClass(c.type)}">${c.type||tx('unknown')}${c.bot?' '+c.bot+'"':''}</span>`
-    ).join('');
-    return `<div class="profile-card" onclick="showProfileDetail('${p.id}')">
-      <div class="pc-top">
-        <div class="pc-addr">${p.address||'No address'}</div>
-        <div class="pc-date">${p.date||''}</div>
-      </div>
+  list.innerHTML = profiles.map(p=>{
+    const tags = (p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
+    return `<div class="profile-card" onclick="showDetail('${p.id}')">
+      <div class="pc-top"><div class="pc-addr">${p.address||'No address'}</div><div class="pc-date">${p.date||''}</div></div>
       <div class="pc-tags">
         <span class="tag t-gray">${p.foreman||''}</span>
-        ${p.total_footage?`<span class="tag t-gray">${p.total_footage} ft</span>`:''}
+        ${p.total_footage?`<span class="tag t-gray">${Math.round(p.total_footage/12)} ft</span>`:''}
         ${p.product?`<span class="tag t-gray">${p.product}</span>`:''}
-        ${crossTags}
-        <span class="tag ${stageColor(p.stage)}">${p.stage||'811'}</span>
+        ${tags}
       </div>
     </div>`;
   }).join('');
 }
 
-function showProfileDetail(id) {
+function showDetail(id) {
   const p = allProfiles.find(x=>x.id===id);
   if(!p) return;
-  currentProfile = p;
-  const crossRows = (p.crossings||[]).map((c,i) => {
-    const top = c.top ? c.top+'"' : '—';
-    const bot = c.bot ? c.bot+'"' : '—';
-    const depth = p.actual_depth || p.planned_depth;
-    let clrHtml = '';
-    if(depth && c.bot) {
-      const clr = parseFloat(depth) - parseFloat(c.bot);
-      const color = clr>=24?'#166534':clr>=0?'#991b1b':'#991b1b';
-      const icon = clr>=24?'✓':'⚠';
-      clrHtml = `<div class="cr-clearance" style="color:${color};">${clr}" ${icon}</div>`;
-    }
+  currentProfileId = id;
+  const crossRows = (p.crossings||[]).map((c,i)=>{
+    const clr = c.bore_depth_at_crossing && c.bot ? parseFloat(c.bore_depth_at_crossing)-parseFloat(c.bot) : null;
+    const clrHtml = clr!==null ? `<div class="cr-clearance ${clr>=24?'clearance-ok':'clearance-bad'}">${clr>=24?'✓':'⚠'} ${clr}" clear</div>` : '';
     return `<div class="crossing-row">
-      <div>
-        <div class="cr-type">${c.type||tx('unknown')}</div>
-        <div class="cr-depths">Top ${top} · Bot ${bot} · Crossing ${i+1}</div>
-      </div>
-      <div style="text-align:right;">${clrHtml}</div>
+      <div><div class="cr-type">${c.type||'Unknown'}</div>
+      <div class="cr-depths">Top ${c.top||'—'}" · Bot ${c.bot||'—'}" · Crossing ${i+1}</div></div>
+      <div>${clrHtml}</div>
     </div>`;
   }).join('');
 
-  document.getElementById('detailContent').innerHTML = `
+  document.getElementById('detailContent').innerHTML=`
     <div style="font-size:16px;font-weight:600;color:#111;margin-bottom:2px;">${p.address||'No address'}</div>
-    <div style="font-size:12px;color:#888;margin-bottom:12px;">${p.customer||''} · ${p.foreman||''} · ${p.date||''} ${p.job_number?'· #'+p.job_number:''}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:12px;">${[p.customer,p.foreman,p.date,p.job_number?'#'+p.job_number:''].filter(Boolean).join(' · ')}</div>
     <div class="stat-grid">
-      <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage||'—'} ft</div></div>
+      <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage?Math.round(p.total_footage/12)+' ft':'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Product</div><div class="stat-val">${p.product||'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Bore depth</div><div class="stat-val">${p.actual_depth||p.planned_depth||'—'}"</div></div>
       <div class="stat-box"><div class="stat-lbl">Ground type</div><div class="stat-val">${p.ground_type||'—'}</div></div>
     </div>
     ${crossRows?`<div class="card"><div class="card-title">Utility crossings</div>${crossRows}</div>`:''}
+    ${p.latitude?`<div class="card"><div class="card-title">Location</div><div style="font-size:12px;color:#888;">Machine: ${p.latitude?.toFixed(5)}, ${p.longitude?.toFixed(5)}</div>${p.pit_latitude?`<div style="font-size:12px;color:#888;margin-top:4px;">Pit: ${p.pit_latitude?.toFixed(5)}, ${p.pit_longitude?.toFixed(5)}</div>`:''}</div>`:''}
     ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
-  `;
+    <div class="admin-bar">
+      <button class="edit-btn" onclick="requireAdmin('edit')">Edit Profile</button>
+      <button class="delete-btn" onclick="requireAdmin('delete')">Delete</button>
+    </div>`;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-detail').classList.add('active');
   window.scrollTo(0,0);
+}
+
+function requireAdmin(action) {
+  adminAction = action;
+  document.getElementById('adminPinInput').value='';
+  document.getElementById('adminModal').style.display='flex';
+}
+
+function closeAdminModal() { document.getElementById('adminModal').style.display='none'; }
+function closeDeleteModal() { document.getElementById('deleteModal').style.display='none'; }
+
+function confirmAdminPin() {
+  const pin = document.getElementById('adminPinInput').value;
+  if(pin !== ADMIN_PIN) { showToast('Incorrect PIN'); return; }
+  closeAdminModal();
+  if(adminAction==='delete') { document.getElementById('deleteModal').style.display='flex'; }
+  if(adminAction==='edit') { showToast('Edit coming soon — contact developer'); }
+}
+
+async function confirmDelete() {
+  closeDeleteModal();
+  const { error } = await sb.from('profiles').delete().eq('id', currentProfileId);
+  if(error) { showToast('Error deleting'); return; }
+  showToast('Profile deleted');
+  allProfiles = allProfiles.filter(p=>p.id!==currentProfileId);
+  showScreen('profiles');
+  renderProfiles(allProfiles);
+}
+
+function setLang(l) {
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
 }
 
 setDate();
@@ -589,4 +732,3 @@ loadProfiles();
 </script>
 </body>
 </html>
-
