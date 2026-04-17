@@ -851,8 +851,9 @@ function buildMapCard(p) {
 
   const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=17&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
 
+  const streetViewUrl = `https://www.google.com/maps?q=&layer=c&cbll=${p.latitude},${p.longitude}`;
   const coordText = `Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}${hasPit?' &nbsp;·&nbsp; Pit: '+p.pit_latitude.toFixed(5)+', '+p.pit_longitude.toFixed(5):''}`;
-
+  
   const legend = (p.crossings||[]).filter(c=>c.type).map((c,i) => {
     const type = (c.type||'unknown').toLowerCase();
     const colorHex = { gas:'#FB923C', water:'#2DD4BF', electric:'#F87171', fiber:'#A78BFA', sewer:'#4ADE80', telecom:'#60A5FA', unknown:'#9CA3AF' };
@@ -867,7 +868,10 @@ function buildMapCard(p) {
     <div class="card-title">Bore Location</div>
     <img src="${mapUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;" alt="Bore location map" />
     ${legend ? `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">${legend}</div>` : ''}
-    <div style="font-size:10px;color:#aaa;">${coordText}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+      <div style="font-size:10px;color:#aaa;">${coordText}</div>
+      <a href="${streetViewUrl}" target="_blank" style="font-size:12px;font-weight:600;color:#1a56db;text-decoration:none;padding:6px 12px;border:1px solid #1a56db;border-radius:6px;white-space:nowrap;">Street View</a>
+    </div>
   </div>`;
 }
 
