@@ -1002,5 +1002,108 @@ function openEditModal() {
   modal.innerHTML=`
     <div class="modal">
       <div class="modal-title">Edit Profile</div>
-      <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="edit-date" value="${p.date||''}" /></div>
-      <div class="form-group"><l
+      <div class="form-group"><label class="form-label">Job no.</label><input class="form-input" id="edit-jobno" value="${p.job_number||''}" /></div>
+      <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="edit-customer" value="${p.customer||''}" /></div>
+      <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="edit-address" value="${p.address||''}" /></div>
+      <div class="form-group"><label class="form-label">Foreman</label><input class="form-input" id="edit-foreman" value="${p.foreman||''}" /></div>
+      <div class="form-group"><label class="form-label">811 Ticket #</label><input class="form-input" id="edit-811" value="${p.ticket_811||''}" /></div>
+      <div class="form-group"><label class="form-label">Total footage (ft)</label><input class="form-input" type="number" id="edit-footage" value="${p.total_footage||''}" /></div>
+      <div class="form-group"><label class="form-label">Product</label><input class="form-input" id="edit-product" value="${p.product||''}" /></div>
+      <div class="form-group"><label class="form-label">Direction</label>
+        <select class="form-input" id="edit-direction">
+          <option ${p.direction==='N to S'?'selected':''}>N to S</option>
+          <option ${p.direction==='S to N'?'selected':''}>S to N</option>
+          <option ${p.direction==='E to W'?'selected':''}>E to W</option>
+          <option ${p.direction==='W to E'?'selected':''}>W to E</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Ground type</label>
+        <select class="form-input" id="edit-ground">
+          <option ${p.ground_type==='Caliche'?'selected':''}>Caliche</option>
+          <option ${p.ground_type==='Sandy'?'selected':''}>Sandy</option>
+          <option ${p.ground_type==='Rocky'?'selected':''}>Rocky</option>
+          <option ${p.ground_type==='Clay'?'selected':''}>Clay</option>
+          <option ${p.ground_type==='Mixed'?'selected':''}>Mixed</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Max bore depth (in)</label><input class="form-input" type="number" id="edit-actualdepth" value="${p.actual_depth||''}" /></div>
+      <div class="form-group"><label class="form-label">Reamer size</label>
+        <select class="form-input" id="edit-reamersize">
+          <option value="">Select...</option>
+          <option ${p.bit_size==='Head'?'selected':''}>Head</option>
+          <option ${p.bit_size==='6"'?'selected':''}>6"</option>
+          <option ${p.bit_size==='8"'?'selected':''}>8"</option>
+          <option ${p.bit_size==='10"'?'selected':''}>10"</option>
+          <option ${p.bit_size==='12"'?'selected':''}>12"</option>
+          <option ${p.bit_size==='14"'?'selected':''}>14"</option>
+          <option ${p.bit_size==='16"'?'selected':''}>16"</option>
+          <option ${p.bit_size==='18"'?'selected':''}>18"</option>
+          <option ${p.bit_size==='20"'?'selected':''}>20"</option>
+          <option ${p.bit_size==='22"'?'selected':''}>22"</option>
+          <option ${p.bit_size==='24"'?'selected':''}>24"</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="3" id="edit-notes">${p.notes||''}</textarea></div>
+      <div class="modal-btns" style="margin-top:8px;">
+        <button class="modal-btn modal-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-btn modal-confirm" onclick="saveEdit()">Save changes</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function closeEditModal() {
+  const m=document.getElementById('editModal');
+  if(m) m.remove();
+}
+
+async function saveEdit() {
+  const btn=document.querySelector('#editModal .modal-confirm');
+  btn.textContent='Saving...'; btn.disabled=true;
+  const updates={
+    date: document.getElementById('edit-date').value,
+    job_number: document.getElementById('edit-jobno').value,
+    customer: document.getElementById('edit-customer').value,
+    address: document.getElementById('edit-address').value,
+    foreman: document.getElementById('edit-foreman').value,
+    ticket_811: document.getElementById('edit-811').value,
+    total_footage: parseFloat(document.getElementById('edit-footage').value)||null,
+    product: document.getElementById('edit-product').value,
+    direction: document.getElementById('edit-direction').value,
+    ground_type: document.getElementById('edit-ground').value,
+    actual_depth: parseFloat(document.getElementById('edit-actualdepth').value)||null,
+    bit_size: document.getElementById('edit-reamersize').value,
+    notes: document.getElementById('edit-notes').value,
+  };
+  const {error}=await sb.from('profiles').update(updates).eq('id',currentProfileId);
+  btn.textContent='Save changes'; btn.disabled=false;
+  if(error) { showToast('Error saving — try again'); return; }
+  const idx=allProfiles.findIndex(x=>x.id===currentProfileId);
+  if(idx>=0) allProfiles[idx]={...allProfiles[idx],...updates};
+  closeEditModal();
+  showToast('Profile updated');
+  showDetail(currentProfileId);
+}
+
+async function confirmDelete() {
+  closeDeleteModal();
+  const {error}=await sb.from('profiles').delete().eq('id',currentProfileId);
+  if(error) { showToast('Error deleting'); return; }
+  showToast('Profile deleted');
+  allProfiles=allProfiles.filter(p=>p.id!==currentProfileId);
+  renderProfiles(allProfiles);
+  showScreen('profiles');
+}
+
+function setLang(l) {
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
+}
+
+setDate();
+addCrossing();
+loadProfiles();
+loadCrews();
+</script>
+</body>
+</html>
