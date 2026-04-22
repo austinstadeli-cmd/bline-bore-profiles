@@ -368,7 +368,7 @@ const SUPABASE_URL = 'https://aanzqnvgfchcyvmnyfqd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_oaB6D1OSU9N6FzQG25ZWUg_PVKBO1fk';
 const GOOGLE_MAPS_KEY = 'AIzaSyBf3H0wMo7tQI07VjFw1aAaKlzEUGsph7o';
 const ADMIN_PIN = '1234';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = supabase.createClient('https://aanzqnvgfchcyvmnyfqd.supabase.co', 'sb_publishable_oaB6D1OSU9N6FzQG25ZWUg_PVKBO1fk');
 
 let lang = 'en';
 let crossings = [];
