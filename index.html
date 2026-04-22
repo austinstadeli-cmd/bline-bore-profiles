@@ -7,135 +7,161 @@
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; max-width: 480px; margin: 0 auto; min-height: 100vh; }
-.header { background: #fff; padding: 12px 16px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-.header-title { font-size: 15px; font-weight: 600; color: #111; }
-.header-sub { font-size: 11px; color: #888; }
-.header-right { display: flex; align-items: center; gap: 10px; }
-.lang-toggle { display: flex; border: 1px solid #e5e5e5; border-radius: 6px; overflow: hidden; }
-.lang-btn { padding: 4px 10px; font-size: 11px; background: none; border: none; cursor: pointer; color: #888; }
-.lang-btn.active { background: #1a56db; color: #fff; }
-.gear-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 2px 4px; color: #888; }
-.nav { display: flex; background: #fff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 57px; z-index: 99; }
-.nav-btn { flex: 1; padding: 10px 4px; font-size: 12px; color: #888; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; }
-.nav-btn.active { color: #1a56db; border-bottom-color: #1a56db; font-weight: 600; }
-.screen { display: none; padding: 12px; padding-bottom: 40px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif; background: #EEF2F7; max-width: 480px; margin: 0 auto; min-height: 100vh; color: #0F172A; }
+.header { background: #1E3A8A; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.header-brand { display: flex; align-items: center; gap: 10px; }
+.header-icon { width: 34px; height: 34px; background: #2563EB; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.header-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+.header-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.lang-toggle { display: flex; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; overflow: hidden; }
+.lang-btn { padding: 5px 10px; font-size: 11px; font-weight: 600; background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.55); }
+.lang-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
+.gear-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); cursor: pointer; font-size: 15px; padding: 5px 8px; border-radius: 7px; }
+.nav { display: flex; background: #fff; border-bottom: 1px solid #E2E8F0; position: sticky; top: 62px; z-index: 99; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.nav-btn { flex: 1; padding: 12px 4px; font-size: 12px; font-weight: 500; color: #94A3B8; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; }
+.nav-btn.active { color: #1D4ED8; border-bottom-color: #1D4ED8; font-weight: 700; }
+.screen { display: none; padding: 14px; padding-bottom: 48px; }
 .screen.active { display: block; }
-.card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-.card-title { font-size: 13px; font-weight: 600; color: #111; margin-bottom: 10px; }
-.form-label { font-size: 11px; color: #888; margin-bottom: 3px; display: block; }
-.form-input { width: 100%; padding: 9px 10px; font-size: 14px; border: 1px solid #e5e5e5; border-radius: 8px; background: #fff; color: #111; appearance: none; -webkit-appearance: none; }
-.form-input:focus { outline: none; border-color: #1a56db; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-.form-group { margin-bottom: 8px; }
-.stage-bar { display: flex; gap: 4px; margin-bottom: 12px; }
-.stage-pill { flex: 1; padding: 7px 2px; border-radius: 6px; font-size: 10px; text-align: center; font-weight: 600; border: 1px solid #e5e5e5; background: #fff; color: #888; cursor: default; }
-.stage-pill.done { background: #f0fdf4; color: #166534; border-color: #86efac; cursor: pointer; }
-.stage-pill.done:hover { background: #dcfce7; }
-.stage-pill.active { background: #1a56db; color: #fff; border-color: #1a56db; cursor: default; }
-.stage-pill.locked { opacity: 0.4; cursor: default; }
-.pin-btn { width: 100%; padding: 12px; border-radius: 10px; border: 2px dashed #93c5fd; background: #eff6ff; font-size: 13px; font-weight: 600; color: #1a56db; cursor: pointer; margin-bottom: 4px; text-align: center; }
-.pin-btn.pinned { background: #f0fdf4; border-color: #86efac; border-style: solid; color: #166534; }
-.depth-input-wrap { display: flex; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
-.depth-input-wrap input { flex: 1; padding: 9px 10px; font-size: 14px; border: none; background: #fff; color: #111; min-width: 0; }
-.depth-input-wrap input:focus { outline: none; }
+.card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 15px 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.card-title { font-size: 11px; font-weight: 700; color: #64748B; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.6px; }
+.form-label { font-size: 11px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
+.form-input { width: 100%; padding: 10px 12px; font-size: 14px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; -webkit-appearance: none; transition: border-color 0.15s; }
+.form-input:focus { outline: none; border-color: #1D4ED8; box-shadow: 0 0 0 3px rgba(29,78,216,0.08); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.form-group { margin-bottom: 10px; }
+.stage-bar { display: flex; gap: 6px; margin-bottom: 14px; }
+.stage-pill { flex: 1; padding: 8px 2px; border-radius: 8px; font-size: 10px; text-align: center; font-weight: 700; border: 1.5px solid #E2E8F0; background: #fff; color: #94A3B8; cursor: default; letter-spacing: 0.3px; }
+.stage-pill.done { background: #F0FDF4; color: #16A34A; border-color: #86EFAC; cursor: pointer; }
+.stage-pill.done:hover { background: #DCFCE7; }
+.stage-pill.active { background: #1D4ED8; color: #fff; border-color: #1D4ED8; }
+.stage-pill.locked { opacity: 0.35; }
+.pin-btn { width: 100%; padding: 13px; border-radius: 10px; border: 2px dashed #93C5FD; background: #EFF6FF; font-size: 13px; font-weight: 600; color: #1D4ED8; cursor: pointer; margin-bottom: 4px; text-align: center; }
+.pin-btn.pinned { background: #F0FDF4; border-color: #86EFAC; border-style: solid; color: #16A34A; }
+.depth-input-wrap { display: flex; border: 1.5px solid #E2E8F0; border-radius: 8px; overflow: hidden; transition: border-color 0.15s; }
+.depth-input-wrap:focus-within { border-color: #1D4ED8; }
+.depth-input-wrap input { flex: 1; padding: 10px 12px; font-size: 14px; border: none; background: #fff; color: #0F172A; min-width: 0; outline: none; }
 .unit-toggle { display: flex; }
-.unit-btn { padding: 9px 10px; font-size: 12px; font-weight: 600; border: none; background: #f3f4f6; color: #888; cursor: pointer; border-left: 1px solid #e5e5e5; }
-.unit-btn.active { background: #1a56db; color: #fff; }
-.pothole-block { border: 1px solid #e5e5e5; border-radius: 8px; padding: 10px; margin-bottom: 8px; background: #fafafa; }
-.pothole-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.pothole-num { font-size: 12px; font-weight: 600; color: #111; }
-.del-btn { font-size: 11px; color: #ef4444; background: none; border: none; cursor: pointer; padding: 2px 6px; }
-.crossing-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 6px; }
-.crossing-fields input, .crossing-fields select { font-size: 13px; padding: 8px 6px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; width: 100%; appearance: none; -webkit-appearance: none; }
+.unit-btn { padding: 10px 10px; font-size: 11px; font-weight: 700; border: none; background: #F8FAFC; color: #94A3B8; cursor: pointer; border-left: 1.5px solid #E2E8F0; }
+.unit-btn.active { background: #1D4ED8; color: #fff; }
+.pothole-block { border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px; background: #FAFBFD; }
+.pothole-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.pothole-num { font-size: 12px; font-weight: 700; color: #0F172A; }
+.del-btn { font-size: 11px; color: #DC2626; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 5px; cursor: pointer; padding: 3px 9px; font-weight: 600; }
+.crossing-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+.crossing-fields input, .crossing-fields select { font-size: 13px; padding: 9px 7px; border: 1.5px solid #E2E8F0; border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
 .dist-field { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
-.dist-field input { flex: 1; font-size: 13px; padding: 7px 8px; border: 1px solid #e5e5e5; border-radius: 6px; background: #fff; color: #111; appearance: none; -webkit-appearance: none; }
-.dist-label { font-size: 11px; color: #888; white-space: nowrap; }
-.add-btn { width: 100%; padding: 9px; font-size: 13px; color: #1a56db; background: none; border: 2px dashed #93c5fd; border-radius: 8px; cursor: pointer; margin-top: 4px; }
-.next-btn { width: 100%; padding: 13px; background: #1a56db; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
-.next-btn:active { opacity: 0.85; }
-.save-btn { width: 100%; padding: 13px; background: #166534; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
-.save-btn:active { opacity: 0.85; }
-.profile-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 11px 13px; margin-bottom: 8px; cursor: pointer; }
-.profile-card:active { background: #f9fafb; }
+.dist-field input { flex: 1; font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 7px; background: #fff; color: #0F172A; -webkit-appearance: none; }
+.dist-label { font-size: 11px; color: #64748B; font-weight: 500; white-space: nowrap; }
+.add-btn { width: 100%; padding: 10px; font-size: 13px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1.5px dashed #93C5FD; border-radius: 8px; cursor: pointer; margin-top: 6px; }
+.next-btn { width: 100%; padding: 14px; background: #1D4ED8; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 10px rgba(29,78,216,0.22); }
+.next-btn:active { opacity: 0.9; }
+.save-btn { width: 100%; padding: 14px; background: #16A34A; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 10px rgba(22,163,74,0.22); }
+.save-btn:active { opacity: 0.9; }
+.profile-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 13px 15px; margin-bottom: 10px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.profile-card:active { opacity: 0.92; }
+.profile-card.has-hit { border-left: 3px solid #DC2626; }
 .pc-top { display: flex; justify-content: space-between; align-items: flex-start; }
-.pc-addr { font-size: 13px; font-weight: 600; color: #111; flex: 1; margin-right: 8px; }
-.pc-date { font-size: 11px; color: #888; white-space: nowrap; }
-.pc-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
-.tag { font-size: 10px; padding: 3px 7px; border-radius: 4px; font-weight: 500; }
-.t-blue { background: #eff6ff; color: #1e40af; }
-.t-amber { background: #fffbeb; color: #92400e; }
-.t-green { background: #f0fdf4; color: #166534; }
-.t-red { background: #fef2f2; color: #991b1b; }
-.t-purple { background: #f5f3ff; color: #5b21b6; }
-.t-gray { background: #f3f4f6; color: #374151; }
-.t-teal { background: #f0fdfa; color: #134e4a; }
-.back-btn { font-size: 13px; color: #1a56db; background: none; border: none; cursor: pointer; padding: 0 0 12px; display: flex; align-items: center; gap: 4px; }
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.stat-box { background: #f9fafb; border-radius: 8px; padding: 10px; }
-.stat-lbl { font-size: 11px; color: #888; }
-.stat-val { font-size: 17px; font-weight: 600; color: #111; margin-top: 2px; }
-.crossing-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f3f4f6; }
+.pc-addr { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; line-height: 1.3; }
+.pc-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.pc-sub { font-size: 12px; color: #64748B; margin-top: 3px; }
+.pc-tags { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+.tag { font-size: 10px; padding: 3px 8px; border-radius: 5px; font-weight: 600; }
+.t-blue { background: #EFF6FF; color: #1D4ED8; }
+.t-amber { background: #FFFBEB; color: #92400E; }
+.t-green { background: #F0FDF4; color: #166534; }
+.t-red { background: #FEF2F2; color: #991B1B; }
+.t-purple { background: #F5F3FF; color: #5B21B6; }
+.t-gray { background: #F1F5F9; color: #475569; }
+.t-teal { background: #F0FDFA; color: #134E4A; }
+.back-btn { font-size: 13px; font-weight: 600; color: #1D4ED8; background: none; border: none; cursor: pointer; padding: 0 0 14px; display: flex; align-items: center; gap: 4px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.stat-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px; }
+.stat-lbl { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-val { font-size: 18px; font-weight: 700; color: #0F172A; margin-top: 3px; }
+.crossing-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F1F5F9; }
 .crossing-row:last-child { border-bottom: none; }
-.cr-type { font-size: 13px; font-weight: 600; color: #111; }
-.cr-depths { font-size: 11px; color: #888; margin-top: 2px; }
-.cr-clearance { font-size: 12px; font-weight: 600; }
-.clearance-ok { color: #166534; }
-.clearance-bad { color: #991b1b; }
-.empty-state { text-align: center; padding: 40px 20px; color: #888; }
-.empty-icon { font-size: 32px; margin-bottom: 8px; }
-.empty-text { font-size: 14px; font-weight: 600; color: #555; }
-.empty-sub { font-size: 12px; margin-top: 4px; }
-.loading { text-align: center; padding: 30px; color: #888; font-size: 13px; }
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+.cr-type { font-size: 13px; font-weight: 700; color: #0F172A; }
+.cr-depths { font-size: 11px; color: #64748B; margin-top: 2px; }
+.cr-clearance { font-size: 12px; font-weight: 700; }
+.clearance-ok { color: #16A34A; }
+.clearance-bad { color: #DC2626; }
+.empty-state { text-align: center; padding: 48px 20px; }
+.empty-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-text { font-size: 15px; font-weight: 700; color: #475569; }
+.empty-sub { font-size: 12px; margin-top: 6px; color: #94A3B8; }
+.loading { text-align: center; padding: 40px; color: #94A3B8; font-size: 13px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #0F172A; color: #fff; padding: 11px 22px; border-radius: 10px; font-size: 13px; font-weight: 600; z-index: 999; opacity: 0; transition: opacity 0.25s; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
 .toast.show { opacity: 1; }
-.finalize-crossing { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
-.finalize-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.finalize-title { font-size: 12px; font-weight: 600; color: #111; }
-.clearance-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
-.badge-ok { background: #f0fdf4; color: #166534; }
-.badge-bad { background: #fef2f2; color: #991b1b; }
-.badge-neutral { background: #f3f4f6; color: #888; }
-.search-input { width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid #e5e5e5; border-radius: 10px; background: #fff; color: #111; margin-bottom: 10px; appearance: none; -webkit-appearance: none; }
-.search-input:focus { outline: none; border-color: #1a56db; }
-.admin-bar { display: flex; gap: 8px; margin-top: 12px; }
-.edit-btn { flex: 1; padding: 10px; background: #fff; border: 1px solid #1a56db; color: #1a56db; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
-.delete-btn { padding: 10px 16px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
-.pin-coords { font-size: 10px; color: #888; margin-bottom: 8px; text-align: center; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; }
-.modal { background: #fff; border-radius: 12px; padding: 20px; width: 320px; max-height: 88vh; overflow-y: auto; }
-.modal-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111; }
-.modal-input { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: 4px; }
+.finalize-crossing { background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+.finalize-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.finalize-title { font-size: 12px; font-weight: 700; color: #0F172A; }
+.clearance-badge { font-size: 11px; padding: 3px 9px; border-radius: 5px; font-weight: 700; }
+.badge-ok { background: #F0FDF4; color: #16A34A; }
+.badge-bad { background: #FEF2F2; color: #DC2626; }
+.badge-neutral { background: #F1F5F9; color: #94A3B8; }
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 14px; pointer-events: none; }
+.search-input { width: 100%; padding: 11px 12px 11px 36px; font-size: 14px; border: 1.5px solid #E2E8F0; border-radius: 10px; background: #fff; color: #0F172A; -webkit-appearance: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.search-input:focus { outline: none; border-color: #1D4ED8; }
+.admin-bar { display: flex; gap: 8px; margin-top: 14px; }
+.edit-btn { flex: 1; padding: 11px; background: #fff; border: 1.5px solid #1D4ED8; color: #1D4ED8; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.delete-btn { padding: 11px 18px; background: #FEF2F2; border: 1.5px solid #FECACA; color: #DC2626; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.pin-coords { font-size: 10px; color: #94A3B8; margin-bottom: 8px; text-align: center; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+.modal { background: #fff; border-radius: 16px; padding: 22px; width: 330px; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #0F172A; }
+.modal-input { width: 100%; padding: 12px; font-size: 18px; border: 1.5px solid #E2E8F0; border-radius: 9px; margin-bottom: 14px; text-align: center; letter-spacing: 6px; }
 .modal-btns { display: flex; gap: 8px; }
-.modal-btn { flex: 1; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; }
-.modal-cancel { background: #f3f4f6; color: #111; }
-.modal-confirm { background: #1a56db; color: #fff; }
-.path-wrap { overflow-x: auto; background: #f9fafb; border-radius: 8px; padding: 8px; margin-bottom: 10px; }
-.col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 6px; padding: 0 2px; }
-.col-header { font-size: 10px; color: #888; font-weight: 600; }
-.crew-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+.modal-btn { flex: 1; padding: 11px; border-radius: 9px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; }
+.modal-cancel { background: #F1F5F9; color: #475569; }
+.modal-confirm { background: #1D4ED8; color: #fff; }
+.path-wrap { overflow-x: auto; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 10px; margin-bottom: 12px; }
+.col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 8px; padding: 0 2px; }
+.col-header { font-size: 10px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+.crew-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
 .crew-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
-.crew-name { font-size: 14px; font-weight: 600; color: #111; }
-.crew-num { font-size: 11px; color: #888; margin-top: 2px; }
-.crew-meta { font-size: 12px; color: #555; margin-top: 6px; }
-.crew-actions { display: flex; gap: 6px; margin-top: 10px; }
-.crew-edit-btn { flex: 1; padding: 7px; background: #fff; border: 1px solid #1a56db; color: #1a56db; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.crew-del-btn { padding: 7px 12px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.section-title { font-size: 13px; font-weight: 600; color: #111; }
-.add-crew-btn { padding: 7px 12px; background: #1a56db; color: #fff; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
-.kpi-box { background: #f9fafb; border-radius: 6px; padding: 8px; text-align: center; }
-.kpi-val { font-size: 16px; font-weight: 600; color: #111; }
-.kpi-lbl { font-size: 10px; color: #888; margin-top: 2px; }
+.crew-name { font-size: 15px; font-weight: 700; color: #0F172A; }
+.crew-num { font-size: 12px; color: #64748B; margin-top: 2px; }
+.crew-meta { font-size: 12px; color: #475569; margin-top: 7px; }
+.crew-actions { display: flex; gap: 8px; margin-top: 12px; }
+.crew-edit-btn { flex: 1; padding: 8px; background: #fff; border: 1.5px solid #1D4ED8; color: #1D4ED8; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.crew-del-btn { padding: 8px 14px; background: #FEF2F2; border: 1.5px solid #FECACA; color: #DC2626; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.section-title { font-size: 14px; font-weight: 700; color: #0F172A; }
+.add-crew-btn { padding: 8px 14px; background: #1D4ED8; color: #fff; border: none; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+.kpi-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 9px; text-align: center; }
+.kpi-val { font-size: 17px; font-weight: 700; color: #0F172A; }
+.kpi-lbl { font-size: 10px; color: #64748B; margin-top: 2px; font-weight: 600; }
+.hit-toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; background: #FEF2F2; border: 1.5px solid #FECACA; border-radius: 8px; }
+.hit-toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+.hit-toggle-label { font-size: 13px; font-weight: 700; color: #DC2626; cursor: pointer; user-select: none; }
+.hit-fields { display: none; margin-top: 10px; padding: 12px; background: #FFF1F2; border: 1.5px solid #FECACA; border-radius: 8px; }
+.hit-fields.active { display: block; }
+.hit-fields .form-label { color: #DC2626; }
+.hit-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.hit-field { margin-bottom: 8px; }
+.hit-field select, .hit-field input[type="text"], .hit-field input[type="number"] { width: 100%; padding: 9px 11px; font-size: 13px; border: 1.5px solid #FECACA; border-radius: 7px; background: #fff; color: #0F172A; -webkit-appearance: none; }
+.photo-upload-btn { display: block; width: 100%; padding: 13px; border: 2px dashed #FCA5A5; border-radius: 7px; background: #fff; color: #DC2626; font-size: 12px; font-weight: 700; text-align: center; cursor: pointer; }
+.photo-upload-btn.uploaded { border-style: solid; border-color: #86EFAC; background: #F0FDF4; color: #16A34A; }
+.photo-upload-btn input[type="file"] { display: none; }
+.photo-preview { margin-top: 8px; max-width: 100%; border-radius: 8px; display: block; }
+.hit-banner { background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 9px; padding: 11px 12px; margin-top: 10px; }
+.hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+.hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
+.hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <div class="header-title">B-Line Bore Profiles</div>
-    <div class="header-sub">Phoenix, AZ</div>
+  <div class="header-brand">
+    <div class="header-icon">🔩</div>
+    <div>
+      <div class="header-title">B-Line Bore Profiles</div>
+      <div class="header-sub">Phoenix, AZ</div>
+    </div>
   </div>
   <div class="header-right">
     <div class="lang-toggle">
@@ -153,7 +179,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 <!-- PROFILES -->
 <div id="screen-profiles" class="screen active">
-  <input class="search-input" id="searchInput" placeholder="Search address, customer, foreman..." oninput="filterProfiles()" />
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" placeholder="Search address, customer, foreman..." oninput="filterProfiles()" />
+  </div>
   <div id="profilesList"><div class="loading">Loading profiles...</div></div>
 </div>
 
@@ -516,7 +545,7 @@ function updateCrossing(i) {
 function buildFinalizeList() {
   const list = document.getElementById('finalizeList');
   list.innerHTML='';
-  const active = crossings.filter(c=>c&&c.type);
+  const active = crossings.filter(c=>c&&c.type).sort((a,b)=>(parseFloat(a.dist)||0)-(parseFloat(b.dist)||0));
   if(!active.length) {
     list.innerHTML='<div style="font-size:13px;color:#888;text-align:center;padding:12px;">No utility crossings logged in potholes tab</div>';
     return;
@@ -665,7 +694,7 @@ function resetForm() {
 async function saveProfile() {
   const btn = document.querySelector('.save-btn');
   btn.textContent='Saving...'; btn.disabled=true;
-  const active = crossings.filter(c=>c&&c.type);
+  const active = crossings.filter(c=>c&&c.type).sort((a,b)=>(parseFloat(a.dist)||0)-(parseFloat(b.dist)||0));
   const finalCrossings = active.map((c,i)=>({
     ...c,
     bore_depth_at_crossing: parseFloat(document.getElementById('fbore'+i)?.value)||null
@@ -747,13 +776,14 @@ function renderProfiles(profiles) {
     return;
   }
   list.innerHTML=profiles.map(p=>{
+    const hasHit=(p.crossings||[]).some(c=>c&&c.hit);
     const tags=(p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
-    return `<div class="profile-card" onclick="showDetail('${p.id}')">
+    const sub=[p.foreman,p.total_footage?p.total_footage+' ft':null,p.product].filter(Boolean).join(' · ');
+    return `<div class="profile-card${hasHit?' has-hit':''}" onclick="showDetail('${p.id}')">
       <div class="pc-top"><div class="pc-addr">${p.address||'No address'}</div><div class="pc-date">${p.date||''}</div></div>
+      ${sub?`<div class="pc-sub">${sub}</div>`:''}
       <div class="pc-tags">
-        <span class="tag t-gray">${p.foreman||''}</span>
-        ${p.total_footage?`<span class="tag t-gray">${p.total_footage} ft</span>`:''}
-        ${p.product?`<span class="tag t-gray">${p.product}</span>`:''}
+        ${hasHit?`<span class="tag t-red">⚠ HIT</span>`:''}
         ${tags}
       </div>
     </div>`;
@@ -913,7 +943,17 @@ function buildMapCard(p) {
     markers+=`&markers=color:${color}|label:${i+1}|${lat.toFixed(6)},${lng.toFixed(6)}`;
   });
   const path=hasPit?`&path=color:0x1a56dbcc|weight:3|${p.latitude},${p.longitude}|${p.pit_latitude},${p.pit_longitude}`:'';
-  const mapUrl=`https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=17&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
+  let zoom=18;
+  if(hasPit){
+    const R=6371000;
+    const dLat=(p.pit_latitude-p.latitude)*Math.PI/180;
+    const dLng=(p.pit_longitude-p.longitude)*Math.PI/180;
+    const a=Math.sin(dLat/2)**2+Math.cos(p.latitude*Math.PI/180)*Math.cos(p.pit_latitude*Math.PI/180)*Math.sin(dLng/2)**2;
+    const distM=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    const latRad=centerLat*Math.PI/180;
+    zoom=Math.min(19,Math.max(15,Math.round(Math.log2(156543*Math.cos(latRad)*384/distM))));
+  }
+  const mapUrl=`https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=${zoom}&size=640x300&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
   const streetViewUrl=`https://www.google.com/maps?q=&layer=c&cbll=${p.latitude},${p.longitude}`;
   const colorHex={gas:'#FB923C',water:'#2DD4BF',electric:'#F87171',fiber:'#A78BFA',sewer:'#4ADE80',telecom:'#60A5FA',unknown:'#9CA3AF'};
   const legend=(p.crossings||[]).filter(c=>c.type).map((c,i)=>{
@@ -963,108 +1003,4 @@ function openEditModal() {
     <div class="modal">
       <div class="modal-title">Edit Profile</div>
       <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="edit-date" value="${p.date||''}" /></div>
-      <div class="form-group"><label class="form-label">Job no.</label><input class="form-input" id="edit-jobno" value="${p.job_number||''}" /></div>
-      <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="edit-customer" value="${p.customer||''}" /></div>
-      <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="edit-address" value="${p.address||''}" /></div>
-      <div class="form-group"><label class="form-label">Foreman</label><input class="form-input" id="edit-foreman" value="${p.foreman||''}" /></div>
-      <div class="form-group"><label class="form-label">811 Ticket #</label><input class="form-input" id="edit-811" value="${p.ticket_811||''}" /></div>
-      <div class="form-group"><label class="form-label">Total footage (ft)</label><input class="form-input" type="number" id="edit-footage" value="${p.total_footage||''}" /></div>
-      <div class="form-group"><label class="form-label">Product</label><input class="form-input" id="edit-product" value="${p.product||''}" /></div>
-      <div class="form-group"><label class="form-label">Direction</label>
-        <select class="form-input" id="edit-direction">
-          <option ${p.direction==='N to S'?'selected':''}>N to S</option>
-          <option ${p.direction==='S to N'?'selected':''}>S to N</option>
-          <option ${p.direction==='E to W'?'selected':''}>E to W</option>
-          <option ${p.direction==='W to E'?'selected':''}>W to E</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Ground type</label>
-        <select class="form-input" id="edit-ground">
-          <option ${p.ground_type==='Caliche'?'selected':''}>Caliche</option>
-          <option ${p.ground_type==='Sandy'?'selected':''}>Sandy</option>
-          <option ${p.ground_type==='Rocky'?'selected':''}>Rocky</option>
-          <option ${p.ground_type==='Clay'?'selected':''}>Clay</option>
-          <option ${p.ground_type==='Mixed'?'selected':''}>Mixed</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Max bore depth (in)</label><input class="form-input" type="number" id="edit-actualdepth" value="${p.actual_depth||''}" /></div>
-      <div class="form-group"><label class="form-label">Reamer size</label>
-        <select class="form-input" id="edit-reamersize">
-          <option value="">Select...</option>
-          <option ${p.bit_size==='Head'?'selected':''}>Head</option>
-          <option ${p.bit_size==='6"'?'selected':''}>6"</option>
-          <option ${p.bit_size==='8"'?'selected':''}>8"</option>
-          <option ${p.bit_size==='10"'?'selected':''}>10"</option>
-          <option ${p.bit_size==='12"'?'selected':''}>12"</option>
-          <option ${p.bit_size==='14"'?'selected':''}>14"</option>
-          <option ${p.bit_size==='16"'?'selected':''}>16"</option>
-          <option ${p.bit_size==='18"'?'selected':''}>18"</option>
-          <option ${p.bit_size==='20"'?'selected':''}>20"</option>
-          <option ${p.bit_size==='22"'?'selected':''}>22"</option>
-          <option ${p.bit_size==='24"'?'selected':''}>24"</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="3" id="edit-notes">${p.notes||''}</textarea></div>
-      <div class="modal-btns" style="margin-top:8px;">
-        <button class="modal-btn modal-cancel" onclick="closeEditModal()">Cancel</button>
-        <button class="modal-btn modal-confirm" onclick="saveEdit()">Save changes</button>
-      </div>
-    </div>`;
-  document.body.appendChild(modal);
-}
-
-function closeEditModal() {
-  const m=document.getElementById('editModal');
-  if(m) m.remove();
-}
-
-async function saveEdit() {
-  const btn=document.querySelector('#editModal .modal-confirm');
-  btn.textContent='Saving...'; btn.disabled=true;
-  const updates={
-    date: document.getElementById('edit-date').value,
-    job_number: document.getElementById('edit-jobno').value,
-    customer: document.getElementById('edit-customer').value,
-    address: document.getElementById('edit-address').value,
-    foreman: document.getElementById('edit-foreman').value,
-    ticket_811: document.getElementById('edit-811').value,
-    total_footage: parseFloat(document.getElementById('edit-footage').value)||null,
-    product: document.getElementById('edit-product').value,
-    direction: document.getElementById('edit-direction').value,
-    ground_type: document.getElementById('edit-ground').value,
-    actual_depth: parseFloat(document.getElementById('edit-actualdepth').value)||null,
-    bit_size: document.getElementById('edit-reamersize').value,
-    notes: document.getElementById('edit-notes').value,
-  };
-  const {error}=await sb.from('profiles').update(updates).eq('id',currentProfileId);
-  btn.textContent='Save changes'; btn.disabled=false;
-  if(error) { showToast('Error saving — try again'); return; }
-  const idx=allProfiles.findIndex(x=>x.id===currentProfileId);
-  if(idx>=0) allProfiles[idx]={...allProfiles[idx],...updates};
-  closeEditModal();
-  showToast('Profile updated');
-  showDetail(currentProfileId);
-}
-
-async function confirmDelete() {
-  closeDeleteModal();
-  const {error}=await sb.from('profiles').delete().eq('id',currentProfileId);
-  if(error) { showToast('Error deleting'); return; }
-  showToast('Profile deleted');
-  allProfiles=allProfiles.filter(p=>p.id!==currentProfileId);
-  renderProfiles(allProfiles);
-  showScreen('profiles');
-}
-
-function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
-}
-
-setDate();
-addCrossing();
-loadProfiles();
-loadCrews();
-</script>
-</body>
-</html>
+      <div class="form-group"><l
