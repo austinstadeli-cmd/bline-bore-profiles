@@ -793,6 +793,86 @@ body {
 .hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
 .hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
+
+/* ============================================================
+   DAILY LOG
+   ============================================================ */
+.dl-log-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.dl-log-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-1px); border-color: #CBD5E1; }
+.dl-log-card:active { opacity: 0.92; transform: none; }
+.dl-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.dl-card-title { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; }
+.dl-card-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.dl-card-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.dl-card-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-label { font-size: 12px; font-weight: 700; color: #475569; }
+.equip-row select, .equip-row input { font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.equip-row select:focus, .equip-row input:focus { outline: none; border-color: #1D4ED8; }
+.service-flag { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.service-flag input[type="checkbox"] { width: 16px; height: 16px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+.bore-row-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #FAFBFD;
+}
+.bore-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.bore-row-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+
+.crew-time-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.crew-time-row:last-child { border-bottom: none; }
+.crew-time-row input, .crew-time-row select {
+  font-size: 12px; padding: 7px 8px; border: 1.5px solid #E2E8F0;
+  border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none;
+}
+.crew-time-row input:focus, .crew-time-row select:focus { outline: none; border-color: #1D4ED8; }
+.crew-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  padding: 0 0 6px;
+}
+.crew-col-hdr { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-label { font-size: 11px; font-weight: 600; color: #64748B; }
+.mat-input { font-size: 13px; padding: 9px 11px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.mat-input:focus { outline: none; border-color: #1D4ED8; }
+
+.dl-detail-section { margin-bottom: 14px; }
+.dl-detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F8FAFC; font-size: 13px; }
+.dl-detail-row:last-child { border-bottom: none; }
+.dl-detail-lbl { color: #64748B; font-weight: 500; }
+.dl-detail-val { color: #0F172A; font-weight: 600; text-align: right; max-width: 60%; }
 </style>
 </head>
 <body>
@@ -835,6 +915,7 @@ body {
 <div class="nav">
   <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
   <button class="nav-btn" onclick="showScreen('new')">+ New</button>
+  <button class="nav-btn" onclick="showScreen('dailylog')">Daily Log</button>
 </div>
 
 <!-- ============================================================
@@ -1026,8 +1107,281 @@ body {
 </div>
 
 <!-- ============================================================
-     MODALS
+     DAILY LOG — LIST SCREEN
      ============================================================ -->
+<div id="screen-dailylog" class="screen">
+  <div class="section-header">
+    <div class="section-title">Daily Worksheets</div>
+    <button class="add-crew-btn" onclick="showScreen('newlog')">+ New Log</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="logSearchInput" placeholder="Search customer, foreman, address..." oninput="filterLogs()" />
+  </div>
+  <div id="logsList"><div class="loading">Loading logs...</div></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — NEW ENTRY SCREEN
+     ============================================================ -->
+<div id="screen-newlog" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Back</button>
+
+  <!-- Job Header -->
+  <div class="card">
+    <div class="card-title">Job Information</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="dl-date" /></div>
+      <div class="form-group">
+        <label class="form-label">Prevailing Wages</label>
+        <select class="form-input" id="dl-prevwage">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="dl-customer" placeholder="Customer name" /></div>
+    <div class="form-group"><label class="form-label">Job Address</label><input class="form-input" id="dl-address" placeholder="Street address" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">City, State &amp; Zip</label><input class="form-input" id="dl-city" placeholder="Phoenix, AZ" /></div>
+      <div class="form-group"><label class="form-label">Production Goal (ft)</label><input class="form-input" type="number" id="dl-goal" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">PO #</label><input class="form-input" id="dl-po" placeholder="Optional" /></div>
+      <div class="form-group"><label class="form-label">Blue Stake #</label><input class="form-input" id="dl-bluestake" placeholder="Optional" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Time On Site</label><input class="form-input" type="time" id="dl-timeon" /></div>
+      <div class="form-group"><label class="form-label">Time Off Site</label><input class="form-input" type="time" id="dl-timeoff" /></div>
+    </div>
+  </div>
+
+  <!-- Crew -->
+  <div class="card">
+    <div class="card-title">Employees On Site</div>
+    <div class="crew-col-headers">
+      <div class="crew-col-hdr">Role / Name</div>
+      <div class="crew-col-hdr">Time In</div>
+      <div class="crew-col-hdr">Time Out</div>
+      <div class="crew-col-hdr">Total</div>
+      <div class="crew-col-hdr">Lunch</div>
+      <div class="crew-col-hdr">Approved</div>
+    </div>
+    <div id="dl-crew-rows">
+      <!-- Drill Operator -->
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">DRILL OPERATOR</div>
+          <input id="dl-crew-drill" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-drill" oninput="calcCrewTotal('drill')" />
+        <input type="time" id="dl-tout-drill" oninput="calcCrewTotal('drill')" />
+        <input id="dl-total-drill" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-drill" placeholder="30" step="15" />
+        <select id="dl-appr-drill"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Locator -->
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">LOCATOR</div>
+          <input id="dl-crew-locator" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-locator" oninput="calcCrewTotal('locator')" />
+        <input type="time" id="dl-tout-locator" oninput="calcCrewTotal('locator')" />
+        <input id="dl-total-locator" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-locator" placeholder="30" step="15" />
+        <select id="dl-appr-locator"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Laborers -->
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">LABORER 1</div>
+          <input id="dl-crew-lab1" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-lab1" oninput="calcCrewTotal('lab1')" />
+        <input type="time" id="dl-tout-lab1" oninput="calcCrewTotal('lab1')" />
+        <input id="dl-total-lab1" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-lab1" placeholder="30" step="15" />
+        <select id="dl-appr-lab1"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">LABORER 2</div>
+          <input id="dl-crew-lab2" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-lab2" oninput="calcCrewTotal('lab2')" />
+        <input type="time" id="dl-tout-lab2" oninput="calcCrewTotal('lab2')" />
+        <input id="dl-total-lab2" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-lab2" placeholder="30" step="15" />
+        <select id="dl-appr-lab2"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">LABORER 3</div>
+          <input id="dl-crew-lab3" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-lab3" oninput="calcCrewTotal('lab3')" />
+        <input type="time" id="dl-tout-lab3" oninput="calcCrewTotal('lab3')" />
+        <input id="dl-total-lab3" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-lab3" placeholder="30" step="15" />
+        <select id="dl-appr-lab3"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Potholer -->
+      <div class="crew-time-row">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px;">POTHOLER</div>
+          <input id="dl-crew-potholer" placeholder="Name" />
+        </div>
+        <input type="time" id="dl-tin-potholer" oninput="calcCrewTotal('potholer')" />
+        <input type="time" id="dl-tout-potholer" oninput="calcCrewTotal('potholer')" />
+        <input id="dl-total-potholer" placeholder="0.0" readonly style="background:#F8FAFC;" />
+        <input type="number" id="dl-lunch-potholer" placeholder="30" step="15" />
+        <select id="dl-appr-potholer"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label">Job Supervisor</label>
+      <input class="form-input" id="dl-supervisor" placeholder="Supervisor name" />
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="card">
+    <div class="card-title">Equipment On Site</div>
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;padding-bottom:6px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;"></div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">Unit #</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">Begin HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">End HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">Needs Service</div>
+    </div>
+    <!-- Drill -->
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div class="equip-label">DRILL</div>
+      <select class="form-input" id="eq-drill-unit" style="font-size:12px;padding:8px 10px;">
+        <option value="">Select...</option>
+        <option>D165</option><option>D167</option><option>D168</option><option>D174</option>
+        <option>D176</option><option>D177</option><option>D178</option><option>D180</option>
+        <option>D181</option><option>D182</option><option>D183</option><option>D184</option>
+        <option>D185</option><option>D186</option><option>D187</option><option>D188</option>
+        <option>D189</option><option>D190</option><option>D191</option>
+      </select>
+      <input class="form-input" type="number" id="eq-drill-start" placeholder="0" style="font-size:13px;padding:8px 10px;" />
+      <input class="form-input" type="number" id="eq-drill-end" placeholder="0" style="font-size:13px;padding:8px 10px;" oninput="calcEquipHrs('drill')" />
+      <div class="service-flag"><input type="checkbox" id="eq-drill-svc" /><label for="eq-drill-svc" style="font-size:12px;color:#DC2626;font-weight:600;">Flag</label></div>
+    </div>
+    <!-- Pickup -->
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div class="equip-label">PICKUP</div>
+      <select class="form-input" id="eq-pickup-unit" style="font-size:12px;padding:8px 10px;">
+        <option value="">Select...</option>
+        <option>434</option><option>435</option><option>437</option><option>442</option>
+        <option>443</option><option>445</option><option>446</option><option>447</option>
+        <option>449</option><option>450</option><option>451</option><option>452</option>
+        <option>456</option><option>457</option><option>459</option><option>461</option>
+        <option>463</option><option>464</option><option>465</option><option>466</option>
+      </select>
+      <input class="form-input" type="number" id="eq-pickup-start" placeholder="0" style="font-size:13px;padding:8px 10px;" />
+      <input class="form-input" type="number" id="eq-pickup-end" placeholder="0" style="font-size:13px;padding:8px 10px;" oninput="calcEquipHrs('pickup')" />
+      <div class="service-flag"><input type="checkbox" id="eq-pickup-svc" /><label for="eq-pickup-svc" style="font-size:12px;color:#DC2626;font-weight:600;">Flag</label></div>
+    </div>
+    <!-- Vac -->
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div class="equip-label">VAC</div>
+      <select class="form-input" id="eq-vac-unit" style="font-size:12px;padding:8px 10px;">
+        <option value="">Select...</option>
+        <option>V341</option><option>V343</option><option>V348</option><option>V349</option>
+        <option>V352</option><option>V353</option><option>V354</option><option>V357</option>
+        <option>V358</option><option>V360</option><option>V361</option><option>V362</option>
+        <option>V363</option><option>V364</option><option>V365</option><option>V366</option>
+        <option>623</option><option>624</option><option>625</option><option>626</option>
+        <option>628</option><option>629</option><option>630</option><option>631</option>
+      </select>
+      <input class="form-input" type="number" id="eq-vac-start" placeholder="0" style="font-size:13px;padding:8px 10px;" />
+      <input class="form-input" type="number" id="eq-vac-end" placeholder="0" style="font-size:13px;padding:8px 10px;" oninput="calcEquipHrs('vac')" />
+      <div class="service-flag"><input type="checkbox" id="eq-vac-svc" /><label for="eq-vac-svc" style="font-size:12px;color:#DC2626;font-weight:600;">Flag</label></div>
+    </div>
+    <!-- Semi -->
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div class="equip-label">SEMI</div>
+      <select class="form-input" id="eq-semi-unit" style="font-size:12px;padding:8px 10px;">
+        <option value="">Select...</option>
+        <option>520</option><option>523</option><option>529</option><option>531</option>
+        <option>532</option><option>533</option><option>534</option><option>537</option>
+        <option>539</option><option>541</option><option>542</option><option>543</option>
+        <option>544</option><option>545</option><option>546</option>
+      </select>
+      <input class="form-input" type="number" id="eq-semi-start" placeholder="0" style="font-size:13px;padding:8px 10px;" />
+      <input class="form-input" type="number" id="eq-semi-end" placeholder="0" style="font-size:13px;padding:8px 10px;" oninput="calcEquipHrs('semi')" />
+      <div class="service-flag"><input type="checkbox" id="eq-semi-svc" /><label for="eq-semi-svc" style="font-size:12px;color:#DC2626;font-weight:600;">Flag</label></div>
+    </div>
+    <!-- Trailer -->
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:8px 0;">
+      <div class="equip-label">TRAILER</div>
+      <select class="form-input" id="eq-trailer-unit" style="font-size:12px;padding:8px 10px;">
+        <option value="">Select...</option>
+        <option>T262</option><option>T263</option><option>T265</option><option>T266</option>
+        <option>T267</option><option>T268</option><option>T270</option><option>T271</option>
+        <option>T272</option><option>T273</option><option>T275</option><option>T276</option>
+        <option>T277</option><option>T278</option><option>T279</option><option>T280</option>
+        <option>T281</option><option>T282</option><option>T283</option><option>T284</option>
+        <option>T285</option><option>T286</option>
+        <option>RT901</option><option>RT902</option><option>RT903</option><option>RT904</option>
+        <option>RT905</option><option>RT906</option><option>RT907</option><option>RT908</option>
+        <option>RT909</option><option>RT910</option><option>RT911</option><option>RT912</option>
+        <option>RT913</option><option>RT914</option>
+      </select>
+      <input class="form-input" type="number" id="eq-trailer-start" placeholder="0" style="font-size:13px;padding:8px 10px;" />
+      <input class="form-input" type="number" id="eq-trailer-end" placeholder="0" style="font-size:13px;padding:8px 10px;" oninput="calcEquipHrs('trailer')" />
+      <div class="service-flag"><input type="checkbox" id="eq-trailer-svc" /><label for="eq-trailer-svc" style="font-size:12px;color:#DC2626;font-weight:600;">Flag</label></div>
+    </div>
+  </div>
+
+  <!-- Materials -->
+  <div class="card">
+    <div class="card-title">Job Materials</div>
+    <div class="mat-grid">
+      <div class="mat-item"><label class="mat-label">Bentonite (bags)</label><input class="mat-input" type="number" id="mat-bentonite" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Asphalt Patch (bags)</label><input class="mat-input" type="number" id="mat-asphalt" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Soda Ash (bags)</label><input class="mat-input" type="number" id="mat-sodaash" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">A/B</label><input class="mat-input" id="mat-ab" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Soap (gal)</label><input class="mat-input" type="number" id="mat-soap" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Slurry</label><input class="mat-input" id="mat-slurry" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Polymer (gal)</label><input class="mat-input" type="number" id="mat-polymer" placeholder="0" /></div>
+    </div>
+  </div>
+
+  <!-- Bore Log -->
+  <div class="card">
+    <div class="card-title">Bore Log</div>
+    <div id="dl-bore-rows"></div>
+    <button class="add-btn" onclick="addBoreRow()">+ Add bore</button>
+  </div>
+
+  <!-- Comments -->
+  <div class="card">
+    <div class="card-title">Comments</div>
+    <textarea class="form-input" rows="3" id="dl-comments" placeholder="Notes, issues, instructions..."></textarea>
+  </div>
+
+  <div class="form-group" style="padding:0 0 8px;">
+    <label class="form-label">Invoice #</label>
+    <input class="form-input" id="dl-invoice" placeholder="Optional" />
+  </div>
+
+  <button class="save-btn" onclick="saveDailyLog()">Save Daily Worksheet</button>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — DETAIL SCREEN
+     ============================================================ -->
+<div id="screen-logdetail" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Daily Logs</button>
+  <div id="logDetailContent"></div>
+</div>
+
+
 
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
@@ -1104,11 +1458,14 @@ function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
-  const idx = ['profiles','new'].indexOf(name);
+  const navMap = ['profiles','new','dailylog'];
+  const idx = navMap.indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
   if(name==='admin') loadCrews();
-  if(name!=='detail') prevScreen=name;
+  if(name==='dailylog') loadLogs();
+  if(name==='newlog') resetLogForm();
+  if(!['detail','logdetail'].includes(name)) prevScreen=name;
 }
 
 function goBack() { showScreen(prevScreen); }
@@ -1776,6 +2133,290 @@ setDate();
 addCrossing();
 loadProfiles();
 loadCrews();
+let allLogs = [];
+let currentLogId = null;
+let dlBoreCount = 0;
+let dlBoreRows = [];
+
+function resetLogForm() {
+  dlBoreCount = 0; dlBoreRows = [];
+  document.getElementById('dl-bore-rows').innerHTML = '';
+  document.getElementById('dl-date').value = new Date().toISOString().split('T')[0];
+  ['dl-customer','dl-address','dl-city','dl-comments','dl-invoice','dl-po','dl-bluestake','dl-supervisor','dl-goal',
+   'dl-timeon','dl-timeoff'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    ['dl-crew-','dl-tin-','dl-tout-','dl-total-','dl-lunch-'].forEach(pre=>{
+      const e=document.getElementById(pre+role); if(e) e.value='';
+    });
+    const a=document.getElementById('dl-appr-'+role); if(a) a.value='';
+  });
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    const u=document.getElementById('eq-'+eq+'-unit'); if(u) u.value='';
+    const s=document.getElementById('eq-'+eq+'-start'); if(s) s.value='';
+    const en=document.getElementById('eq-'+eq+'-end'); if(en) en.value='';
+    const svc=document.getElementById('eq-'+eq+'-svc'); if(svc) svc.checked=false;
+  });
+  ['bentonite','asphalt','sodaash','ab','soap','slurry','polymer'].forEach(m=>{
+    const e=document.getElementById('mat-'+m); if(e) e.value='';
+  });
+  document.getElementById('dl-prevwage').value='no';
+  addBoreRow();
+}
+
+function calcCrewTotal(role) {
+  const tin = document.getElementById('dl-tin-'+role)?.value;
+  const tout = document.getElementById('dl-tout-'+role)?.value;
+  const totalEl = document.getElementById('dl-total-'+role);
+  if(!tin||!tout||!totalEl) return;
+  const [inh,inm]=tin.split(':').map(Number);
+  const [outh,outm]=tout.split(':').map(Number);
+  let mins=(outh*60+outm)-(inh*60+inm);
+  if(mins<0) mins+=1440;
+  totalEl.value=(mins/60).toFixed(2);
+}
+
+function calcEquipHrs(eq) {
+  const start=parseFloat(document.getElementById('eq-'+eq+'-start')?.value)||0;
+  const end=parseFloat(document.getElementById('eq-'+eq+'-end')?.value)||0;
+  // just used for display in saved record — no separate total field needed
+}
+
+function addBoreRow() {
+  dlBoreCount++;
+  const i=dlBoreCount;
+  dlBoreRows.push({});
+  const list=document.getElementById('dl-bore-rows');
+  const block=document.createElement('div');
+  block.className='bore-row-block';
+  block.id='dlbore'+i;
+  block.innerHTML=`
+    <div class="bore-row-header">
+      <div class="bore-row-num">Bore ${i}</div>
+      <button class="del-btn" onclick="removeBoreRow(${i})">✕ Remove</button>
+    </div>
+    <div class="form-group"><label class="form-label">Location of Bore</label><input class="form-input" id="dlb-loc${i}" placeholder="e.g. Under Main St crossing" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Product Installing</label><input class="form-input" id="dlb-prod${i}" placeholder='e.g. 2" gas' /></div>
+      <div class="form-group"><label class="form-label">Ground Type</label>
+        <select class="form-input" id="dlb-ground${i}">
+          <option value="">Select...</option>
+          <option>Caliche</option><option>Sandy</option><option>Rocky</option><option>Clay</option><option>Mixed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Length (ft)</label><input class="form-input" type="number" id="dlb-len${i}" placeholder="0" /></div>`;
+  list.appendChild(block);
+}
+
+function removeBoreRow(i) {
+  const el=document.getElementById('dlbore'+i); if(el) el.remove();
+  if(dlBoreRows[i-1]) dlBoreRows[i-1]=null;
+}
+
+async function saveDailyLog() {
+  const btn=document.querySelector('#screen-newlog .save-btn');
+  btn.textContent='Saving...'; btn.disabled=true;
+
+  const crew={};
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    crew[role]={
+      name: document.getElementById('dl-crew-'+role)?.value||'',
+      time_in: document.getElementById('dl-tin-'+role)?.value||'',
+      time_out: document.getElementById('dl-tout-'+role)?.value||'',
+      total_hrs: document.getElementById('dl-total-'+role)?.value||'',
+      lunch_min: document.getElementById('dl-lunch-'+role)?.value||'',
+      approved: document.getElementById('dl-appr-'+role)?.value||''
+    };
+  });
+
+  const equipment={};
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    const start=parseFloat(document.getElementById('eq-'+eq+'-start')?.value)||null;
+    const end=parseFloat(document.getElementById('eq-'+eq+'-end')?.value)||null;
+    equipment[eq]={
+      unit: document.getElementById('eq-'+eq+'-unit')?.value||'',
+      hr_start: start,
+      hr_end: end,
+      total_hrs: (start!==null&&end!==null)?Math.round((end-start)*10)/10:null,
+      needs_service: document.getElementById('eq-'+eq+'-svc')?.checked||false
+    };
+  });
+
+  const bores=[];
+  for(let i=1;i<=dlBoreCount;i++){
+    const loc=document.getElementById('dlb-loc'+i)?.value;
+    if(!loc&&!document.getElementById('dlb-prod'+i)?.value) continue;
+    bores.push({
+      location: loc||'',
+      product: document.getElementById('dlb-prod'+i)?.value||'',
+      ground: document.getElementById('dlb-ground'+i)?.value||'',
+      length_ft: parseFloat(document.getElementById('dlb-len'+i)?.value)||null
+    });
+  }
+
+  const materials={
+    bentonite: parseFloat(document.getElementById('mat-bentonite')?.value)||null,
+    asphalt_patch: parseFloat(document.getElementById('mat-asphalt')?.value)||null,
+    soda_ash: parseFloat(document.getElementById('mat-sodaash')?.value)||null,
+    ab: document.getElementById('mat-ab')?.value||'',
+    soap: parseFloat(document.getElementById('mat-soap')?.value)||null,
+    slurry: document.getElementById('mat-slurry')?.value||'',
+    polymer: parseFloat(document.getElementById('mat-polymer')?.value)||null
+  };
+
+  const record={
+    date: document.getElementById('dl-date')?.value||null,
+    prevailing_wages: document.getElementById('dl-prevwage')?.value==='yes',
+    customer: document.getElementById('dl-customer')?.value||'',
+    address: document.getElementById('dl-address')?.value||'',
+    city_state_zip: document.getElementById('dl-city')?.value||'',
+    production_goal_ft: parseFloat(document.getElementById('dl-goal')?.value)||null,
+    po_number: document.getElementById('dl-po')?.value||'',
+    blue_stake: document.getElementById('dl-bluestake')?.value||'',
+    time_on_site: document.getElementById('dl-timeon')?.value||'',
+    time_off_site: document.getElementById('dl-timeoff')?.value||'',
+    supervisor: document.getElementById('dl-supervisor')?.value||'',
+    comments: document.getElementById('dl-comments')?.value||'',
+    invoice_number: document.getElementById('dl-invoice')?.value||'',
+    crew,
+    equipment,
+    materials,
+    bores
+  };
+
+  const {error}=await sb.from('daily_logs').insert([record]);
+  btn.textContent='Save Daily Worksheet'; btn.disabled=false;
+  if(error){
+    if(error.message&&error.message.includes('does not exist')){
+      showToast('Create daily_logs table in Supabase first');
+    } else {
+      showToast('Error saving — '+error.message);
+    }
+    return;
+  }
+  showToast('Worksheet saved!');
+  await loadLogs();
+  showScreen('dailylog');
+}
+
+async function loadLogs() {
+  const {data,error}=await sb.from('daily_logs').select('*').order('date',{ascending:false});
+  if(error){
+    document.getElementById('logsList').innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Table not set up yet</div><div class="empty-sub">See setup instructions below</div></div>`;
+    return;
+  }
+  allLogs=data||[];
+  renderLogs(allLogs);
+}
+
+function filterLogs() {
+  const q=document.getElementById('logSearchInput').value.toLowerCase();
+  renderLogs(allLogs.filter(l=>
+    (l.customer||'').toLowerCase().includes(q)||
+    (l.address||'').toLowerCase().includes(q)||
+    (l.supervisor||'').toLowerCase().includes(q)||
+    (l.crew?.drill?.name||'').toLowerCase().includes(q)
+  ));
+}
+
+function renderLogs(logs) {
+  const list=document.getElementById('logsList');
+  if(!logs||!logs.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No worksheets yet</div><div class="empty-sub">Tap + New Log to create your first daily worksheet</div></div>`;
+    return;
+  }
+  list.innerHTML=logs.map(l=>{
+    const svcFlags=Object.entries(l.equipment||{}).filter(([,v])=>v.needs_service).map(([k])=>k.toUpperCase());
+    const totalFt=(l.bores||[]).reduce((sum,b)=>sum+(b.length_ft||0),0);
+    const drillName=l.crew?.drill?.name||'';
+    const sub=[drillName,totalFt?totalFt+' ft drilled':null,l.city_state_zip].filter(Boolean).join(' · ');
+    return `<div class="dl-log-card" onclick="showLogDetail('${l.id}')">
+      <div class="dl-card-top">
+        <div class="dl-card-title">${l.customer||'No customer'} — ${l.address||''}</div>
+        <div class="dl-card-date">${l.date||''}</div>
+      </div>
+      ${sub?`<div class="dl-card-sub">${sub}</div>`:''}
+      <div class="dl-card-tags">
+        ${l.prevailing_wages?`<span class="tag t-amber">PW</span>`:''}
+        ${svcFlags.map(f=>`<span class="tag t-red">⚠ ${f}</span>`).join('')}
+        ${totalFt?`<span class="tag t-green">${totalFt} ft</span>`:''}
+        ${(l.bores||[]).length?`<span class="tag t-blue">${l.bores.length} bore${l.bores.length>1?'s':''}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showLogDetail(id) {
+  const l=allLogs.find(x=>x.id===id);
+  if(!l) return;
+  currentLogId=id;
+
+  const roleLabel={drill:'Drill Operator',locator:'Locator',lab1:'Laborer 1',lab2:'Laborer 2',lab3:'Laborer 3',potholer:'Potholer'};
+  const crewRows=Object.entries(l.crew||{}).filter(([,v])=>v.name).map(([role,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${roleLabel[role]||role}</div>
+      <div class="dl-detail-val">${v.name}${v.time_in?' · '+v.time_in+' – '+(v.time_out||'?'):''}${v.total_hrs?' ('+v.total_hrs+'h)':''}</div>
+    </div>`).join('');
+
+  const equipRows=Object.entries(l.equipment||{}).filter(([,v])=>v.unit).map(([eq,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${eq.toUpperCase()} — ${v.unit}</div>
+      <div class="dl-detail-val">${v.hr_start||'—'} → ${v.hr_end||'—'}${v.total_hrs?' ('+v.total_hrs+'h)':''}${v.needs_service?' ⚠ Service':''}</div>
+    </div>`).join('');
+
+  const matPairs=[['Bentonite',l.materials?.bentonite],['Soda Ash',l.materials?.soda_ash],['Soap',l.materials?.soap],['Polymer',l.materials?.polymer],['Asphalt Patch',l.materials?.asphalt_patch],['A/B',l.materials?.ab],['Slurry',l.materials?.slurry]];
+  const matRows=matPairs.filter(([,v])=>v).map(([k,v])=>`
+    <div class="dl-detail-row"><div class="dl-detail-lbl">${k}</div><div class="dl-detail-val">${v}</div></div>`).join('');
+
+  const boreRows=(l.bores||[]).map((b,i)=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">Bore ${i+1}${b.location?' — '+b.location:''}</div>
+      <div class="dl-detail-val">${[b.product,b.ground,b.length_ft?b.length_ft+' ft':null].filter(Boolean).join(' · ')}</div>
+    </div>`).join('');
+
+  document.getElementById('logDetailContent').innerHTML=`
+    <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${l.customer||'No customer'}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">${[l.address,l.city_state_zip,l.date].filter(Boolean).join(' · ')}</div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">Total Footage</div><div class="stat-val">${(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),0)} ft</div></div>
+      <div class="stat-box"><div class="stat-lbl">Bores</div><div class="stat-val">${(l.bores||[]).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Crew Size</div><div class="stat-val">${Object.values(l.crew||{}).filter(v=>v.name).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Prevailing Wages</div><div class="stat-val">${l.prevailing_wages?'Yes':'No'}</div></div>
+    </div>
+
+    ${crewRows?`<div class="card"><div class="card-title">Crew</div>${crewRows}</div>`:''}
+    ${equipRows?`<div class="card"><div class="card-title">Equipment</div>${equipRows}</div>`:''}
+    ${matRows?`<div class="card"><div class="card-title">Materials</div>${matRows}</div>`:''}
+    ${boreRows?`<div class="card"><div class="card-title">Bore Log</div>${boreRows}</div>`:''}
+    ${l.comments?`<div class="card"><div class="card-title">Comments</div><div style="font-size:13px;color:#555;line-height:1.6;">${l.comments}</div></div>`:''}
+    ${l.po_number||l.blue_stake||l.invoice_number?`
+    <div class="card">
+      <div class="card-title">References</div>
+      ${l.po_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">PO #</div><div class="dl-detail-val">${l.po_number}</div></div>`:''}
+      ${l.blue_stake?`<div class="dl-detail-row"><div class="dl-detail-lbl">Blue Stake #</div><div class="dl-detail-val">${l.blue_stake}</div></div>`:''}
+      ${l.invoice_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">Invoice #</div><div class="dl-detail-val">${l.invoice_number}</div></div>`:''}
+    </div>`:''}
+    <div class="admin-bar">
+      <button class="delete-btn" onclick="deleteLog('${id}')">Delete</button>
+    </div>`;
+
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-logdetail').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+async function deleteLog(id) {
+  if(!confirm('Delete this worksheet?')) return;
+  const {error}=await sb.from('daily_logs').delete().eq('id',id);
+  if(error){ showToast('Error deleting'); return; }
+  showToast('Worksheet deleted');
+  allLogs=allLogs.filter(l=>l.id!==id);
+  renderLogs(allLogs);
+  showScreen('dailylog');
+}
+
+
 </script>
 </body>
 </html>
