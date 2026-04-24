@@ -2227,7 +2227,6 @@ async function autoLinkProfileToWorksheet(profileId, date, address) {
   for(const log of logs) {
     const logAddr = (log.address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
     const hasPipe = (log.bores||[]).some(b=>b.pipe_pulled);
-    // Match if address has at least 6 chars in common prefix OR contains each other
     const minLen = Math.min(addrNorm.length, logAddr.length);
     const overlap = minLen >= 4 && (addrNorm.slice(0,Math.min(8,minLen)) === logAddr.slice(0,Math.min(8,minLen)));
     if(overlap && hasPipe) return log.id;
@@ -2915,9 +2914,10 @@ async function saveDailyLog() {
     blue_stake:document.getElementById('dl-bluestake')?.value||'',
     time_on_site:document.getElementById('dl-timeon')?.value||'',
     time_off_site:document.getElementById('dl-timeoff')?.value||'',
-    supervisor:document.getElementById('dl-supervisor')?.value||currentUser?.display_name||'',
+    supervisor:document.getElementById('dl-supervisor')?.value||'',
     comments:document.getElementById('dl-comments')?.value||'',
     invoice_number:document.getElementById('dl-invoice')?.value||'',
+    submitted_by:currentUser?.username||null,
     crew, equipment, materials, bores
   };
 
@@ -2942,7 +2942,7 @@ async function loadLogs() {
   let query = sb.from('daily_logs').select('*').order('date',{ascending:false});
   // Foremen only see their own submitted worksheets
   if(currentUser?.role === 'foreman') {
-    query = query.eq('supervisor', currentUser.display_name);
+    query = query.eq('submitted_by', currentUser.username);
   }
 
   const {data, error} = await query;
@@ -3033,7 +3033,7 @@ function showLogDetail(id) {
   document.getElementById('logDetailContent').innerHTML=`
     <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${l.customer||'No customer'}</div>
     <div style="font-size:12px;color:#888;margin-bottom:8px;">${[l.address,l.city_state_zip,l.date].filter(Boolean).join(' · ')}</div>
-    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.supervisor?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.supervisor}</span>`:''}</div>
+    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.submitted_by?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.submitted_by}</span>`:''}</div>
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-lbl">Total Footage</div><div class="stat-val">${(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),0)} ft</div></div>
       <div class="stat-box"><div class="stat-lbl">Bores</div><div class="stat-val">${(l.bores||[]).length}</div></div>
