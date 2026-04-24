@@ -6,189 +6,1119 @@
 <title>B-Line Bore Profiles</title>
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif; background: #EEF2F7; max-width: 480px; margin: 0 auto; min-height: 100vh; color: #0F172A; }
-.header { background: #1E3A8A; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
-.header-brand { display: flex; align-items: center; gap: 10px; }
-.header-icon { width: 34px; height: 34px; background: #2563EB; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.header-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
-.header-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
-.header-right { display: flex; align-items: center; gap: 8px; }
-.lang-toggle { display: flex; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; overflow: hidden; }
-.lang-btn { padding: 5px 10px; font-size: 11px; font-weight: 600; background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.55); }
-.lang-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
-.gear-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); cursor: pointer; font-size: 15px; padding: 5px 8px; border-radius: 7px; }
-.nav { display: flex; background: #fff; border-bottom: 1px solid #E2E8F0; position: sticky; top: 62px; z-index: 99; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.nav-btn { flex: 1; padding: 12px 4px; font-size: 12px; font-weight: 500; color: #94A3B8; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+  background: #EEF2F7;
+  max-width: 860px;
+  margin: 0 auto;
+  min-height: 100vh;
+  color: #0F172A;
+}
+
+/* Subtle card-like shadow on desktop when centered */
+@media (min-width: 862px) {
+  body { box-shadow: 0 0 60px rgba(0,0,0,0.1); }
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.22);
+}
+
+.header-brand { display: flex; align-items: center; gap: 12px; }
+
+/* Real logo — shown when logo.png exists */
+.header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+}
+
+/* Emoji fallback — shown when logo.png is missing */
+.header-logo-fallback {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+.header-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+.lang-toggle {
+  display: flex;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.lang-btn {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.15s;
+}
+.lang-btn.active { background: rgba(255,255,255,0.22); color: #fff; }
+.lang-btn:hover:not(.active) { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+
+.gear-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  font-size: 15px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.gear-btn:hover { background: rgba(255,255,255,0.22); }
+
+/* ============================================================
+   NAV TABS
+   ============================================================ */
+.nav {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 66px;
+  z-index: 99;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+.nav-btn {
+  flex: 1;
+  padding: 14px 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94A3B8;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.1px;
+}
 .nav-btn.active { color: #1D4ED8; border-bottom-color: #1D4ED8; font-weight: 700; }
-.screen { display: none; padding: 14px; padding-bottom: 48px; }
+.nav-btn:hover:not(.active) { color: #475569; background: #F8FAFC; }
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen { display: none; padding: 18px 16px; padding-bottom: 60px; }
 .screen.active { display: block; }
-.card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 15px 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.card-title { font-size: 11px; font-weight: 700; color: #64748B; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.6px; }
-.form-label { font-size: 11px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
-.form-input { width: 100%; padding: 10px 12px; font-size: 14px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; -webkit-appearance: none; transition: border-color 0.15s; }
-.form-input:focus { outline: none; border-color: #1D4ED8; box-shadow: 0 0 0 3px rgba(29,78,216,0.08); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.form-group { margin-bottom: 10px; }
-.stage-bar { display: flex; gap: 6px; margin-bottom: 14px; }
-.stage-pill { flex: 1; padding: 8px 2px; border-radius: 8px; font-size: 10px; text-align: center; font-weight: 700; border: 1.5px solid #E2E8F0; background: #fff; color: #94A3B8; cursor: default; letter-spacing: 0.3px; }
+
+@media (min-width: 600px) {
+  .screen { padding: 22px 24px; padding-bottom: 60px; }
+}
+@media (min-width: 860px) {
+  .screen { padding: 28px 32px; padding-bottom: 60px; }
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+}
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  margin-bottom: 5px;
+  display: block;
+  letter-spacing: 0.1px;
+}
+.form-input {
+  width: 100%;
+  padding: 11px 13px;
+  font-size: 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 9px;
+  background: #fff;
+  color: #0F172A;
+  -webkit-appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  line-height: 1.4;
+}
+.form-input:focus {
+  outline: none;
+  border-color: #1D4ED8;
+  box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-group { margin-bottom: 12px; }
+
+/* ============================================================
+   STAGE BAR
+   ============================================================ */
+.stage-bar { display: flex; gap: 8px; margin-bottom: 18px; }
+.stage-pill {
+  flex: 1;
+  padding: 10px 4px;
+  border-radius: 10px;
+  font-size: 11px;
+  text-align: center;
+  font-weight: 700;
+  border: 1.5px solid #E2E8F0;
+  background: #fff;
+  color: #94A3B8;
+  cursor: default;
+  letter-spacing: 0.3px;
+  transition: all 0.15s;
+}
 .stage-pill.done { background: #F0FDF4; color: #16A34A; border-color: #86EFAC; cursor: pointer; }
 .stage-pill.done:hover { background: #DCFCE7; }
 .stage-pill.active { background: #1D4ED8; color: #fff; border-color: #1D4ED8; }
 .stage-pill.locked { opacity: 0.35; }
-.pin-btn { width: 100%; padding: 13px; border-radius: 10px; border: 2px dashed #93C5FD; background: #EFF6FF; font-size: 13px; font-weight: 600; color: #1D4ED8; cursor: pointer; margin-bottom: 4px; text-align: center; }
+
+/* ============================================================
+   PIN BUTTON
+   ============================================================ */
+.pin-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px dashed #93C5FD;
+  background: #EFF6FF;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1D4ED8;
+  cursor: pointer;
+  margin-bottom: 4px;
+  text-align: center;
+  transition: all 0.15s;
+}
+.pin-btn:hover { background: #DBEAFE; border-color: #60A5FA; }
 .pin-btn.pinned { background: #F0FDF4; border-color: #86EFAC; border-style: solid; color: #16A34A; }
-.depth-input-wrap { display: flex; border: 1.5px solid #E2E8F0; border-radius: 8px; overflow: hidden; transition: border-color 0.15s; }
-.depth-input-wrap:focus-within { border-color: #1D4ED8; }
-.depth-input-wrap input { flex: 1; padding: 10px 12px; font-size: 14px; border: none; background: #fff; color: #0F172A; min-width: 0; outline: none; }
+
+.pin-coords { font-size: 10px; color: #94A3B8; margin-bottom: 8px; text-align: center; }
+
+/* ============================================================
+   DEPTH INPUT
+   ============================================================ */
+.depth-input-wrap {
+  display: flex;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 9px;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.depth-input-wrap:focus-within {
+  border-color: #1D4ED8;
+  box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+}
+.depth-input-wrap input {
+  flex: 1;
+  padding: 11px 13px;
+  font-size: 14px;
+  border: none;
+  background: #fff;
+  color: #0F172A;
+  min-width: 0;
+  outline: none;
+}
 .unit-toggle { display: flex; }
-.unit-btn { padding: 10px 10px; font-size: 11px; font-weight: 700; border: none; background: #F8FAFC; color: #94A3B8; cursor: pointer; border-left: 1.5px solid #E2E8F0; }
+.unit-btn {
+  padding: 11px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border: none;
+  background: #F8FAFC;
+  color: #94A3B8;
+  cursor: pointer;
+  border-left: 1.5px solid #E2E8F0;
+  transition: all 0.15s;
+}
 .unit-btn.active { background: #1D4ED8; color: #fff; }
-.pothole-block { border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px; background: #FAFBFD; }
-.pothole-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.pothole-num { font-size: 12px; font-weight: 700; color: #0F172A; }
-.del-btn { font-size: 11px; color: #DC2626; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 5px; cursor: pointer; padding: 3px 9px; font-weight: 600; }
-.crossing-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 8px; }
-.crossing-fields input, .crossing-fields select { font-size: 13px; padding: 9px 7px; border: 1.5px solid #E2E8F0; border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
-.dist-field { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
-.dist-field input { flex: 1; font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 7px; background: #fff; color: #0F172A; -webkit-appearance: none; }
+
+/* ============================================================
+   POTHOLE / CROSSING BLOCKS
+   ============================================================ */
+.pothole-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: #FAFBFD;
+}
+.pothole-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.pothole-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+.del-btn {
+  font-size: 11px;
+  color: #DC2626;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.del-btn:hover { background: #FEE2E2; }
+
+.crossing-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.crossing-fields input, .crossing-fields select {
+  font-size: 13px;
+  padding: 10px 8px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #fff;
+  color: #0F172A;
+  width: 100%;
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+.crossing-fields input:focus, .crossing-fields select:focus {
+  outline: none;
+  border-color: #1D4ED8;
+}
+.dist-field { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.dist-field input {
+  flex: 1;
+  font-size: 13px;
+  padding: 9px 11px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #fff;
+  color: #0F172A;
+  -webkit-appearance: none;
+}
 .dist-label { font-size: 11px; color: #64748B; font-weight: 500; white-space: nowrap; }
-.add-btn { width: 100%; padding: 10px; font-size: 13px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1.5px dashed #93C5FD; border-radius: 8px; cursor: pointer; margin-top: 6px; }
-.next-btn { width: 100%; padding: 14px; background: #1D4ED8; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 10px rgba(29,78,216,0.22); }
-.next-btn:active { opacity: 0.9; }
-.save-btn { width: 100%; padding: 14px; background: #16A34A; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 10px rgba(22,163,74,0.22); }
-.save-btn:active { opacity: 0.9; }
-.profile-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 13px 15px; margin-bottom: 10px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.profile-card:active { opacity: 0.92; }
-.profile-card.has-hit { border-left: 3px solid #DC2626; }
+
+/* ============================================================
+   BUTTONS — PRIMARY
+   ============================================================ */
+.add-btn {
+  width: 100%;
+  padding: 11px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1D4ED8;
+  background: #EFF6FF;
+  border: 1.5px dashed #93C5FD;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.15s;
+}
+.add-btn:hover { background: #DBEAFE; border-color: #60A5FA; }
+
+.next-btn {
+  width: 100%;
+  padding: 15px;
+  background: #1D4ED8;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 3px 12px rgba(29,78,216,0.28);
+  transition: all 0.15s;
+}
+.next-btn:hover { background: #1a44c2; box-shadow: 0 5px 18px rgba(29,78,216,0.38); transform: translateY(-1px); }
+.next-btn:active { opacity: 0.9; transform: none; }
+
+.save-btn {
+  width: 100%;
+  padding: 15px;
+  background: #16A34A;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 3px 12px rgba(22,163,74,0.28);
+  transition: all 0.15s;
+}
+.save-btn:hover { background: #15803d; box-shadow: 0 5px 18px rgba(22,163,74,0.38); transform: translateY(-1px); }
+.save-btn:active { opacity: 0.9; transform: none; }
+
+/* ============================================================
+   PROFILE LIST CARDS
+   ============================================================ */
+.profile-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.profile-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+  border-color: #CBD5E1;
+}
+.profile-card:active { opacity: 0.92; transform: none; }
+.profile-card.has-hit { border-left: 4px solid #DC2626; }
+
 .pc-top { display: flex; justify-content: space-between; align-items: flex-start; }
 .pc-addr { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; line-height: 1.3; }
 .pc-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
-.pc-sub { font-size: 12px; color: #64748B; margin-top: 3px; }
-.pc-tags { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
-.tag { font-size: 10px; padding: 3px 8px; border-radius: 5px; font-weight: 600; }
-.t-blue { background: #EFF6FF; color: #1D4ED8; }
-.t-amber { background: #FFFBEB; color: #92400E; }
-.t-green { background: #F0FDF4; color: #166534; }
-.t-red { background: #FEF2F2; color: #991B1B; }
+.pc-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.pc-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+/* ============================================================
+   TAGS
+   ============================================================ */
+.tag { font-size: 10px; padding: 3px 9px; border-radius: 6px; font-weight: 700; }
+.t-blue   { background: #EFF6FF; color: #1D4ED8; }
+.t-amber  { background: #FFFBEB; color: #92400E; }
+.t-green  { background: #F0FDF4; color: #166534; }
+.t-red    { background: #FEF2F2; color: #991B1B; }
 .t-purple { background: #F5F3FF; color: #5B21B6; }
-.t-gray { background: #F1F5F9; color: #475569; }
-.t-teal { background: #F0FDFA; color: #134E4A; }
-.back-btn { font-size: 13px; font-weight: 600; color: #1D4ED8; background: none; border: none; cursor: pointer; padding: 0 0 14px; display: flex; align-items: center; gap: 4px; }
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.stat-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px; }
-.stat-lbl { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-.stat-val { font-size: 18px; font-weight: 700; color: #0F172A; margin-top: 3px; }
-.crossing-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F1F5F9; }
+.t-gray   { background: #F1F5F9; color: #475569; }
+.t-teal   { background: #F0FDFA; color: #134E4A; }
+
+/* ============================================================
+   BACK BUTTON
+   ============================================================ */
+.back-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1D4ED8;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+.back-btn:hover { color: #1a44c2; }
+
+/* ============================================================
+   DETAIL STATS
+   ============================================================ */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.stat-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 11px; padding: 14px; }
+.stat-lbl { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
+.stat-val { font-size: 20px; font-weight: 700; color: #0F172A; margin-top: 4px; }
+
+/* ============================================================
+   CROSSING ROWS
+   ============================================================ */
+.crossing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
 .crossing-row:last-child { border-bottom: none; }
 .cr-type { font-size: 13px; font-weight: 700; color: #0F172A; }
 .cr-depths { font-size: 11px; color: #64748B; margin-top: 2px; }
 .cr-clearance { font-size: 12px; font-weight: 700; }
-.clearance-ok { color: #16A34A; }
+.clearance-ok  { color: #16A34A; }
 .clearance-bad { color: #DC2626; }
-.empty-state { text-align: center; padding: 48px 20px; }
-.empty-icon { font-size: 36px; margin-bottom: 10px; }
-.empty-text { font-size: 15px; font-weight: 700; color: #475569; }
-.empty-sub { font-size: 12px; margin-top: 6px; color: #94A3B8; }
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state { text-align: center; padding: 56px 20px; }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-text { font-size: 16px; font-weight: 700; color: #475569; }
+.empty-sub { font-size: 13px; margin-top: 6px; color: #94A3B8; }
+
 .loading { text-align: center; padding: 40px; color: #94A3B8; font-size: 13px; }
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #0F172A; color: #fff; padding: 11px 22px; border-radius: 10px; font-size: 13px; font-weight: 600; z-index: 999; opacity: 0; transition: opacity 0.25s; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0F172A;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
 .toast.show { opacity: 1; }
-.finalize-crossing { background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-.finalize-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+
+/* ============================================================
+   FINALIZE CROSSING
+   ============================================================ */
+.finalize-crossing {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.finalize-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .finalize-title { font-size: 12px; font-weight: 700; color: #0F172A; }
-.clearance-badge { font-size: 11px; padding: 3px 9px; border-radius: 5px; font-weight: 700; }
-.badge-ok { background: #F0FDF4; color: #16A34A; }
-.badge-bad { background: #FEF2F2; color: #DC2626; }
+.clearance-badge { font-size: 11px; padding: 3px 10px; border-radius: 6px; font-weight: 700; }
+.badge-ok      { background: #F0FDF4; color: #16A34A; }
+.badge-bad     { background: #FEF2F2; color: #DC2626; }
 .badge-neutral { background: #F1F5F9; color: #94A3B8; }
-.search-wrap { position: relative; margin-bottom: 12px; }
-.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 14px; pointer-events: none; }
-.search-input { width: 100%; padding: 11px 12px 11px 36px; font-size: 14px; border: 1.5px solid #E2E8F0; border-radius: 10px; background: #fff; color: #0F172A; -webkit-appearance: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.search-input:focus { outline: none; border-color: #1D4ED8; }
-.admin-bar { display: flex; gap: 8px; margin-top: 14px; }
-.edit-btn { flex: 1; padding: 11px; background: #fff; border: 1.5px solid #1D4ED8; color: #1D4ED8; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; }
-.delete-btn { padding: 11px 18px; background: #FEF2F2; border: 1.5px solid #FECACA; color: #DC2626; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; }
-.pin-coords { font-size: 10px; color: #94A3B8; margin-bottom: 8px; text-align: center; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-.modal { background: #fff; border-radius: 16px; padding: 22px; width: 330px; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
-.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #0F172A; }
-.modal-input { width: 100%; padding: 12px; font-size: 18px; border: 1.5px solid #E2E8F0; border-radius: 9px; margin-bottom: 14px; text-align: center; letter-spacing: 6px; }
-.modal-btns { display: flex; gap: 8px; }
-.modal-btn { flex: 1; padding: 11px; border-radius: 9px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; }
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94A3B8;
+  font-size: 14px;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 12px 13px 12px 38px;
+  font-size: 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  background: #fff;
+  color: #0F172A;
+  -webkit-appearance: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #1D4ED8;
+  box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+}
+
+/* ============================================================
+   ADMIN / DETAIL ACTIONS
+   ============================================================ */
+.admin-bar { display: flex; gap: 10px; margin-top: 16px; }
+.edit-btn {
+  flex: 1;
+  padding: 12px;
+  background: #fff;
+  border: 1.5px solid #1D4ED8;
+  color: #1D4ED8;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.edit-btn:hover { background: #EFF6FF; }
+.delete-btn {
+  padding: 12px 20px;
+  background: #FEF2F2;
+  border: 1.5px solid #FECACA;
+  color: #DC2626;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.delete-btn:hover { background: #FEE2E2; }
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.modal {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  width: 340px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+}
+.modal-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: #0F172A; }
+.modal-input {
+  width: 100%;
+  padding: 13px;
+  font-size: 20px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  text-align: center;
+  letter-spacing: 8px;
+}
+.modal-btns { display: flex; gap: 10px; }
+.modal-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
 .modal-cancel { background: #F1F5F9; color: #475569; }
+.modal-cancel:hover { background: #E2E8F0; }
 .modal-confirm { background: #1D4ED8; color: #fff; }
-.path-wrap { overflow-x: auto; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 10px; margin-bottom: 12px; }
-.col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 8px; padding: 0 2px; }
-.col-header { font-size: 10px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-.crew-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.modal-confirm:hover { background: #1a44c2; }
+
+/* ============================================================
+   BORE PATH VIZ
+   ============================================================ */
+.path-wrap {
+  overflow-x: auto;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.col-headers { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 10px; padding: 0 2px; }
+.col-header { font-size: 10px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ============================================================
+   CREW CARDS
+   ============================================================ */
+.crew-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
 .crew-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
 .crew-name { font-size: 15px; font-weight: 700; color: #0F172A; }
 .crew-num { font-size: 12px; color: #64748B; margin-top: 2px; }
-.crew-meta { font-size: 12px; color: #475569; margin-top: 7px; }
-.crew-actions { display: flex; gap: 8px; margin-top: 12px; }
-.crew-edit-btn { flex: 1; padding: 8px; background: #fff; border: 1.5px solid #1D4ED8; color: #1D4ED8; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
-.crew-del-btn { padding: 8px 14px; background: #FEF2F2; border: 1.5px solid #FECACA; color: #DC2626; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.section-title { font-size: 14px; font-weight: 700; color: #0F172A; }
-.add-crew-btn { padding: 8px 14px; background: #1D4ED8; color: #fff; border: none; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; }
-.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
-.kpi-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 9px; text-align: center; }
-.kpi-val { font-size: 17px; font-weight: 700; color: #0F172A; }
+.crew-meta { font-size: 12px; color: #475569; margin-top: 8px; }
+.crew-actions { display: flex; gap: 10px; margin-top: 14px; }
+.crew-edit-btn {
+  flex: 1;
+  padding: 9px;
+  background: #fff;
+  border: 1.5px solid #1D4ED8;
+  color: #1D4ED8;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.crew-edit-btn:hover { background: #EFF6FF; }
+.crew-del-btn {
+  padding: 9px 16px;
+  background: #FEF2F2;
+  border: 1.5px solid #FECACA;
+  color: #DC2626;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.crew-del-btn:hover { background: #FEE2E2; }
+
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.section-title { font-size: 15px; font-weight: 700; color: #0F172A; }
+.add-crew-btn {
+  padding: 9px 16px;
+  background: #1D4ED8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.add-crew-btn:hover { background: #1a44c2; }
+
+/* ============================================================
+   KPI GRID
+   ============================================================ */
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+.kpi-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 9px; padding: 10px; text-align: center; }
+.kpi-val { font-size: 18px; font-weight: 700; color: #0F172A; }
 .kpi-lbl { font-size: 10px; color: #64748B; margin-top: 2px; font-weight: 600; }
-.hit-toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; background: #FEF2F2; border: 1.5px solid #FECACA; border-radius: 8px; }
-.hit-toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+/* ============================================================
+   HIT TOGGLE & FIELDS
+   ============================================================ */
+.hit-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #FEF2F2;
+  border: 1.5px solid #FECACA;
+  border-radius: 9px;
+}
+.hit-toggle-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #DC2626;
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+}
 .hit-toggle-label { font-size: 13px; font-weight: 700; color: #DC2626; cursor: pointer; user-select: none; }
-.hit-fields { display: none; margin-top: 10px; padding: 12px; background: #FFF1F2; border: 1.5px solid #FECACA; border-radius: 8px; }
+.hit-fields {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  background: #FFF1F2;
+  border: 1.5px solid #FECACA;
+  border-radius: 9px;
+}
 .hit-fields.active { display: block; }
 .hit-fields .form-label { color: #DC2626; }
 .hit-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
 .hit-field { margin-bottom: 8px; }
-.hit-field select, .hit-field input[type="text"], .hit-field input[type="number"] { width: 100%; padding: 9px 11px; font-size: 13px; border: 1.5px solid #FECACA; border-radius: 7px; background: #fff; color: #0F172A; -webkit-appearance: none; }
-.photo-upload-btn { display: block; width: 100%; padding: 13px; border: 2px dashed #FCA5A5; border-radius: 7px; background: #fff; color: #DC2626; font-size: 12px; font-weight: 700; text-align: center; cursor: pointer; }
+.hit-field select,
+.hit-field input[type="text"],
+.hit-field input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 13px;
+  border: 1.5px solid #FECACA;
+  border-radius: 8px;
+  background: #fff;
+  color: #0F172A;
+  -webkit-appearance: none;
+}
+
+/* ============================================================
+   PHOTO UPLOAD
+   ============================================================ */
+.photo-upload-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 2px dashed #FCA5A5;
+  border-radius: 8px;
+  background: #fff;
+  color: #DC2626;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
 .photo-upload-btn.uploaded { border-style: solid; border-color: #86EFAC; background: #F0FDF4; color: #16A34A; }
 .photo-upload-btn input[type="file"] { display: none; }
-.photo-preview { margin-top: 8px; max-width: 100%; border-radius: 8px; display: block; }
-.hit-banner { background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 9px; padding: 11px 12px; margin-top: 10px; }
+.photo-preview { margin-top: 8px; max-width: 100%; border-radius: 9px; display: block; }
+
+/* ============================================================
+   HIT BANNER
+   ============================================================ */
+.hit-banner {
+  background: #FEF2F2;
+  border: 1.5px solid #FCA5A5;
+  border-radius: 10px;
+  padding: 13px 14px;
+  margin-top: 12px;
+}
 .hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
 .hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
-.print-btn { width: 100%; padding: 12px; background: #fff; border: 1.5px solid #64748B; color: #475569; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
-.print-btn:active { background: #F1F5F9; }
+
+/* ============================================================
+   DAILY LOG
+   ============================================================ */
+.dl-log-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.dl-log-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-1px); border-color: #CBD5E1; }
+.dl-log-card:active { opacity: 0.92; transform: none; }
+.dl-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.dl-card-title { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; }
+.dl-card-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.dl-card-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.dl-card-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-label { font-size: 12px; font-weight: 700; color: #475569; }
+.equip-row select, .equip-row input { font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.equip-row select:focus, .equip-row input:focus { outline: none; border-color: #1D4ED8; }
+.service-flag { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.service-flag input[type="checkbox"] { width: 16px; height: 16px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+.bore-row-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #FAFBFD;
+}
+.bore-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.bore-row-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+
+.crew-time-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.crew-time-row:last-child { border-bottom: none; }
+.crew-time-row input, .crew-time-row select {
+  font-size: 12px; padding: 7px 8px; border: 1.5px solid #E2E8F0;
+  border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none;
+}
+.crew-time-row input:focus, .crew-time-row select:focus { outline: none; border-color: #1D4ED8; }
+.crew-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  padding: 0 0 6px;
+}
+.crew-col-hdr { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-label { font-size: 11px; font-weight: 600; color: #64748B; }
+.mat-input { font-size: 13px; padding: 9px 11px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.mat-input:focus { outline: none; border-color: #1D4ED8; }
+
+.dl-detail-section { margin-bottom: 14px; }
+.dl-detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F8FAFC; font-size: 13px; }
+.dl-detail-row:last-child { border-bottom: none; }
+.dl-detail-lbl { color: #64748B; font-weight: 500; }
+.dl-detail-val { color: #0F172A; font-weight: 600; text-align: right; max-width: 60%; }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+.login-screen {
+  display: none; position: fixed; inset: 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  z-index: 1000; align-items: center; justify-content: center;
+}
+.login-screen.active { display: flex; }
+.login-box {
+  background: #fff; border-radius: 20px; padding: 32px 28px;
+  width: 340px; max-width: 90vw;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.login-logo { text-align: center; margin-bottom: 8px; font-size: 36px; }
+.login-title { font-size: 20px; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: #94A3B8; text-align: center; margin-bottom: 24px; }
+.login-btn {
+  width: 100%; padding: 14px; background: #1D4ED8; color: #fff;
+  border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 8px; transition: background 0.15s;
+}
+.login-btn:hover { background: #1a44c2; }
+.login-err { font-size: 12px; color: #DC2626; text-align: center; margin-top: 8px; min-height: 18px; }
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 800;
+}
+.status-final { background: #F0FDF4; color: #166534; }
+.status-pending { background: #FFFBEB; color: #92400E; }
+
+/* ============================================================
+   USER PILL IN HEADER
+   ============================================================ */
+.user-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: #fff;
+  cursor: pointer; transition: background 0.15s;
+}
+.user-pill:hover { background: rgba(255,255,255,0.25); }
+
+/* ============================================================
+   SERVICE NOTES
+   ============================================================ */
+.svc-notes {
+  display: none; margin-top: 8px;
+  background: #FFF7ED; border: 1.5px solid #FED7AA;
+  border-radius: 8px; padding: 10px;
+}
+.svc-notes.active { display: block; }
+.svc-notes textarea {
+  width: 100%; font-size: 13px; padding: 8px 10px;
+  border: 1.5px solid #FED7AA; border-radius: 7px;
+  background: #fff; color: #0F172A; resize: none;
+  font-family: inherit;
+}
+.svc-notes textarea:focus { outline: none; border-color: #F97316; }
+
+/* ============================================================
+   VOICE BUTTON
+   ============================================================ */
+.voice-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px; background: #EFF6FF;
+  border: 1.5px solid #93C5FD; border-radius: 9px;
+  font-size: 12px; font-weight: 700; color: #1D4ED8;
+  cursor: pointer; transition: all 0.15s; margin-bottom: 8px;
+}
+.voice-btn:hover { background: #DBEAFE; }
+.voice-btn.recording { background: #FEF2F2; border-color: #FCA5A5; color: #DC2626; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* ============================================================
+   VIEW TOGGLE (admin profile grid/list)
+   ============================================================ */
+.view-toggle-btn {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #fff;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.view-toggle-btn.active { background: #1D4ED8; color: #fff; border-color: #1D4ED8; }
+.view-toggle-btn:hover:not(.active) { background: #F8FAFC; }
+
+/* ============================================================
+   FOREMAN GRID VIEW (admin only)
+   ============================================================ */
+.foreman-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.foreman-grid-card {
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.foreman-grid-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #93C5FD; }
+.foreman-grid-avatar {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #fff; font-weight: 800;
+}
+.foreman-grid-name { font-size: 13px; font-weight: 700; color: #0F172A; line-height: 1.3; }
+.foreman-grid-count { font-size: 11px; color: #64748B; font-weight: 500; }
+
+/* ============================================================
+   ARCHIVE ACCORDION
+   ============================================================ */
+.archive-toggle-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  margin-bottom: 8px;
+}
+.archive-toggle-btn:hover { background: #EFF6FF; border-color: #93C5FD; color: #1D4ED8; }
+.archive-toggle-btn.open { border-color: #93C5FD; color: #1D4ED8; background: #EFF6FF; }
+
+
+.pipe-pulled-banner {
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;
+  font-size: 13px; color: #92400E; font-weight: 600;
+  display: none;
+}
+.pipe-pulled-banner.active { display: block; }
 </style>
 </head>
 <body>
 
+<!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+<div class="login-screen active" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🔩</div>
+    <div class="login-title">B-Line</div>
+    <div class="login-sub">Directional Drilling — Phoenix, AZ</div>
+    <div class="form-group"><label class="form-label">Username</label><input class="form-input" id="login-user" placeholder="Username" autocapitalize="none" /></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="login-pass" placeholder="Password" /></div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
 <div class="header">
   <div class="header-brand">
-    <div class="header-icon">🔩</div>
-    <div>
-      <div class="header-title">B-Line Bore Profiles</div>
-      <div class="header-sub">Phoenix, AZ</div>
-    </div>
+    <!--
+      LOGO: Save your logo file as "logo.png" in the same folder as index.html.
+      It will appear here automatically. The fallback emoji shows if no logo is found.
+    -->
+    <img
+      src="logo.png"
+      alt="B-Line"
+      class="header-logo"
+      id="brand-logo"
+      onload="document.getElementById('brand-logo-fallback').style.display='none'"
+      onerror="this.style.display='none'"
+    />
+    <div class="header-logo-fallback" id="brand-logo-fallback">🔩</div>
+
   </div>
   <div class="header-right">
     <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('es')">ES</button>
+      <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="lang-es" onclick="setLang('es')">ES</button>
     </div>
-    <button class="gear-btn" onclick="openAdmin()" title="Admin">⚙️</button>
+    <div class="user-pill" id="userPill" onclick="doLogout()" title="Tap to sign out">
+      <span id="userPillName">—</span> <span style="opacity:0.6;">✕</span>
+    </div>
+    <button class="gear-btn" id="gearBtn" onclick="openAdmin()" title="Admin" style="display:none;">⚙️</button>
   </div>
 </div>
 
+<!-- ============================================================
+     NAV
+     ============================================================ -->
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
-  <button class="nav-btn" onclick="showScreen('new')">+ New</button>
+  <button class="nav-btn active" onclick="showScreen('profiles')" data-en="Profiles" data-es="Perfiles">Profiles</button>
+  <button class="nav-btn" onclick="showScreen('dailylog')" data-en="Worksheets" data-es="Hojas">Worksheets</button>
 </div>
 
-<!-- PROFILES -->
+<!-- ============================================================
+     PROFILES SCREEN
+     ============================================================ -->
 <div id="screen-profiles" class="screen active">
+  <div class="section-header">
+    <div class="section-title" data-en="Bore Profiles" data-es="Perfiles de Perforación">Bore Profiles</div>
+    <button class="add-crew-btn" onclick="showScreen('new')" data-en="+ New Profile" data-es="+ Nuevo Perfil">+ New Profile</button>
+  </div>
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input class="search-input" id="searchInput" placeholder="Search address, customer, foreman..." oninput="filterProfiles()" />
   </div>
+  <!-- View toggle (admin only) -->
+  <div id="profileViewToggle" style="display:none;margin-bottom:14px;gap:8px;">
+    <button class="view-toggle-btn active" id="viewListBtn" onclick="setProfileView('list')">☰ List</button>
+    <button class="view-toggle-btn" id="viewGridBtn" onclick="setProfileView('grid')">⊞ By Foreman</button>
+  </div>
   <div id="profilesList"><div class="loading">Loading profiles...</div></div>
+  <!-- Archived profiles accordion -->
+  <div id="archivedSection" style="display:none;margin-top:8px;">
+    <button class="archive-toggle-btn" onclick="toggleArchive()" id="archiveToggleBtn">
+      📦 Older profiles (1+ months) <span id="archiveCount"></span> ▼
+    </button>
+    <div id="archivedList" style="display:none;"></div>
+  </div>
 </div>
 
-<!-- NEW PROFILE -->
+<!-- ============================================================
+     NEW PROFILE SCREEN
+     ============================================================ -->
 <div id="screen-new" class="screen">
   <div class="stage-bar">
     <div class="stage-pill active" id="sp1" onclick="goToStage(1)">1. Project Info</div>
@@ -235,7 +1165,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
         <div class="form-group">
           <label class="form-label">Total footage</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-footage" placeholder="0" />
+            <input type="number" id="f-footage" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn active" id="footageUnitFt" onclick="setUnit('footage','ft')">ft</button>
             </div>
@@ -259,7 +1189,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
         <div class="form-group">
           <label class="form-label">Entry depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-entrydepth" placeholder="0" />
+            <input type="number" id="f-entrydepth" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn" id="entryUnitIn" onclick="setUnit('entry','in')">in</button>
               <button class="unit-btn active" id="entryUnitFt" onclick="setUnit('entry','ft')">ft</button>
@@ -269,7 +1199,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
         <div class="form-group">
           <label class="form-label">Exit depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-exitdepth" placeholder="0" />
+            <input type="number" id="f-exitdepth" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn" id="exitUnitIn" onclick="setUnit('exit','in')">in</button>
               <button class="unit-btn active" id="exitUnitFt" onclick="setUnit('exit','ft')">ft</button>
@@ -286,7 +1216,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
   <div id="stage2" style="display:none;">
     <div class="card">
       <div class="card-title">Utility Crossings — Pothole Log</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;">Log each utility in order from machine to pit. Enter depths in inches and distance from machine in feet.</div>
+      <div style="font-size:11px;color:#888;margin-bottom:12px;">Log each utility in order from machine to pit. Enter depths in inches and distance from machine in feet.</div>
       <div class="col-headers">
         <div class="col-header">UTILITY TYPE</div>
         <div class="col-header">TOP (in)</div>
@@ -303,7 +1233,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
   <div id="stage3" style="display:none;">
     <div class="card">
       <div class="card-title">Bore Depth at Each Crossing</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;">Enter the actual bore depth at each utility crossing. Minimum 24" clearance required from bottom of utility.</div>
+      <div style="font-size:11px;color:#888;margin-bottom:12px;">Enter the actual bore depth at each utility crossing. Minimum 24" clearance required from bottom of utility.</div>
       <div id="finalizeList"></div>
     </div>
     <div class="card">
@@ -312,7 +1242,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
         <div class="form-group">
           <label class="form-label">Max bore depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-actualdepth" placeholder="0" oninput="updatePathViz()" />
+            <input type="number" id="f-actualdepth" placeholder="0 INCHES" oninput="updatePathViz()" />
             <div class="unit-toggle">
               <button class="unit-btn active" id="actualUnitIn" onclick="setUnit('actual','in')">in</button>
               <button class="unit-btn" id="actualUnitFt" onclick="setUnit('actual','ft')">ft</button>
@@ -343,13 +1273,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
   </div>
 </div>
 
-<!-- DETAIL -->
+<!-- ============================================================
+     DETAIL SCREEN
+     ============================================================ -->
 <div id="screen-detail" class="screen">
   <button class="back-btn" onclick="goBack()">← Back</button>
   <div id="detailContent"></div>
 </div>
 
-<!-- ADMIN -->
+<!-- ============================================================
+     ADMIN SCREEN
+     ============================================================ -->
 <div id="screen-admin" class="screen">
   <button class="back-btn" onclick="showScreen('profiles')">← Back</button>
   <div class="section-header">
@@ -358,6 +1292,271 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI'
   </div>
   <div id="crewList"><div class="loading">Loading crews...</div></div>
 </div>
+
+<!-- ============================================================
+     DAILY LOG — LIST SCREEN
+     ============================================================ -->
+<div id="screen-dailylog" class="screen">
+  <div class="section-header">
+    <div class="section-title" data-en="Daily Worksheets" data-es="Hojas Diarias">Daily Worksheets</div>
+    <button class="add-crew-btn" onclick="showScreen('newlog')" data-en="+ New" data-es="+ Nueva">+ New</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="logSearchInput" placeholder="Search customer, foreman, address..." oninput="filterLogs()" />
+  </div>
+  <!-- View toggle (admin only) -->
+  <div id="logViewToggle" style="display:none;margin-bottom:14px;gap:8px;">
+    <button class="view-toggle-btn active" id="logViewListBtn" onclick="setLogView('list')">☰ List</button>
+    <button class="view-toggle-btn" id="logViewGridBtn" onclick="setLogView('grid')">⊞ By Foreman</button>
+  </div>
+  <div id="logsList"><div class="loading">Loading logs...</div></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — NEW ENTRY SCREEN
+     ============================================================ -->
+<div id="screen-newlog" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Back</button>
+  <div class="pipe-pulled-banner" id="pipe-pulled-banner"></div>
+
+  <!-- Job Header -->
+  <div class="card">
+    <div class="card-title">Job Information</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="dl-date" /></div>
+      <div class="form-group">
+        <label class="form-label">Prevailing Wages</label>
+        <select class="form-input" id="dl-prevwage">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="dl-customer" placeholder="Customer name" /></div>
+    <div class="form-group"><label class="form-label">Job Address</label><input class="form-input" id="dl-address" placeholder="Street address" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">City, State &amp; Zip</label><input class="form-input" id="dl-city" placeholder="Phoenix, AZ" /></div>
+      <div class="form-group"><label class="form-label">Production Goal (ft)</label><input class="form-input" type="number" id="dl-goal" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">PO #</label><input class="form-input" id="dl-po" placeholder="Optional" /></div>
+      <div class="form-group"><label class="form-label">Blue Stake #</label><input class="form-input" id="dl-bluestake" placeholder="Optional" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Time On Site</label><input class="form-input" type="time" id="dl-timeon" /></div>
+      <div class="form-group"><label class="form-label">Time Off Site</label><input class="form-input" type="time" id="dl-timeoff" /></div>
+    </div>
+  </div>
+
+  <!-- Crew -->
+  <div class="card">
+    <div class="card-title" data-en="Employees On Site" data-es="Empleados en Sitio">Employees On Site</div>
+    <div id="dl-crew-rows">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Role / Name" data-es="Rol / Nombre">Role / Name</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Employee" data-es="Empleado">Employee</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Approved" data-es="Aprobado">Approved</div>
+      </div>
+      <!-- Drill Operator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="DRILL OPERATOR" data-es="OPERADOR">DRILL OPERATOR</div>
+        <input class="form-input" id="dl-crew-drill" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-drill" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Locator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LOCATOR" data-es="LOCALIZADOR">LOCATOR</div>
+        <input class="form-input" id="dl-crew-locator" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-locator" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Laborers -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 1" data-es="OBRERO 1">LABORER 1</div>
+        <input class="form-input" id="dl-crew-lab1" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab1" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 2" data-es="OBRERO 2">LABORER 2</div>
+        <input class="form-input" id="dl-crew-lab2" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab2" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 3" data-es="OBRERO 3">LABORER 3</div>
+        <input class="form-input" id="dl-crew-lab3" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab3" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Potholer -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="POTHOLER" data-es="PERFORADOR">POTHOLER</div>
+        <input class="form-input" id="dl-crew-potholer" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-potholer" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label" data-en="Job Supervisor" data-es="Supervisor">Job Supervisor</label>
+      <input class="form-input" id="dl-supervisor" placeholder="Supervisor name" />
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="card">
+    <div class="card-title" data-en="Equipment On Site" data-es="Equipo en Sitio">Equipment On Site</div>
+    <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;padding-bottom:6px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;"></div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Unit #" data-es="Unidad #">Unit #</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Start HR" data-es="HR Inicio">Start HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="End HR" data-es="HR Fin">End HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Service?" data-es="¿Servicio?">Service?</div>
+    </div>
+
+    <!-- DRILL -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">DRILL</div>
+        <select class="form-input" id="eq-drill-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('drill')">
+          <option value="">Select...</option>
+          <option>D165</option><option>D167</option><option>D168</option><option>D174</option>
+          <option>D176</option><option>D177</option><option>D178</option><option>D180</option>
+          <option>D181</option><option>D182</option><option>D183</option><option>D184</option>
+          <option>D185</option><option>D186</option><option>D187</option><option>D188</option>
+          <option>D189</option><option>D190</option><option>D191</option>
+        </select>
+        <input class="form-input" type="number" id="eq-drill-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-drill-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-drill-svc" onchange="toggleSvcNotes('drill')" /><label for="eq-drill-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-drill"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-drill" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- PICKUP -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">PICKUP</div>
+        <select class="form-input" id="eq-pickup-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('pickup')">
+          <option value="">Select...</option>
+          <option>434</option><option>435</option><option>437</option><option>442</option>
+          <option>443</option><option>445</option><option>446</option><option>447</option>
+          <option>449</option><option>450</option><option>451</option><option>452</option>
+          <option>456</option><option>457</option><option>459</option><option>461</option>
+          <option>463</option><option>464</option><option>465</option><option>466</option>
+        </select>
+        <input class="form-input" type="number" id="eq-pickup-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-pickup-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-pickup-svc" onchange="toggleSvcNotes('pickup')" /><label for="eq-pickup-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-pickup"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-pickup" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- VAC -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">VAC</div>
+        <select class="form-input" id="eq-vac-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('vac')">
+          <option value="">Select...</option>
+          <option>V341</option><option>V343</option><option>V348</option><option>V349</option>
+          <option>V352</option><option>V353</option><option>V354</option><option>V357</option>
+          <option>V358</option><option>V360</option><option>V361</option><option>V362</option>
+          <option>V363</option><option>V364</option><option>V365</option><option>V366</option>
+          <option>623</option><option>624</option><option>625</option><option>626</option>
+          <option>628</option><option>629</option><option>630</option><option>631</option>
+        </select>
+        <input class="form-input" type="number" id="eq-vac-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-vac-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-vac-svc" onchange="toggleSvcNotes('vac')" /><label for="eq-vac-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-vac"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-vac" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- SEMI -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">SEMI</div>
+        <select class="form-input" id="eq-semi-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('semi')">
+          <option value="">Select...</option>
+          <option>520</option><option>523</option><option>529</option><option>531</option>
+          <option>532</option><option>533</option><option>534</option><option>537</option>
+          <option>539</option><option>541</option><option>542</option><option>543</option>
+          <option>544</option><option>545</option><option>546</option>
+        </select>
+        <input class="form-input" type="number" id="eq-semi-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-semi-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-semi-svc" onchange="toggleSvcNotes('semi')" /><label for="eq-semi-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-semi"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-semi" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- TRAILER -->
+    <div style="padding:8px 0;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">TRAILER</div>
+        <select class="form-input" id="eq-trailer-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('trailer')">
+          <option value="">Select...</option>
+          <option>T262</option><option>T263</option><option>T265</option><option>T266</option>
+          <option>T267</option><option>T268</option><option>T270</option><option>T271</option>
+          <option>T272</option><option>T273</option><option>T275</option><option>T276</option>
+          <option>T277</option><option>T278</option><option>T279</option><option>T280</option>
+          <option>T281</option><option>T282</option><option>T283</option><option>T284</option>
+          <option>T285</option><option>T286</option>
+          <option>RT901</option><option>RT902</option><option>RT903</option><option>RT904</option>
+          <option>RT905</option><option>RT906</option><option>RT907</option><option>RT908</option>
+          <option>RT909</option><option>RT910</option><option>RT911</option><option>RT912</option>
+          <option>RT913</option><option>RT914</option>
+        </select>
+        <input class="form-input" type="number" id="eq-trailer-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-trailer-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-trailer-svc" onchange="toggleSvcNotes('trailer')" /><label for="eq-trailer-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-trailer"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-trailer" placeholder="Describe the issue..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- Materials -->
+  <div class="card">
+    <div class="card-title">Job Materials</div>
+    <div class="mat-grid">
+      <div class="mat-item"><label class="mat-label">Bentonite (bags)</label><input class="mat-input" type="number" id="mat-bentonite" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Asphalt Patch (bags)</label><input class="mat-input" type="number" id="mat-asphalt" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Soda Ash (bags)</label><input class="mat-input" type="number" id="mat-sodaash" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">A/B</label><input class="mat-input" id="mat-ab" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Soap (gal)</label><input class="mat-input" type="number" id="mat-soap" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Slurry</label><input class="mat-input" id="mat-slurry" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Polymer (gal)</label><input class="mat-input" type="number" id="mat-polymer" placeholder="0" /></div>
+    </div>
+  </div>
+
+  <!-- Bore Log -->
+  <div class="card">
+    <div class="card-title" data-en="Bore Log" data-es="Registro de Perforación">Bore Log</div>
+    <div id="dl-bore-rows"></div>
+    <button class="add-btn" onclick="addBoreRow()" data-en="+ Add bore" data-es="+ Agregar perforación">+ Add bore</button>
+  </div>
+
+  <!-- Comments -->
+  <div class="card">
+    <div class="card-title" data-en="Comments" data-es="Comentarios">Comments</div>
+    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤 <span data-en="Tap to speak" data-es="Toca para hablar">Tap to speak</span></button>
+    <textarea class="form-input" rows="3" id="dl-comments" placeholder="Notes, issues, instructions..."></textarea>
+  </div>
+
+  <div class="form-group" style="padding:0 0 8px;">
+    <label class="form-label">Invoice #</label>
+    <input class="form-input" id="dl-invoice" placeholder="Optional" />
+  </div>
+
+  <button class="save-btn" onclick="saveDailyLog()">Save Daily Worksheet</button>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — DETAIL SCREEN
+     ============================================================ -->
+<div id="screen-logdetail" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Daily Logs</button>
+  <div id="logDetailContent"></div>
+</div>
+
+
 
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
@@ -401,44 +1600,259 @@ const GOOGLE_MAPS_KEY = 'AIzaSyBf3H0wMo7tQI07VjFw1aAaKlzEUGsph7o';
 const ADMIN_PIN = '1234';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// ============================================================
+// STATE
+// ============================================================
 let lang = 'en';
-let crossings = [];
-let crossingCount = 0;
-let currentStage = 1;
+let crossings = [], crossingCount = 0, currentStage = 1;
 let prevScreen = 'profiles';
-let allProfiles = [];
-let allCrews = [];
-let currentProfileId = null;
+let allProfiles = [], allCrews = [], allLogs = [];
+let currentProfileId = null, currentLogId = null;
 let adminAction = null;
 let machineLat = null, machineLng = null, pitLat = null, pitLng = null;
 let unitStates = { footage:'ft', entry:'ft', exit:'ft', actual:'in' };
+let dlBoreCount = 0, dlBoreRows = [];
+let currentUser = null; // { id, email, username, role }
+let voiceRecognition = null, voiceActive = false;
 
-function setUnit(field, unit) {
-  unitStates[field] = unit;
-  ['in','ft'].forEach(u => {
-    const id = field+'Unit'+u.charAt(0).toUpperCase()+u.slice(1);
-    const btn = document.getElementById(id);
-    if(btn) btn.classList.toggle('active', u===unit);
+// ============================================================
+// TRANSLATION
+// ============================================================
+const T = {
+  en: {
+    'search_placeholder': 'Search address, customer, foreman...',
+    'log_search_placeholder': 'Search customer, foreman, address...',
+    'no_profiles': 'No profiles yet',
+    'no_profiles_sub': 'Tap + New Profile to create your first bore profile',
+    'pipe_pulled_warning': '⚠ Pipe pulled — a matching bore profile is required before this worksheet can be marked Final.',
+    'status_final': '✓ Final',
+    'status_pending': '⏳ Pending',
+    'save_worksheet': 'Save Daily Worksheet',
+    'saving': 'Saving...',
+    'worksheet_saved': 'Worksheet saved!',
+    'sign_out': 'Sign out',
+    'bore_profiles': 'Bore Profiles',
+    'new_profile': '+ New Profile',
+    'profiles_tab': 'Profiles',
+    'worksheets_tab': 'Worksheets',
+    'project_info': 'Project Information',
+    'date_label': 'Date',
+    'job_no': 'Job no.',
+    'customer': 'Customer',
+    'address': 'Address / Location',
+    'crew_foreman': 'Crew / Foreman',
+    'ticket_811': '811 Ticket #',
+    'gps_pins': 'GPS Pins',
+    'machine_side': 'Machine side (start)',
+    'pit_side': 'Pit side (end)',
+    'capture_machine': '📍 Tap to capture machine location',
+    'capture_pit': '📍 Tap to capture pit location',
+    'bore_details': 'Bore Details',
+    'total_footage': 'Total footage',
+    'product_installed': 'Product installed',
+    'direction': 'Direction',
+    'ground_type': 'Ground type',
+    'entry_depth': 'Entry depth',
+    'exit_depth': 'Exit depth',
+    'next_potholes': 'Next — Log Potholes →',
+    'next_finalize': 'Next — Finalize Profile →',
+    'save_profile': 'Save Complete Profile',
+    'no_worksheets': 'No worksheets yet',
+    'no_worksheets_sub': 'Tap + New to create your first daily worksheet',
+    'older_profiles': '📦 Older profiles (1+ months)',
+    'by_foreman': '⊞ By Foreman',
+    'list_view': '☰ List',
+  },
+  es: {
+    'search_placeholder': 'Buscar dirección, cliente, capataz...',
+    'log_search_placeholder': 'Buscar cliente, capataz, dirección...',
+    'no_profiles': 'Sin perfiles aún',
+    'no_profiles_sub': 'Toca + Nuevo Perfil para crear tu primer perfil',
+    'pipe_pulled_warning': '⚠ Tubería instalada — se requiere un perfil coincidente antes de marcar como Final.',
+    'status_final': '✓ Final',
+    'status_pending': '⏳ Pendiente',
+    'save_worksheet': 'Guardar Hoja Diaria',
+    'saving': 'Guardando...',
+    'worksheet_saved': '¡Hoja guardada!',
+    'sign_out': 'Cerrar sesión',
+    'bore_profiles': 'Perfiles de Perforación',
+    'new_profile': '+ Nuevo Perfil',
+    'profiles_tab': 'Perfiles',
+    'worksheets_tab': 'Hojas',
+    'project_info': 'Información del Proyecto',
+    'date_label': 'Fecha',
+    'job_no': 'N° de Trabajo',
+    'customer': 'Cliente',
+    'address': 'Dirección / Ubicación',
+    'crew_foreman': 'Cuadrilla / Capataz',
+    'ticket_811': 'Boleto 811 #',
+    'gps_pins': 'Pines GPS',
+    'machine_side': 'Lado máquina (inicio)',
+    'pit_side': 'Lado pozo (fin)',
+    'capture_machine': '📍 Toca para capturar ubicación de máquina',
+    'capture_pit': '📍 Toca para capturar ubicación del pozo',
+    'bore_details': 'Detalles de Perforación',
+    'total_footage': 'Metraje total',
+    'product_installed': 'Producto instalado',
+    'direction': 'Dirección',
+    'ground_type': 'Tipo de suelo',
+    'entry_depth': 'Profundidad de entrada',
+    'exit_depth': 'Profundidad de salida',
+    'next_potholes': 'Siguiente — Registrar Baches →',
+    'next_finalize': 'Siguiente — Finalizar Perfil →',
+    'save_profile': 'Guardar Perfil Completo',
+    'no_worksheets': 'Sin hojas aún',
+    'no_worksheets_sub': 'Toca + Nueva para crear tu primera hoja diaria',
+    'older_profiles': '📦 Perfiles más antiguos (1+ mes)',
+    'by_foreman': '⊞ Por Capataz',
+    'list_view': '☰ Lista',
+  }
+};
+
+function t(key) { return T[lang]?.[key] || T.en[key] || key; }
+
+function applyLang() {
+  // Handle data-en/data-es tagged elements
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = lang === 'es' ? (el.getAttribute('data-es') || el.getAttribute('data-en')) : el.getAttribute('data-en');
   });
-  if(field==='actual') updatePathViz();
+
+  // Placeholders
+  const si = document.getElementById('searchInput');
+  if(si) si.placeholder = t('search_placeholder');
+  const lsi = document.getElementById('logSearchInput');
+  if(lsi) lsi.placeholder = t('log_search_placeholder');
+
+  // Profiles screen header
+  const profTitle = document.querySelector('#screen-profiles .section-title');
+  if(profTitle) profTitle.textContent = t('bore_profiles');
+  const newProfBtn = document.querySelector('#screen-profiles .add-crew-btn');
+  if(newProfBtn) newProfBtn.textContent = t('new_profile');
+
+  // View toggle buttons
+  const listBtn = document.getElementById('viewListBtn');
+  if(listBtn) listBtn.textContent = t('list_view');
+  const gridBtn = document.getElementById('viewGridBtn');
+  if(gridBtn) gridBtn.textContent = t('by_foreman');
+
+  // Archive toggle
+  const archBtn = document.getElementById('archiveToggleBtn');
+  if(archBtn) {
+    const count = document.getElementById('archiveCount');
+    const countText = count ? count.textContent : '';
+    archBtn.innerHTML = `${t('older_profiles')} <span id="archiveCount">${countText}</span> ${archBtn.innerHTML.includes('▲')?'▲':'▼'}`;
+  }
+
+  // Nav tabs
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const navKeys = ['profiles_tab','worksheets_tab'];
+  navBtns.forEach((btn,i) => { if(navKeys[i]) btn.textContent = t(navKeys[i]); });
+
+  // New profile form buttons
+  const nextPoth = document.querySelector('#stage1 .next-btn');
+  if(nextPoth) nextPoth.textContent = t('next_potholes');
+  const nextFin = document.querySelector('#stage2 .next-btn');
+  if(nextFin) nextFin.textContent = t('next_finalize');
+  const saveProf = document.querySelector('#screen-new .save-btn');
+  if(saveProf) saveProf.textContent = t('save_profile');
+
+  // Pin buttons (only if not already captured)
+  const mb = document.getElementById('pinMachineBtn');
+  if(mb && !mb.classList.contains('pinned')) mb.textContent = t('capture_machine');
+  const pb = document.getElementById('pinPitBtn');
+  if(pb && !pb.classList.contains('pinned')) pb.textContent = t('capture_pit');
 }
 
-function toInches(val, field) {
-  if(!val && val!==0) return null;
-  const n = parseFloat(val);
-  if(isNaN(n)) return null;
-  return unitStates[field]==='ft' ? n*12 : n;
+function setLang(l) {
+  lang = l;
+  document.getElementById('lang-en').classList.toggle('active', l==='en');
+  document.getElementById('lang-es').classList.toggle('active', l==='es');
+  applyLang();
 }
 
+// ============================================================
+// AUTH
+// ============================================================
+async function doLogin() {
+  const username = document.getElementById('login-user').value.trim().toLowerCase();
+  const password = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+  if(!username || !password) { errEl.textContent = 'Enter username and password.'; return; }
+
+  // Look up user in app_users table
+  const { data: users, error } = await sb.from('app_users')
+    .select('*').eq('username', username).limit(1);
+
+  if(error || !users?.length) { errEl.textContent = 'Invalid username or password.'; return; }
+  const user = users[0];
+
+  // Simple password check (plaintext for now — upgrade to hashed later)
+  if(user.password !== password) { errEl.textContent = 'Invalid username or password.'; return; }
+
+  currentUser = { id: user.id, username: user.username, role: user.role, display_name: user.display_name || user.username };
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('userPillName').textContent = currentUser.display_name;
+
+  // Show/hide gear based on role
+  const isAdmin = currentUser.role === 'admin';
+  document.getElementById('gearBtn').style.display = isAdmin ? 'block' : 'none';
+
+  // Hide admin-only nav items for foremen
+  applyRoleVisibility();
+  await loadProfiles();
+  await loadCrews();
+  showScreen('profiles');
+}
+
+function doLogout() {
+  if(!confirm('Sign out?')) return;
+  currentUser = null;
+  document.getElementById('loginScreen').classList.add('active');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-err').textContent = '';
+}
+
+function applyRoleVisibility() {
+  const isAdmin = currentUser?.role === 'admin';
+  const toggle = document.getElementById('profileViewToggle');
+  if(toggle) toggle.style.display = isAdmin ? 'flex' : 'none';
+  const logToggle = document.getElementById('logViewToggle');
+  if(logToggle) logToggle.style.display = isAdmin ? 'flex' : 'none';
+  renderProfiles(allProfiles);
+}
+
+function requireAdmin(action) {
+  if(currentUser?.role === 'admin') {
+    adminAction = action;
+    if(action === 'delete') document.getElementById('deleteModal').style.display='flex';
+    if(action === 'edit') openEditModal();
+    if(action === 'admin') showScreen('admin');
+    return;
+  }
+  adminAction = action;
+  document.getElementById('adminPinInput').value='';
+  document.getElementById('adminModal').style.display='flex';
+}
+
+// ============================================================
+// SCREEN ROUTING
+// ============================================================
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const idx = ['profiles','new'].indexOf(name);
+  const el = document.getElementById('screen-'+name);
+  if(el) el.classList.add('active');
+  const navMap = ['profiles','dailylog'];
+  const idx = navMap.indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
   if(name==='admin') loadCrews();
-  if(name!=='detail') prevScreen=name;
+  if(name==='dailylog') loadLogs();
+  if(name==='newlog') resetLogForm();
+  if(!['detail','logdetail'].includes(name)) prevScreen=name;
+  applyLang();
 }
 
 function goBack() { showScreen(prevScreen); }
@@ -450,13 +1864,42 @@ function showToast(msg) {
 }
 
 function setDate() {
-  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  const el = document.getElementById('f-date');
+  if(el) el.value = new Date().toISOString().split('T')[0];
 }
 
 function openAdmin() {
+  if(currentUser?.role === 'admin') { showScreen('admin'); return; }
   adminAction = 'admin';
   document.getElementById('adminPinInput').value='';
   document.getElementById('adminModal').style.display='flex';
+}
+
+// ============================================================
+// BORE PROFILE FORM
+// ============================================================
+function setUnit(field, unit) {
+  unitStates[field] = unit;
+  ['in','ft'].forEach(u => {
+    const id = field+'Unit'+u.charAt(0).toUpperCase()+u.slice(1);
+    const btn = document.getElementById(id);
+    if(btn) btn.classList.toggle('active', u===unit);
+  });
+  // Update placeholder text to reflect selected unit
+  const inputMap = { footage:'f-footage', entry:'f-entrydepth', exit:'f-exitdepth', actual:'f-actualdepth' };
+  const inputEl = document.getElementById(inputMap[field]);
+  if(inputEl) {
+    if(unit === 'in') inputEl.placeholder = '0 INCHES';
+    else if(unit === 'ft') inputEl.placeholder = '0 FEET';
+  }
+  if(field==='actual') updatePathViz();
+}
+
+function toInches(val, field) {
+  if(!val && val!==0) return null;
+  const n = parseFloat(val);
+  if(isNaN(n)) return null;
+  return unitStates[field]==='ft' ? n*12 : n;
 }
 
 function getPin(side) {
@@ -493,9 +1936,27 @@ function closePinModal() { document.getElementById('pinModal').style.display='no
 function populateCrewDropdown() {
   const sel = document.getElementById('f-foreman');
   if(!sel) return;
-  sel.innerHTML = allCrews.length
-    ? allCrews.map(c=>`<option value="${c.id}">${c.crew_number ? 'Crew '+c.crew_number+' — ' : ''}${c.foreman_name}</option>`).join('')
-    : '<option value="">No crews — add in admin</option>';
+
+  if(currentUser?.role === 'foreman') {
+    // Auto-select this foreman's crew — find by matching display_name
+    const myCrew = allCrews.find(c => c.foreman_name === currentUser.display_name)
+      || allCrews.find(c => c.foreman_name?.toLowerCase() === currentUser.username?.toLowerCase());
+    if(myCrew) {
+      sel.innerHTML = `<option value="${myCrew.id}">${myCrew.crew_number ? 'Crew '+myCrew.crew_number+' — ' : ''}${myCrew.foreman_name}</option>`;
+    } else {
+      sel.innerHTML = `<option value="">${currentUser.display_name}</option>`;
+    }
+    sel.disabled = true;
+    sel.style.opacity = '0.7';
+    sel.style.background = '#F8FAFC';
+  } else {
+    sel.disabled = false;
+    sel.style.opacity = '';
+    sel.style.background = '';
+    sel.innerHTML = allCrews.length
+      ? allCrews.map(c=>`<option value="${c.id}">${c.crew_number ? 'Crew '+c.crew_number+' — ' : ''}${c.foreman_name}</option>`).join('')
+      : '<option value="">No crews — add in admin</option>';
+  }
 }
 
 function addCrossing() {
@@ -633,7 +2094,7 @@ function updatePathViz() {
   svg+=`<text x="${padL}" y="${H-4}" font-size="8" fill="#888">Machine</text>`;
   svg+=`<text x="${W-padR-18}" y="${H-4}" font-size="8" fill="#888">Pit</text>`;
   svg+=`<circle cx="${padL}" cy="${toSvgY(entryIn)}" r="4" fill="#166534"/>`;
-  svg+=`<circle cx="${W-padR}" cy="${toSvgY(exitIn)}" r="4" fill="#166534"/>`;
+  svg+=`<circle cx="${W-padR}" cy="${toSvgY(exitIn)}" r="4" fill="#166634"/>`;
   svg+='</svg>';
   wrap.innerHTML=svg;
 }
@@ -694,7 +2155,8 @@ function resetForm() {
 }
 
 async function saveProfile() {
-  const btn = document.querySelector('.save-btn');
+  const btn = document.querySelector('#screen-new .save-btn');
+  if(!btn) return;
   btn.textContent='Saving...'; btn.disabled=true;
   const active = crossings.filter(c=>c&&c.type).sort((a,b)=>(parseFloat(a.dist)||0)-(parseFloat(b.dist)||0));
   const finalCrossings = active.map((c,i)=>({
@@ -706,11 +2168,14 @@ async function saveProfile() {
   const foremanDisplay = selectedCrew
     ? (selectedCrew.crew_number?'Crew '+selectedCrew.crew_number+' — ':'')+selectedCrew.foreman_name
     : foremanSel.options[foremanSel.selectedIndex]?.text||'';
+  const profileDate = document.getElementById('f-date').value;
+  const profileAddr = document.getElementById('f-address').value;
+
   const profile = {
-    date: document.getElementById('f-date').value,
+    date: profileDate,
     job_number: document.getElementById('f-jobno').value,
     customer: document.getElementById('f-customer').value,
-    address: document.getElementById('f-address').value,
+    address: profileAddr,
     foreman: foremanDisplay,
     ticket_811: document.getElementById('f-811').value,
     total_footage: parseFloat(document.getElementById('f-footage').value)||null,
@@ -727,19 +2192,62 @@ async function saveProfile() {
     longitude: machineLng,
     pit_latitude: pitLat,
     pit_longitude: pitLng,
+    created_by: currentUser?.username || null,
   };
-  const { error } = await sb.from('profiles').insert([profile]);
+
+  const { data: inserted, error } = await sb.from('profiles').insert([profile]).select().single();
   btn.textContent='Save Complete Profile'; btn.disabled=false;
   if(error) { showToast('Error saving — try again'); return; }
-  showToast('Profile saved!');
+
+  // Auto-link: find worksheets on same date with matching address
+  if(inserted?.id && profileDate && profileAddr) {
+    const linkedId = await autoLinkProfileToWorksheet(inserted.id, profileDate, profileAddr);
+    if(linkedId) {
+      // Update worksheet status to final now that profile exists
+      await sb.from('daily_logs').update({ status:'final', linked_profile_id: inserted.id })
+        .eq('id', linkedId);
+      // Update profile with linked worksheet id
+      await sb.from('profiles').update({ linked_worksheet_id: linkedId })
+        .eq('id', inserted.id);
+      showToast('Profile saved & linked to worksheet ✓');
+    } else {
+      showToast('Profile saved!');
+    }
+  } else {
+    showToast('Profile saved!');
+  }
+
   await loadProfiles();
   showScreen('profiles');
 }
 
+async function autoLinkProfileToWorksheet(profileId, date, address) {
+  // Find worksheets on same date that have pipe pulled and no linked profile yet
+  const { data: logs } = await sb.from('daily_logs')
+    .select('id,address,bores,status')
+    .eq('date', date)
+    .is('linked_profile_id', null);
+  if(!logs?.length) return null;
+  const addrNorm = (address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  for(const log of logs) {
+    const logAddr = (log.address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const hasPipe = (log.bores||[]).some(b=>b.pipe_pulled);
+    const minLen = Math.min(addrNorm.length, logAddr.length);
+    const overlap = minLen >= 4 && (addrNorm.slice(0,Math.min(8,minLen)) === logAddr.slice(0,Math.min(8,minLen)));
+    if(overlap && hasPipe) return log.id;
+  }
+  return null;
+}
+
 async function loadProfiles() {
-  const { data, error } = await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  let query = sb.from('profiles').select('*').order('created_at',{ascending:false});
+  // Foremen only see profiles they created
+  if(currentUser?.role === 'foreman') {
+    query = query.eq('created_by', currentUser.username);
+  }
+  const { data, error } = await query;
   if(error) return;
-  allProfiles=data||[];
+  allProfiles = data||[];
   renderProfiles(allProfiles);
 }
 
@@ -771,13 +2279,91 @@ function getTagClass(type) {
   return 't-gray';
 }
 
+let currentProfileView = 'list';
+
+function setProfileView(view) {
+  currentProfileView = view;
+  document.getElementById('viewListBtn').classList.toggle('active', view==='list');
+  document.getElementById('viewGridBtn').classList.toggle('active', view==='grid');
+  renderProfiles(allProfiles);
+}
+
+function toggleArchive() {
+  const list = document.getElementById('archivedList');
+  const btn = document.getElementById('archiveToggleBtn');
+  const isOpen = list.style.display !== 'none';
+  list.style.display = isOpen ? 'none' : 'block';
+  btn.classList.toggle('open', !isOpen);
+  btn.innerHTML = btn.innerHTML.replace(/[▼▲]/, isOpen ? '▼' : '▲');
+}
+
+function isOlderThanOneMonth(dateStr) {
+  if(!dateStr) return false;
+  const d = new Date(dateStr);
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - 1);
+  return d < cutoff;
+}
+
 function renderProfiles(profiles) {
-  const list=document.getElementById('profilesList');
-  if(!profiles||!profiles.length) {
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No profiles yet</div><div class="empty-sub">Tap + New to create your first bore profile</div></div>`;
+  const list = document.getElementById('profilesList');
+  const isAdmin = currentUser?.role === 'admin';
+
+  if(!profiles || !profiles.length) {
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_profiles')}</div><div class="empty-sub">${t('no_profiles_sub')}</div></div>`;
+    document.getElementById('archivedSection').style.display='none';
     return;
   }
-  list.innerHTML=profiles.map(p=>{
+
+  const recent = profiles.filter(p => !isOlderThanOneMonth(p.date));
+  const archived = profiles.filter(p => isOlderThanOneMonth(p.date));
+
+  // Grid view (admin only)
+  if(isAdmin && currentProfileView === 'grid') {
+    // Group by foreman
+    const groups = {};
+    profiles.forEach(p => {
+      const key = p.foreman || 'Unassigned';
+      if(!groups[key]) groups[key] = [];
+      groups[key].push(p);
+    });
+    const cards = Object.entries(groups).map(([foreman, profs]) => {
+      const initials = foreman.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase() || '?';
+      return `<div class="foreman-grid-card" onclick="filterByForeman('${foreman.replace(/'/g,"\\'")}')">
+        <div class="foreman-grid-avatar">${initials}</div>
+        <div class="foreman-grid-name">${foreman}</div>
+        <div class="foreman-grid-count">${profs.length} profile${profs.length!==1?'s':''}</div>
+      </div>`;
+    }).join('');
+    list.innerHTML = `<div class="foreman-grid">${cards}</div>`;
+    document.getElementById('archivedSection').style.display='none';
+    return;
+  }
+
+  // List view
+  list.innerHTML = renderProfileCards(recent);
+
+  // Archived section
+  if(archived.length) {
+    document.getElementById('archivedSection').style.display='block';
+    document.getElementById('archiveCount').textContent = `(${archived.length})`;
+    document.getElementById('archivedList').innerHTML = renderProfileCards(archived);
+  } else {
+    document.getElementById('archivedSection').style.display='none';
+  }
+}
+
+function filterByForeman(foreman) {
+  currentProfileView = 'list';
+  document.getElementById('viewListBtn').classList.add('active');
+  document.getElementById('viewGridBtn').classList.remove('active');
+  document.getElementById('searchInput').value = foreman;
+  filterProfiles();
+}
+
+function renderProfileCards(profiles) {
+  if(!profiles.length) return `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_profiles')}</div></div>`;
+  return profiles.map(p=>{
     const hasHit=(p.crossings||[]).some(c=>c&&c.hit);
     const tags=(p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
     const sub=[p.foreman,p.total_footage?p.total_footage+' ft':null,p.product].filter(Boolean).join(' · ');
@@ -816,7 +2402,7 @@ function renderCrews(crews) {
       <div class="crew-card-top">
         <div>
           <div class="crew-name">${c.foreman_name}</div>
-          <div class="crew-num">${c.crew_number?'Crew '+c.crew_number:''} ${c.machine_type?'· '+c.machine_type:''}</div>
+          <div class="crew-num">${c.crew_number?'Crew '+c.crew_number:''} ${c.assigned_drill?'· '+c.assigned_drill:''}</div>
         </div>
       </div>
       ${c.phone?`<div class="crew-meta">📞 ${c.phone}</div>`:''}
@@ -836,6 +2422,8 @@ function renderCrews(crews) {
 
 function openCrewModal(id) {
   const c = id ? allCrews.find(x=>x.id==id) : null;
+  const drillOpts = ['D165','D167','D168','D174','D176','D177','D178','D180','D181','D182','D183','D184','D185','D186','D187','D188','D189','D190','D191']
+    .map(d=>`<option value="${d}" ${c?.assigned_drill===d?'selected':''}>${d}</option>`).join('');
   const modal = document.createElement('div');
   modal.className='modal-overlay';
   modal.id='crewModal';
@@ -844,9 +2432,13 @@ function openCrewModal(id) {
       <div class="modal-title">${c?'Edit Crew':'Add Crew'}</div>
       <div class="form-group"><label class="form-label">Crew number</label><input class="form-input" id="crew-num" placeholder="e.g. 1" value="${c?.crew_number||''}" /></div>
       <div class="form-group"><label class="form-label">Foreman name</label><input class="form-input" id="crew-name" placeholder="Full name" value="${c?.foreman_name||''}" /></div>
+      <div class="form-group"><label class="form-label">Assigned Drill Unit</label>
+        <select class="form-input" id="crew-drill">
+          <option value="">None assigned</option>${drillOpts}
+        </select>
+      </div>
       <div class="form-group"><label class="form-label">Phone number</label><input class="form-input" id="crew-phone" placeholder="Optional" value="${c?.phone||''}" /></div>
       <div class="form-group"><label class="form-label">Hire date</label><input class="form-input" type="date" id="crew-hire" value="${c?.hire_date||''}" /></div>
-      <div class="form-group"><label class="form-label">Machine type</label><input class="form-input" id="crew-machine" placeholder="e.g. Vermeer D24x40" value="${c?.machine_type||''}" /></div>
       <div class="modal-btns" style="margin-top:8px;">
         <button class="modal-btn modal-cancel" onclick="closeCrewModal()">Cancel</button>
         <button class="modal-btn modal-confirm" onclick="saveCrew('${id||''}')">${c?'Save changes':'Add crew'}</button>
@@ -866,9 +2458,9 @@ async function saveCrew(id) {
   const data={
     crew_number: parseInt(document.getElementById('crew-num').value)||null,
     foreman_name: document.getElementById('crew-name').value,
+    assigned_drill: document.getElementById('crew-drill').value||null,
     phone: document.getElementById('crew-phone').value,
     hire_date: document.getElementById('crew-hire').value||null,
-    machine_type: document.getElementById('crew-machine').value,
   };
   let error;
   if(id) {
@@ -907,9 +2499,10 @@ function showDetail(id) {
     </div>`;
   }).join('');
 
+  const canEdit = currentUser?.role==='admin';
   document.getElementById('detailContent').innerHTML=`
-    <div style="font-size:16px;font-weight:600;color:#111;margin-bottom:2px;">${p.address||'No address'}</div>
-    <div style="font-size:12px;color:#888;margin-bottom:12px;">${[p.customer,p.foreman,p.date,p.job_number?'#'+p.job_number:''].filter(Boolean).join(' · ')}</div>
+    <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${p.address||'No address'}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">${[p.customer,p.foreman,p.date,p.job_number?'#'+p.job_number:''].filter(Boolean).join(' · ')}</div>
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-lbl">Total footage</div><div class="stat-val">${p.total_footage?p.total_footage+' ft':'—'}</div></div>
       <div class="stat-box"><div class="stat-lbl">Product</div><div class="stat-val">${p.product||'—'}</div></div>
@@ -918,13 +2511,18 @@ function showDetail(id) {
     </div>
     ${crossRows?`<div class="card"><div class="card-title">Utility crossings</div>${crossRows}</div>`:''}
     ${p.latitude?buildMapCard(p):''}
-    ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;">${p.notes}</div></div>`:''}
+    ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;line-height:1.6;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
-    <button class="print-btn" onclick="printProfile('${p.id}')">🖨️ Print / Save PDF</button>
-    <div class="admin-bar">
+    ${p.linked_worksheet_id ? `<div class="card"><div class="card-title">Linked Worksheet</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:13px;color:#555;">Daily worksheet on file</div>
+        <button onclick="viewLinkedWorksheet('${p.linked_worksheet_id}')" style="font-size:12px;font-weight:700;color:#1D4ED8;background:#EFF6FF;border:1.5px solid #93C5FD;border-radius:8px;padding:7px 14px;cursor:pointer;">View Worksheet →</button>
+      </div>
+    </div>` : `<div class="card" style="border-color:#FCD34D;background:#FFFBEB;"><div class="card-title" style="color:#92400E;">No Linked Worksheet</div><div style="font-size:12px;color:#92400E;">No daily worksheet is linked to this profile yet.</div></div>`}
+    ${canEdit?`<div class="admin-bar">
       <button class="edit-btn" onclick="requireAdmin('edit')">Edit Profile</button>
       <button class="delete-btn" onclick="requireAdmin('delete')">Delete</button>
-    </div>`;
+    </div>`:''}`;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-detail').classList.add('active');
   window.scrollTo(0,0);
@@ -969,19 +2567,13 @@ function buildMapCard(p) {
   const coordText=`Machine: ${p.latitude.toFixed(5)}, ${p.longitude.toFixed(5)}${hasPit?' · Pit: '+p.pit_latitude.toFixed(5)+', '+p.pit_longitude.toFixed(5):''}`;
   return `<div class="card">
     <div class="card-title">Bore Location</div>
-    <img src="${mapUrl}" style="width:100%;border-radius:8px;margin-bottom:8px;" alt="Bore location map" />
-    ${legend?`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">${legend}</div>`:''}
+    <img src="${mapUrl}" style="width:100%;border-radius:9px;margin-bottom:10px;" alt="Bore location map" />
+    ${legend?`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">${legend}</div>`:''}
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
       <div style="font-size:10px;color:#aaa;">${coordText}</div>
-      <a href="${streetViewUrl}" target="_blank" style="font-size:12px;font-weight:600;color:#1a56db;text-decoration:none;padding:6px 12px;border:1px solid #1a56db;border-radius:6px;white-space:nowrap;">Street View</a>
+      <a href="${streetViewUrl}" target="_blank" style="font-size:12px;font-weight:600;color:#1a56db;text-decoration:none;padding:6px 12px;border:1px solid #1a56db;border-radius:7px;white-space:nowrap;">Street View</a>
     </div>
   </div>`;
-}
-
-function requireAdmin(action) {
-  adminAction=action;
-  document.getElementById('adminPinInput').value='';
-  document.getElementById('adminModal').style.display='flex';
 }
 
 function closeAdminModal() { document.getElementById('adminModal').style.display='none'; }
@@ -1034,16 +2626,11 @@ function openEditModal() {
         <select class="form-input" id="edit-reamersize">
           <option value="">Select...</option>
           <option ${p.bit_size==='Head'?'selected':''}>Head</option>
-          <option ${p.bit_size==='6"'?'selected':''}>6"</option>
-          <option ${p.bit_size==='8"'?'selected':''}>8"</option>
-          <option ${p.bit_size==='10"'?'selected':''}>10"</option>
-          <option ${p.bit_size==='12"'?'selected':''}>12"</option>
-          <option ${p.bit_size==='14"'?'selected':''}>14"</option>
-          <option ${p.bit_size==='16"'?'selected':''}>16"</option>
-          <option ${p.bit_size==='18"'?'selected':''}>18"</option>
-          <option ${p.bit_size==='20"'?'selected':''}>20"</option>
-          <option ${p.bit_size==='22"'?'selected':''}>22"</option>
-          <option ${p.bit_size==='24"'?'selected':''}>24"</option>
+          <option ${p.bit_size==='6"'?'selected':''}>6"</option><option ${p.bit_size==='8"'?'selected':''}>8"</option>
+          <option ${p.bit_size==='10"'?'selected':''}>10"</option><option ${p.bit_size==='12"'?'selected':''}>12"</option>
+          <option ${p.bit_size==='14"'?'selected':''}>14"</option><option ${p.bit_size==='16"'?'selected':''}>16"</option>
+          <option ${p.bit_size==='18"'?'selected':''}>18"</option><option ${p.bit_size==='20"'?'selected':''}>20"</option>
+          <option ${p.bit_size==='22"'?'selected':''}>22"</option><option ${p.bit_size==='24"'?'selected':''}>24"</option>
         </select>
       </div>
       <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="3" id="edit-notes">${p.notes||''}</textarea></div>
@@ -1064,7 +2651,6 @@ async function saveEdit() {
   const btn=document.querySelector('#editModal .modal-confirm');
   btn.textContent='Saving...'; btn.disabled=true;
   const updates={
-    date: document.getElementById('edit-date').value,
     job_number: document.getElementById('edit-jobno').value,
     customer: document.getElementById('edit-customer').value,
     address: document.getElementById('edit-address').value,
@@ -1098,237 +2684,470 @@ async function confirmDelete() {
   showScreen('profiles');
 }
 
-function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
+// ============================================================
+// DAILY WORKSHEET
+// ============================================================
+function toggleSvcNotes(eq) {
+  const cb = document.getElementById('eq-'+eq+'-svc');
+  const notes = document.getElementById('svc-notes-'+eq);
+  if(notes) notes.classList.toggle('active', cb?.checked);
 }
 
-setDate();
-addCrossing();
-loadProfiles();
-loadCrews();
-
-// ─── PRINT / PDF ──────────────────────────────────────────────────────────────
-
-function buildBoreSvgForPrint(p) {
-  const entryIn = parseFloat(p.planned_depth) || 0;
-  const exitIn  = parseFloat(p.planned_depth) || 0;
-  const totalFt = parseFloat(p.total_footage) || 100;
-  const active  = (p.crossings || []).filter(c => c && c.type);
-  const W=700, H=180, padL=50, padR=20, padT=16, padB=32;
-  const drawW=W-padL-padR, drawH=H-padT-padB;
-  const points = [];
-  points.push({x:0, d:entryIn, label:null});
-  active.forEach((c,i) => {
-    const boreDepth = parseFloat(c.bore_depth_at_crossing) || null;
-    const dist = parseFloat(c.dist) || null;
-    const xFrac = (dist && totalFt) ? Math.min(dist/totalFt,1) : (i+1)/(active.length+1);
-    points.push({x:xFrac, d:boreDepth||(parseFloat(c.bot)||0)+24, label:c.type, bot:parseFloat(c.bot)||0, dist:c.dist, actualBore:boreDepth});
-  });
-  points.push({x:1, d:exitIn, label:null});
-  const maxD = Math.max(...points.map(p=>p.d), 24) + 12;
-  const toX = f => padL + f*drawW;
-  const toY = d => padT + (d/maxD)*drawH;
-  const polyPts = points.map(p=>`${toX(p.x)},${toY(p.d)}`).join(' ');
-  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-  [0.25,0.5,0.75,1].forEach(f => {
-    const d=Math.round(f*maxD), y=toY(d);
-    svg += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#ddd" stroke-width="0.7"/>`;
-    svg += `<text x="4" y="${y+3}" font-size="10" fill="#888">${d}"</text>`;
-  });
-  svg += `<polyline points="${polyPts}" fill="none" stroke="#1a56db" stroke-width="2.5" stroke-linejoin="round"/>`;
-  points.forEach(pt => {
-    if(!pt.label) return;
-    const cx=toX(pt.x), boreY=toY(pt.d), botY=toY(pt.bot);
-    const ok = pt.actualBore ? (pt.actualBore - pt.bot) >= 24 : true;
-    svg += `<line x1="${cx}" y1="${botY}" x2="${cx}" y2="${boreY}" stroke="${ok?'#86efac':'#fca5a5'}" stroke-width="2" stroke-dasharray="3,2"/>`;
-    svg += `<circle cx="${cx}" cy="${botY}" r="5" fill="#ef4444"/>`;
-    svg += `<circle cx="${cx}" cy="${boreY}" r="5" fill="#1a56db"/>`;
-    const lx = cx > W-80 ? cx-40 : cx-15;
-    svg += `<text x="${lx}" y="${Math.max(botY-10, padT+10)}" font-size="9" fill="#444">${pt.label}${pt.dist?' @'+pt.dist+'ft':''}</text>`;
-  });
-  svg += `<text x="${padL}" y="${H-6}" font-size="10" fill="#666">Machine Side</text>`;
-  svg += `<text x="${W-padR-50}" y="${H-6}" font-size="10" fill="#666">Pit Side</text>`;
-  svg += `<circle cx="${padL}" cy="${toY(entryIn)}" r="5" fill="#166534"/>`;
-  svg += `<circle cx="${W-padR}" cy="${toY(exitIn)}" r="5" fill="#166534"/>`;
-  svg += '</svg>';
-  return svg;
-}
-
-function printProfile(id) {
-  const p = allProfiles.find(x => x.id === id);
-  if(!p) return;
-
-  const boreSvg = buildBoreSvgForPrint(p);
-
-  const crossRows = (p.crossings || []).map((c,i) => {
-    const clr = (c.bore_depth_at_crossing && c.bot) ? parseFloat(c.bore_depth_at_crossing) - parseFloat(c.bot) : null;
-    const clrCell = clr !== null
-      ? `<span style="color:${clr>=24?'#166534':'#dc2626'};font-weight:700;">${clr>=24?'✓':'⚠'} ${clr}"</span>`
-      : '—';
-    const hitCell = c.hit ? '<span style="color:#dc2626;font-weight:700;">⚠ HIT</span>' : '—';
-    return `<tr>
-      <td>${i+1}</td><td>${c.type||'Unknown'}</td><td>${c.dist||'—'} ft</td>
-      <td>${c.top||'—'}"</td><td>${c.bot||'—'}"</td>
-      <td>${c.bore_depth_at_crossing||'—'}"</td><td>${clrCell}</td><td>${hitCell}</td>
-    </tr>`;
-  }).join('');
-
-  // Build satellite map URL (same logic as buildMapCard)
-  let mapUrl = null;
-  if(p.latitude) {
-    const hasPit = p.pit_latitude && p.pit_longitude;
-    const cLat = hasPit ? (p.latitude+p.pit_latitude)/2 : p.latitude;
-    const cLng = hasPit ? (p.longitude+p.pit_longitude)/2 : p.longitude;
-    const utC = {gas:'0xFB923C',water:'0x2DD4BF',electric:'0xF87171',fiber:'0xA78BFA',sewer:'0x4ADE80',telecom:'0x60A5FA',unknown:'0x9CA3AF'};
-    let markers = `&markers=color:0x166534|label:M|${p.latitude},${p.longitude}`;
-    if(hasPit) markers += `&markers=color:0x166534|label:P|${p.pit_latitude},${p.pit_longitude}`;
-    (p.crossings||[]).forEach((c,i) => {
-      if(!c.dist || !p.total_footage) return;
-      const frac = parseFloat(c.dist)/parseFloat(p.total_footage);
-      const lat = p.latitude + (p.pit_latitude-p.latitude)*frac;
-      const lng = p.longitude + (p.pit_longitude-p.longitude)*frac;
-      const color = utC[(c.type||'unknown').toLowerCase()] || utC['unknown'];
-      markers += `&markers=color:${color}|label:${i+1}|${lat.toFixed(6)},${lng.toFixed(6)}`;
-    });
-    const path = hasPit ? `&path=color:0x1a56dbcc|weight:3|${p.latitude},${p.longitude}|${p.pit_latitude},${p.pit_longitude}` : '';
-    let zoom = 18;
-    if(hasPit) {
-      const R=6371000, dLat=(p.pit_latitude-p.latitude)*Math.PI/180, dLng=(p.pit_longitude-p.longitude)*Math.PI/180;
-      const a=Math.sin(dLat/2)**2+Math.cos(p.latitude*Math.PI/180)*Math.cos(p.pit_latitude*Math.PI/180)*Math.sin(dLng/2)**2;
-      const distM=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-      zoom=Math.min(19,Math.max(15,Math.round(Math.log2(156543*Math.cos(cLat*Math.PI/180)*384/distM))));
+async function autofillEquipHr(eq) {
+  const unit = document.getElementById('eq-'+eq+'-unit')?.value;
+  if(!unit) return;
+  // Find last worksheet that used this unit
+  const { data } = await sb.from('daily_logs')
+    .select('equipment')
+    .not('equipment', 'is', null)
+    .order('date', {ascending:false})
+    .limit(50);
+  if(!data) return;
+  for(const row of data) {
+    const eqData = row.equipment?.[eq];
+    if(eqData?.unit === unit && eqData?.hr_end != null) {
+      const startEl = document.getElementById('eq-'+eq+'-start');
+      if(startEl && !startEl.value) {
+        startEl.value = eqData.hr_end;
+        showToast(`Auto-filled ${unit} start HR: ${eqData.hr_end}`);
+      }
+      return;
     }
-    mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${cLat},${cLng}&zoom=${zoom}&size=640x280&scale=2&maptype=satellite${markers}${path}&key=${GOOGLE_MAPS_KEY}`;
+  }
+}
+
+function toggleVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) { showToast('Voice not supported on this browser'); return; }
+  const btn = document.getElementById('voiceBtn');
+  if(voiceActive) {
+    voiceRecognition?.stop();
+    voiceActive = false;
+    btn.classList.remove('recording');
+    btn.innerHTML = `🎤 <span data-${lang}>${lang==='es'?'Toca para hablar':'Tap to speak'}</span>`;
+    return;
+  }
+  voiceRecognition = new SpeechRecognition();
+  voiceRecognition.lang = lang === 'es' ? 'es-US' : 'en-US';
+  voiceRecognition.continuous = true;
+  voiceRecognition.interimResults = false;
+  voiceRecognition.onresult = e => {
+    const transcript = Array.from(e.results).map(r=>r[0].transcript).join(' ');
+    const ta = document.getElementById('dl-comments');
+    if(ta) ta.value = (ta.value ? ta.value + ' ' : '') + transcript;
+  };
+  voiceRecognition.onend = () => {
+    voiceActive = false;
+    btn.classList.remove('recording');
+    btn.innerHTML = `🎤 <span>${lang==='es'?'Toca para hablar':'Tap to speak'}</span>`;
+  };
+  voiceRecognition.start();
+  voiceActive = true;
+  btn.classList.add('recording');
+  btn.innerHTML = `🔴 <span>${lang==='es'?'Grabando... toca para parar':'Recording... tap to stop'}</span>`;
+}
+
+function resetLogForm() {
+  dlBoreCount = 0; dlBoreRows = [];
+  document.getElementById('dl-bore-rows').innerHTML = '';
+  document.getElementById('dl-date').value = new Date().toISOString().split('T')[0];
+  ['dl-customer','dl-address','dl-city','dl-comments','dl-invoice','dl-po',
+   'dl-bluestake','dl-supervisor','dl-goal','dl-timeon','dl-timeoff'].forEach(id=>{
+    const e=document.getElementById(id); if(e) e.value='';
+  });
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    const n=document.getElementById('dl-crew-'+role); if(n) n.value='';
+    const a=document.getElementById('dl-appr-'+role); if(a) a.value='';
+  });
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    ['unit','start','end'].forEach(f=>{ const e=document.getElementById('eq-'+eq+'-'+f); if(e) e.value=''; });
+    const svc=document.getElementById('eq-'+eq+'-svc'); if(svc) svc.checked=false;
+    const notes=document.getElementById('svc-notes-'+eq); if(notes) notes.classList.remove('active');
+    const txt=document.getElementById('svc-txt-'+eq); if(txt) txt.value='';
+  });
+  ['bentonite','asphalt','sodaash','ab','soap','slurry','polymer'].forEach(m=>{
+    const e=document.getElementById('mat-'+m); if(e) e.value='';
+  });
+  document.getElementById('dl-prevwage').value='no';
+  const banner=document.getElementById('pipe-pulled-banner');
+  if(banner) banner.classList.remove('active');
+
+  // Autofill foreman name if user is a foreman
+  if(currentUser?.role === 'foreman') {
+    const sup = document.getElementById('dl-supervisor');
+    if(sup) sup.value = currentUser.display_name;
+  }
+  addBoreRow();
+}
+
+function addBoreRow() {
+  dlBoreCount++;
+  const i=dlBoreCount;
+  dlBoreRows.push({});
+  const list=document.getElementById('dl-bore-rows');
+  const block=document.createElement('div');
+  block.className='bore-row-block';
+  block.id='dlbore'+i;
+  block.innerHTML=`
+    <div class="bore-row-header">
+      <div class="bore-row-num">Bore ${i}</div>
+      <button class="del-btn" onclick="removeBoreRow(${i})">✕ Remove</button>
+    </div>
+    <div class="form-group"><label class="form-label" data-en="Location of Bore" data-es="Ubicación de Perforación">Location of Bore</label>
+      <input class="form-input" id="dlb-loc${i}" placeholder="e.g. Under Main St crossing" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-en="Product Installing" data-es="Producto a Instalar">Product Installing</label>
+        <input class="form-input" id="dlb-prod${i}" placeholder='e.g. 2" gas' /></div>
+      <div class="form-group"><label class="form-label" data-en="Ground Type" data-es="Tipo de Suelo">Ground Type</label>
+        <select class="form-input" id="dlb-ground${i}">
+          <option value="">Select...</option>
+          <option>Caliche</option><option>Sandy</option><option>Rocky</option><option>Clay</option><option>Mixed</option>
+        </select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-en="Length (ft)" data-es="Longitud (ft)">Length (ft)</label>
+        <input class="form-input" type="number" id="dlb-len${i}" placeholder="0" /></div>
+      <div class="form-group"><label class="form-label" data-en="Pipe Pulled?" data-es="¿Tubería Instalada?">Pipe Pulled?</label>
+        <select class="form-input" id="dlb-pipe${i}" onchange="checkPipePulled()">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select></div>
+    </div>`;
+  list.appendChild(block);
+}
+
+function removeBoreRow(i) {
+  const el=document.getElementById('dlbore'+i); if(el) el.remove();
+  if(dlBoreRows[i-1]) dlBoreRows[i-1]=null;
+  checkPipePulled();
+}
+
+function checkPipePulled() {
+  let anyPipe = false;
+  for(let i=1;i<=dlBoreCount;i++){
+    if(document.getElementById('dlb-pipe'+i)?.value==='yes') { anyPipe=true; break; }
+  }
+  const banner=document.getElementById('pipe-pulled-banner');
+  if(banner) {
+    banner.classList.toggle('active', anyPipe);
+    banner.textContent = anyPipe ? t('pipe_pulled_warning') : '';
+  }
+}
+
+async function determineWorksheetStatus(date, address, bores) {
+  const anyPipe = bores.some(b=>b.pipe_pulled);
+  if(!anyPipe) return { status:'final', profileId: null };
+
+  const { data: profiles } = await sb.from('profiles')
+    .select('id,date,address')
+    .eq('date', date);
+
+  if(!profiles?.length) return { status:'pending', profileId: null };
+
+  const addrNorm = (address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const match = profiles.find(p => {
+    const pNorm = (p.address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const minLen = Math.min(addrNorm.length, pNorm.length);
+    return minLen >= 4 && addrNorm.slice(0,Math.min(8,minLen)) === pNorm.slice(0,Math.min(8,minLen));
+  });
+  return match
+    ? { status:'final', profileId: match.id }
+    : { status:'pending', profileId: null };
+}
+
+async function saveDailyLog() {
+  const btn=document.querySelector('#screen-newlog .save-btn');
+  if(!btn) return;
+  btn.textContent = t('saving'); btn.disabled=true;
+
+  const crew={};
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    const name = document.getElementById('dl-crew-'+role)?.value||'';
+    if(name) crew[role]={ name, approved: document.getElementById('dl-appr-'+role)?.value||'' };
+  });
+
+  const equipment={};
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    const unit = document.getElementById('eq-'+eq+'-unit')?.value||'';
+    if(!unit) return;
+    const start=parseFloat(document.getElementById('eq-'+eq+'-start')?.value)||null;
+    const end=parseFloat(document.getElementById('eq-'+eq+'-end')?.value)||null;
+    const svc=document.getElementById('eq-'+eq+'-svc')?.checked||false;
+    equipment[eq]={
+      unit, hr_start:start, hr_end:end,
+      total_hrs:(start!=null&&end!=null)?Math.round((end-start)*10)/10:null,
+      needs_service:svc,
+      service_notes: svc ? (document.getElementById('svc-txt-'+eq)?.value||'') : ''
+    };
+  });
+
+  const bores=[];
+  for(let i=1;i<=dlBoreCount;i++){
+    const loc=document.getElementById('dlb-loc'+i)?.value;
+    const prod=document.getElementById('dlb-prod'+i)?.value;
+    if(!loc&&!prod) continue;
+    bores.push({
+      location:loc||'', product:prod||'',
+      ground:document.getElementById('dlb-ground'+i)?.value||'',
+      length_ft:parseFloat(document.getElementById('dlb-len'+i)?.value)||null,
+      pipe_pulled:document.getElementById('dlb-pipe'+i)?.value==='yes'
+    });
   }
 
-  const printDate = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const materials={
+    bentonite:parseFloat(document.getElementById('mat-bentonite')?.value)||null,
+    asphalt_patch:parseFloat(document.getElementById('mat-asphalt')?.value)||null,
+    soda_ash:parseFloat(document.getElementById('mat-sodaash')?.value)||null,
+    ab:document.getElementById('mat-ab')?.value||'',
+    soap:parseFloat(document.getElementById('mat-soap')?.value)||null,
+    slurry:document.getElementById('mat-slurry')?.value||'',
+    polymer:parseFloat(document.getElementById('mat-polymer')?.value)||null
+  };
 
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Bore Profile — ${p.address||'No address'}</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #0F172A; font-size: 10.5pt; line-height: 1.45; }
-.hdr { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 20px 10px; border-bottom: 3px solid #1E3A8A; margin-bottom: 14px; }
-.brand-name { font-size: 15pt; font-weight: 800; color: #1E3A8A; }
-.brand-sub { font-size: 8.5pt; color: #64748B; margin-top: 1px; }
-.doc-title { font-size: 12pt; font-weight: 700; color: #0F172A; text-align: right; }
-.doc-meta { font-size: 8.5pt; color: #64748B; text-align: right; margin-top: 2px; }
-.sec { margin-bottom: 12px; page-break-inside: avoid; }
-.sec-title { font-size: 8.5pt; font-weight: 700; color: #1E3A8A; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #CBD5E1; padding-bottom: 3px; margin-bottom: 7px; }
-.info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 14px; }
-.info-lbl { font-size: 7.5pt; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.4px; }
-.info-val { font-size: 10pt; font-weight: 600; color: #0F172A; margin-top: 1px; }
-table { width: 100%; border-collapse: collapse; font-size: 9pt; }
-th { background: #EFF6FF; color: #1E3A8A; font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; padding: 5px 7px; text-align: left; border: 1px solid #BFDBFE; }
-td { padding: 5px 7px; border: 1px solid #E2E8F0; vertical-align: middle; }
-tr:nth-child(even) td { background: #F8FAFC; }
-.path-wrap { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; padding: 7px; overflow: hidden; }
-.path-legend { font-size: 7.5pt; color: #94A3B8; margin-top: 4px; }
-.map-img { width: 100%; border-radius: 5px; border: 1px solid #E2E8F0; display: block; }
-.notes-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; padding: 9px 11px; font-size: 10pt; color: #334155; white-space: pre-wrap; }
-.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 18px; }
-.sig-line { border-top: 1px solid #475569; padding-top: 4px; font-size: 8pt; color: #64748B; margin-top: 30px; }
-.footer { margin-top: 14px; padding-top: 8px; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; font-size: 7.5pt; color: #94A3B8; }
-@media print {
-  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  @page { margin: 0.55in; size: letter; }
+  const date = document.getElementById('dl-date')?.value||null;
+  const address = document.getElementById('dl-address')?.value||'';
+  const { status, profileId } = await determineWorksheetStatus(date, address, bores);
+
+  const record={
+    date, status,
+    linked_profile_id: profileId || null,
+    prevailing_wages:document.getElementById('dl-prevwage')?.value==='yes',
+    customer:document.getElementById('dl-customer')?.value||'',
+    address, city_state_zip:document.getElementById('dl-city')?.value||'',
+    production_goal_ft:parseFloat(document.getElementById('dl-goal')?.value)||null,
+    po_number:document.getElementById('dl-po')?.value||'',
+    blue_stake:document.getElementById('dl-bluestake')?.value||'',
+    time_on_site:document.getElementById('dl-timeon')?.value||'',
+    time_off_site:document.getElementById('dl-timeoff')?.value||'',
+    supervisor:document.getElementById('dl-supervisor')?.value||'',
+    comments:document.getElementById('dl-comments')?.value||'',
+    invoice_number:document.getElementById('dl-invoice')?.value||'',
+    submitted_by:currentUser?.username||null,
+    crew, equipment, materials, bores
+  };
+
+  const {data: insertedLog, error}=await sb.from('daily_logs').insert([record]).select().single();
+  btn.textContent=t('save_worksheet'); btn.disabled=false;
+  if(error){ showToast('Error: '+error.message); return; }
+
+  // If matched a profile, backlink it
+  if(profileId && insertedLog?.id) {
+    await sb.from('profiles').update({ linked_worksheet_id: insertedLog.id }).eq('id', profileId);
+  }
+
+  showToast(status==='pending' ? '⏳ Saved as Pending — bore profile needed' : t('worksheet_saved'));
+  await loadLogs();
+  showScreen('dailylog');
 }
-</style>
-</head>
-<body>
 
-<div class="hdr">
-  <div>
-    <div class="brand-name">🔩 B-Line Bore Profiles</div>
-    <div class="brand-sub">B-Line Directional Drilling, LLC · Phoenix, AZ</div>
-  </div>
-  <div>
-    <div class="doc-title">Bore Profile Report</div>
-    <div class="doc-meta">Printed: ${printDate}${p.job_number ? ' · Job #'+p.job_number : ''}</div>
-  </div>
-</div>
+async function loadLogs() {
+  const listEl = document.getElementById('logsList');
+  if(listEl) listEl.innerHTML = '<div class="loading">Loading worksheets...</div>';
 
-<div class="sec">
-  <div class="sec-title">Job Information</div>
-  <div class="info-grid">
-    <div><div class="info-lbl">Address / Location</div><div class="info-val">${p.address||'—'}</div></div>
-    <div><div class="info-lbl">Date</div><div class="info-val">${p.date||'—'}</div></div>
-    <div><div class="info-lbl">Job Number</div><div class="info-val">${p.job_number?'#'+p.job_number:'—'}</div></div>
-    <div><div class="info-lbl">Customer</div><div class="info-val">${p.customer||'—'}</div></div>
-    <div><div class="info-lbl">Crew / Foreman</div><div class="info-val">${p.foreman||'—'}</div></div>
-    <div><div class="info-lbl">811 Ticket #</div><div class="info-val">${p.ticket_811?'#'+p.ticket_811:'—'}</div></div>
-    <div><div class="info-lbl">Total Footage</div><div class="info-val">${p.total_footage?p.total_footage+' ft':'—'}</div></div>
-    <div><div class="info-lbl">Product Installed</div><div class="info-val">${p.product||'—'}</div></div>
-    <div><div class="info-lbl">Direction</div><div class="info-val">${p.direction||'—'}</div></div>
-    <div><div class="info-lbl">Ground Type</div><div class="info-val">${p.ground_type||'—'}</div></div>
-    <div><div class="info-lbl">Entry Depth</div><div class="info-val">${p.planned_depth?p.planned_depth+'"':'—'}</div></div>
-    <div><div class="info-lbl">Max Bore Depth</div><div class="info-val">${p.actual_depth?p.actual_depth+'"':'—'}</div></div>
-    <div><div class="info-lbl">Reamer Size</div><div class="info-val">${p.bit_size||'—'}</div></div>
-  </div>
-</div>
+  let query = sb.from('daily_logs').select('*').order('date',{ascending:false});
+  // Foremen only see their own submitted worksheets
+  if(currentUser?.role === 'foreman') {
+    query = query.eq('submitted_by', currentUser.username);
+  }
 
-${(p.crossings||[]).length ? `
-<div class="sec">
-  <div class="sec-title">Utility Crossings — Pothole Log</div>
-  <table>
-    <thead><tr>
-      <th>#</th><th>Utility Type</th><th>Distance</th>
-      <th>Top Depth</th><th>Bottom Depth</th>
-      <th>Bore Depth at Crossing</th><th>Clearance</th><th>Hit?</th>
-    </tr></thead>
-    <tbody>${crossRows}</tbody>
-  </table>
-</div>` : ''}
+  const {data, error} = await query;
 
-<div class="sec">
-  <div class="sec-title">Bore Path Cross-Section</div>
-  <div class="path-wrap">${boreSvg}</div>
-  <div class="path-legend">● Blue = bore path &nbsp;·&nbsp; ● Red dots = utility bottom &nbsp;·&nbsp; ● Blue dots = bore at crossing &nbsp;·&nbsp; ● Green = entry/exit &nbsp;·&nbsp; Dashed line = clearance gap</div>
-</div>
+  if(error) {
+    console.error('loadLogs error:', error);
+    // Show the real error so it can be diagnosed, not a generic "setup" message
+    const isPermission = error.code === 'PGRST301' || error.message?.toLowerCase().includes('permission') || error.message?.toLowerCase().includes('policy');
+    const msg = isPermission
+      ? 'Permission error — check Supabase RLS policies for daily_logs'
+      : (error.message || 'Unknown error loading worksheets');
+    if(listEl) listEl.innerHTML=`<div class="empty-state">
+      <div class="empty-icon">⚠️</div>
+      <div class="empty-text">Could not load worksheets</div>
+      <div class="empty-sub" style="color:#DC2626;font-size:12px;margin-top:6px;">${msg}</div>
+      <button onclick="loadLogs()" style="margin-top:14px;padding:10px 20px;background:#1D4ED8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Retry</button>
+    </div>`;
+    return;
+  }
 
-${mapUrl ? `
-<div class="sec">
-  <div class="sec-title">Bore Location — Satellite View</div>
-  <img src="${mapUrl}" class="map-img" alt="Satellite map" />
-  <div class="path-legend" style="margin-top:4px;">M = Machine side &nbsp;·&nbsp; P = Pit side &nbsp;·&nbsp; Numbered dots = utility crossings</div>
-</div>` : ''}
-
-${p.notes ? `
-<div class="sec">
-  <div class="sec-title">Field Notes</div>
-  <div class="notes-box">${p.notes}</div>
-</div>` : ''}
-
-<div class="sig-grid">
-  <div>
-    <div style="font-size:8.5pt;color:#475569;font-weight:600;">Foreman Signature</div>
-    <div class="sig-line">Name: ${p.foreman||'_______________________'}</div>
-  </div>
-  <div>
-    <div style="font-size:8.5pt;color:#475569;font-weight:600;">Inspector / Supervisor</div>
-    <div class="sig-line">Name: _______________________</div>
-  </div>
-</div>
-
-<div class="footer">
-  <span>B-Line Directional Drilling, LLC · Phoenix, AZ</span>
-  <span>Profile ID: ${p.id}</span>
-  <span>${printDate}</span>
-</div>
-
-<script>window.onload = function(){ setTimeout(function(){ window.print(); }, 800); }<\/script>
-</body>
-</html>`;
-
-  const win = window.open('', '_blank');
-  if(!win) { alert('Please allow pop-ups for this page to use the print feature.'); return; }
-  win.document.write(html);
-  win.document.close();
+  allLogs = data || [];
+  renderLogs(allLogs);
 }
+
+let currentLogView = 'list';
+
+function setLogView(view) {
+  currentLogView = view;
+  document.getElementById('logViewListBtn').classList.toggle('active', view==='list');
+  document.getElementById('logViewGridBtn').classList.toggle('active', view==='grid');
+  renderLogs(allLogs);
+}
+
+function filterByForemanLog(foreman) {
+  currentLogView = 'list';
+  document.getElementById('logViewListBtn').classList.add('active');
+  document.getElementById('logViewGridBtn').classList.remove('active');
+  document.getElementById('logSearchInput').value = foreman;
+  filterLogs();
+}
+
+function filterLogs() {
+  const q=document.getElementById('logSearchInput').value.toLowerCase();
+  renderLogs(allLogs.filter(l=>
+    (l.customer||'').toLowerCase().includes(q)||
+    (l.address||'').toLowerCase().includes(q)||
+    (l.supervisor||'').toLowerCase().includes(q)||
+    Object.values(l.crew||{}).some(v=>(v.name||'').toLowerCase().includes(q))
+  ));
+}
+
+function renderLogs(logs) {
+  const list=document.getElementById('logsList');
+  if(!logs||!logs.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_worksheets')}</div><div class="empty-sub">${t('no_worksheets_sub')}</div></div>`;
+    return;
+  }
+
+  // Grid view (admin only)
+  const isAdmin = currentUser?.role === 'admin';
+  if(isAdmin && currentLogView === 'grid') {
+    const groups = {};
+    logs.forEach(l => {
+      const key = l.supervisor || l.submitted_by || 'Unassigned';
+      if(!groups[key]) groups[key] = [];
+      groups[key].push(l);
+    });
+    const cards = Object.entries(groups).map(([foreman, entries]) => {
+      const initials = foreman.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase() || '?';
+      const totalFt = entries.reduce((sum,l)=>(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),sum),0);
+      const pendingCount = entries.filter(l=>l.status==='pending').length;
+      return `<div class="foreman-grid-card" onclick="filterByForemanLog('${foreman.replace(/'/g,"\\'")}')">
+        <div class="foreman-grid-avatar">${initials}</div>
+        <div class="foreman-grid-name">${foreman}</div>
+        <div class="foreman-grid-count">${entries.length} worksheet${entries.length!==1?'s':''}</div>
+        ${totalFt ? `<div class="foreman-grid-count">${totalFt} ft total</div>` : ''}
+        ${pendingCount ? `<div class="foreman-grid-count" style="color:#DC2626;">⏳ ${pendingCount} pending</div>` : ''}
+      </div>`;
+    }).join('');
+    list.innerHTML = `<div class="foreman-grid">${cards}</div>`;
+    return;
+  }
+
+  // List view
+  list.innerHTML=logs.map(l=>{
+    const svcFlags=Object.entries(l.equipment||{}).filter(([,v])=>v?.needs_service).map(([k])=>k.toUpperCase());
+    const totalFt=(l.bores||[]).reduce((sum,b)=>sum+(b.length_ft||0),0);
+    const drillName=Object.values(l.crew||{}).find(v=>v?.name)?.name||'';
+    const sub=[drillName,totalFt?totalFt+' ft':null,l.city_state_zip].filter(Boolean).join(' · ');
+    const isFinal = l.status==='final';
+    return `<div class="dl-log-card" onclick="showLogDetail('${l.id}')">
+      <div class="dl-card-top">
+        <div class="dl-card-title">${l.customer||'No customer'} — ${l.address||''}</div>
+        <div class="dl-card-date">${l.date||''}</div>
+      </div>
+      ${sub?`<div class="dl-card-sub">${sub}</div>`:''}
+      <div class="dl-card-tags">
+        <span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>
+        ${l.prevailing_wages?`<span class="tag t-amber">PW</span>`:''}
+        ${svcFlags.map(f=>`<span class="tag t-red">⚠ ${f}</span>`).join('')}
+        ${totalFt?`<span class="tag t-green">${totalFt} ft</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showLogDetail(id) {
+  const l=allLogs.find(x=>x.id===id);
+  if(!l) return;
+  currentLogId=id;
+  const roleLabel={drill:'Drill Operator',locator:'Locator',lab1:'Laborer 1',lab2:'Laborer 2',lab3:'Laborer 3',potholer:'Potholer'};
+  const crewRows=Object.entries(l.crew||{}).filter(([,v])=>v?.name).map(([role,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${roleLabel[role]||role}</div>
+      <div class="dl-detail-val">${v.name}${v.approved?' · '+v.approved:''}</div>
+    </div>`).join('');
+  const equipRows=Object.entries(l.equipment||{}).filter(([,v])=>v?.unit).map(([eq,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${eq.toUpperCase()} — ${v.unit}</div>
+      <div class="dl-detail-val">${v.hr_start??'—'} → ${v.hr_end??'—'}${v.total_hrs?' ('+v.total_hrs+'h)':''}${v.needs_service?' ⚠':''}</div>
+    </div>
+    ${v.needs_service&&v.service_notes?`<div style="font-size:11px;color:#EA580C;padding:4px 0 8px 0;">Note: ${v.service_notes}</div>`:''}`).join('');
+  const matPairs=[['Bentonite',l.materials?.bentonite],['Soda Ash',l.materials?.soda_ash],['Soap',l.materials?.soap],['Polymer',l.materials?.polymer],['Asphalt Patch',l.materials?.asphalt_patch],['A/B',l.materials?.ab],['Slurry',l.materials?.slurry]];
+  const matRows=matPairs.filter(([,v])=>v).map(([k,v])=>`<div class="dl-detail-row"><div class="dl-detail-lbl">${k}</div><div class="dl-detail-val">${v}</div></div>`).join('');
+  const boreRows=(l.bores||[]).map((b,i)=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">Bore ${i+1}${b.location?' — '+b.location:''}</div>
+      <div class="dl-detail-val">${[b.product,b.ground,b.length_ft?b.length_ft+' ft':null,b.pipe_pulled?'✓ Pipe pulled':null].filter(Boolean).join(' · ')}</div>
+    </div>`).join('');
+  const isFinal=l.status==='final';
+  const canDelete=currentUser?.role==='admin';
+  document.getElementById('logDetailContent').innerHTML=`
+    <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${l.customer||'No customer'}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:8px;">${[l.address,l.city_state_zip,l.date].filter(Boolean).join(' · ')}</div>
+    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.submitted_by?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.submitted_by}</span>`:''}</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">Total Footage</div><div class="stat-val">${(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),0)} ft</div></div>
+      <div class="stat-box"><div class="stat-lbl">Bores</div><div class="stat-val">${(l.bores||[]).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Crew</div><div class="stat-val">${Object.values(l.crew||{}).filter(v=>v?.name).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Prev. Wages</div><div class="stat-val">${l.prevailing_wages?'Yes':'No'}</div></div>
+    </div>
+    ${crewRows?`<div class="card"><div class="card-title">Crew</div>${crewRows}</div>`:''}
+    ${equipRows?`<div class="card"><div class="card-title">Equipment</div>${equipRows}</div>`:''}
+    ${matRows?`<div class="card"><div class="card-title">Materials</div>${matRows}</div>`:''}
+    ${boreRows?`<div class="card"><div class="card-title">Bore Log</div>${boreRows}</div>`:''}
+    ${l.comments?`<div class="card"><div class="card-title">Comments</div><div style="font-size:13px;color:#555;line-height:1.6;">${l.comments}</div></div>`:''}
+    ${l.po_number||l.blue_stake||l.invoice_number?`<div class="card"><div class="card-title">References</div>
+      ${l.po_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">PO #</div><div class="dl-detail-val">${l.po_number}</div></div>`:''}
+      ${l.blue_stake?`<div class="dl-detail-row"><div class="dl-detail-lbl">Blue Stake #</div><div class="dl-detail-val">${l.blue_stake}</div></div>`:''}
+      ${l.invoice_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">Invoice #</div><div class="dl-detail-val">${l.invoice_number}</div></div>`:''}
+    </div>`:''}
+    ${l.linked_profile_id ? `<div class="card"><div class="card-title">Linked Bore Profile</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:13px;color:#555;">Bore profile on file for this job</div>
+        <button onclick="viewLinkedProfile('${l.linked_profile_id}')" style="font-size:12px;font-weight:700;color:#16A34A;background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:8px;padding:7px 14px;cursor:pointer;">View Profile →</button>
+      </div>
+    </div>` : (l.status==='pending' ? `<div class="card" style="border-color:#FCD34D;background:#FFFBEB;"><div class="card-title" style="color:#92400E;">⏳ Profile Required</div><div style="font-size:12px;color:#92400E;">Pipe was pulled — complete a bore profile to mark this worksheet Final.</div></div>` : '')}
+    ${canDelete?`<div class="admin-bar"><button class="delete-btn" onclick="deleteLog('${id}')">Delete</button></div>`:''}`;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-logdetail').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+async function deleteLog(id) {
+  if(!confirm('Delete this worksheet?')) return;
+  const {error}=await sb.from('daily_logs').delete().eq('id',id);
+  if(error){ showToast('Error deleting'); return; }
+  showToast('Worksheet deleted');
+  allLogs=allLogs.filter(l=>l.id!==id);
+  renderLogs(allLogs);
+  showScreen('dailylog');
+}
+
+function viewLinkedWorksheet(worksheetId) {
+  // Load from allLogs or fetch if needed
+  const log = allLogs.find(l=>l.id===worksheetId);
+  if(log) { showLogDetail(worksheetId); return; }
+  // Not loaded yet — load logs then show
+  loadLogs().then(()=>{
+    const l = allLogs.find(x=>x.id===worksheetId);
+    if(l) showLogDetail(worksheetId);
+    else showToast('Worksheet not found');
+  });
+}
+
+function viewLinkedProfile(profileId) {
+  const p = allProfiles.find(x=>x.id===profileId);
+  if(p) { showDetail(profileId); return; }
+  loadProfiles().then(()=>{
+    const found = allProfiles.find(x=>x.id===profileId);
+    if(found) showDetail(profileId);
+    else showToast('Profile not found');
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+setDate();
+addCrossing();
 </script>
 </body>
 </html>
