@@ -186,7 +186,6 @@ body {
   border-radius: 9px;
   background: #fff;
   color: #0F172A;
-  appearance: none;
   -webkit-appearance: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   line-height: 1.4;
@@ -794,6 +793,172 @@ body {
 .hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
 .hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
+
+/* ============================================================
+   DAILY LOG
+   ============================================================ */
+.dl-log-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.dl-log-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-1px); border-color: #CBD5E1; }
+.dl-log-card:active { opacity: 0.92; transform: none; }
+.dl-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.dl-card-title { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; }
+.dl-card-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.dl-card-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.dl-card-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-label { font-size: 12px; font-weight: 700; color: #475569; }
+.equip-row select, .equip-row input { font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.equip-row select:focus, .equip-row input:focus { outline: none; border-color: #1D4ED8; }
+.service-flag { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.service-flag input[type="checkbox"] { width: 16px; height: 16px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+.bore-row-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #FAFBFD;
+}
+.bore-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.bore-row-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+
+.crew-time-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.crew-time-row:last-child { border-bottom: none; }
+.crew-time-row input, .crew-time-row select {
+  font-size: 12px; padding: 7px 8px; border: 1.5px solid #E2E8F0;
+  border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none;
+}
+.crew-time-row input:focus, .crew-time-row select:focus { outline: none; border-color: #1D4ED8; }
+.crew-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  padding: 0 0 6px;
+}
+.crew-col-hdr { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-label { font-size: 11px; font-weight: 600; color: #64748B; }
+.mat-input { font-size: 13px; padding: 9px 11px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.mat-input:focus { outline: none; border-color: #1D4ED8; }
+
+.dl-detail-section { margin-bottom: 14px; }
+.dl-detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F8FAFC; font-size: 13px; }
+.dl-detail-row:last-child { border-bottom: none; }
+.dl-detail-lbl { color: #64748B; font-weight: 500; }
+.dl-detail-val { color: #0F172A; font-weight: 600; text-align: right; max-width: 60%; }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+.login-screen {
+  display: none; position: fixed; inset: 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  z-index: 1000; align-items: center; justify-content: center;
+}
+.login-screen.active { display: flex; }
+.login-box {
+  background: #fff; border-radius: 20px; padding: 32px 28px;
+  width: 340px; max-width: 90vw;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.login-logo { text-align: center; margin-bottom: 8px; font-size: 36px; }
+.login-title { font-size: 20px; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: #94A3B8; text-align: center; margin-bottom: 24px; }
+.login-btn {
+  width: 100%; padding: 14px; background: #1D4ED8; color: #fff;
+  border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 8px; transition: background 0.15s;
+}
+.login-btn:hover { background: #1a44c2; }
+.login-err { font-size: 12px; color: #DC2626; text-align: center; margin-top: 8px; min-height: 18px; }
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 800;
+}
+.status-final { background: #F0FDF4; color: #166534; }
+.status-pending { background: #FFFBEB; color: #92400E; }
+
+/* ============================================================
+   USER PILL IN HEADER
+   ============================================================ */
+.user-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: #fff;
+  cursor: pointer; transition: background 0.15s;
+}
+.user-pill:hover { background: rgba(255,255,255,0.25); }
+
+/* ============================================================
+   SERVICE NOTES
+   ============================================================ */
+.svc-notes {
+  display: none; margin-top: 8px;
+  background: #FFF7ED; border: 1.5px solid #FED7AA;
+  border-radius: 8px; padding: 10px;
+}
+.svc-notes.active { display: block; }
+.svc-notes textarea {
+  width: 100%; font-size: 13px; padding: 8px 10px;
+  border: 1.5px solid #FED7AA; border-radius: 7px;
+  background: #fff; color: #0F172A; resize: none;
+  font-family: inherit;
+}
+.svc-notes textarea:focus { outline: none; border-color: #F97316; }
+
+/* ============================================================
+   VOICE BUTTON
+   ============================================================ */
+.voice-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px; background: #EFF6FF;
+  border: 1.5px solid #93C5FD; border-radius: 9px;
+  font-size: 12px; font-weight: 700; color: #1D4ED8;
+  cursor: pointer; transition: all 0.15s; margin-bottom: 8px;
+}
+.voice-btn:hover { background: #DBEAFE; }
+.voice-btn.recording { background: #FEF2F2; border-color: #FCA5A5; color: #DC2626; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* Pipe pulled banner */
+.pipe-pulled-banner {
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;
+  font-size: 13px; color: #92400E; font-weight: 600;
+  display: none;
+}
+.pipe-pulled-banner.active { display: block; }
 </style>
 </head>
 <body>
@@ -852,8 +1017,9 @@ body {
      NAV
      ============================================================ -->
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
-  <button class="nav-btn" onclick="showScreen('new')">+ New</button>
+  <button class="nav-btn active" onclick="showScreen('profiles')" data-en="Profiles" data-es="Perfiles">Profiles</button>
+  <button class="nav-btn" onclick="showScreen('new')" data-en="+ New" data-es="+ Nuevo">+ New</button>
+  <button class="nav-btn" onclick="showScreen('dailylog')" data-en="Worksheets" data-es="Hojas">Worksheets</button>
 </div>
 
 <!-- ============================================================
@@ -1047,6 +1213,262 @@ body {
 <!-- ============================================================
      DAILY LOG — LIST SCREEN
      ============================================================ -->
+<div id="screen-dailylog" class="screen">
+  <div class="section-header">
+    <div class="section-title" data-en="Daily Worksheets" data-es="Hojas Diarias">Daily Worksheets</div>
+    <button class="add-crew-btn" onclick="showScreen('newlog')" data-en="+ New" data-es="+ Nueva">+ New</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="logSearchInput" placeholder="Search customer, foreman, address..." oninput="filterLogs()" />
+  </div>
+  <div id="logsList"><div class="loading">Loading logs...</div></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — NEW ENTRY SCREEN
+     ============================================================ -->
+<div id="screen-newlog" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Back</button>
+  <div class="pipe-pulled-banner" id="pipe-pulled-banner"></div>
+
+  <!-- Job Header -->
+  <div class="card">
+    <div class="card-title">Job Information</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="dl-date" /></div>
+      <div class="form-group">
+        <label class="form-label">Prevailing Wages</label>
+        <select class="form-input" id="dl-prevwage">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="dl-customer" placeholder="Customer name" /></div>
+    <div class="form-group"><label class="form-label">Job Address</label><input class="form-input" id="dl-address" placeholder="Street address" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">City, State &amp; Zip</label><input class="form-input" id="dl-city" placeholder="Phoenix, AZ" /></div>
+      <div class="form-group"><label class="form-label">Production Goal (ft)</label><input class="form-input" type="number" id="dl-goal" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">PO #</label><input class="form-input" id="dl-po" placeholder="Optional" /></div>
+      <div class="form-group"><label class="form-label">Blue Stake #</label><input class="form-input" id="dl-bluestake" placeholder="Optional" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Time On Site</label><input class="form-input" type="time" id="dl-timeon" /></div>
+      <div class="form-group"><label class="form-label">Time Off Site</label><input class="form-input" type="time" id="dl-timeoff" /></div>
+    </div>
+  </div>
+
+  <!-- Crew -->
+  <div class="card">
+    <div class="card-title" data-en="Employees On Site" data-es="Empleados en Sitio">Employees On Site</div>
+    <div id="dl-crew-rows">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Role / Name" data-es="Rol / Nombre">Role / Name</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Employee" data-es="Empleado">Employee</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Approved" data-es="Aprobado">Approved</div>
+      </div>
+      <!-- Drill Operator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="DRILL OPERATOR" data-es="OPERADOR">DRILL OPERATOR</div>
+        <input class="form-input" id="dl-crew-drill" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-drill" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Locator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LOCATOR" data-es="LOCALIZADOR">LOCATOR</div>
+        <input class="form-input" id="dl-crew-locator" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-locator" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Laborers -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 1" data-es="OBRERO 1">LABORER 1</div>
+        <input class="form-input" id="dl-crew-lab1" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab1" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 2" data-es="OBRERO 2">LABORER 2</div>
+        <input class="form-input" id="dl-crew-lab2" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab2" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 3" data-es="OBRERO 3">LABORER 3</div>
+        <input class="form-input" id="dl-crew-lab3" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab3" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Potholer -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="POTHOLER" data-es="PERFORADOR">POTHOLER</div>
+        <input class="form-input" id="dl-crew-potholer" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-potholer" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label" data-en="Job Supervisor" data-es="Supervisor">Job Supervisor</label>
+      <input class="form-input" id="dl-supervisor" placeholder="Supervisor name" />
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="card">
+    <div class="card-title" data-en="Equipment On Site" data-es="Equipo en Sitio">Equipment On Site</div>
+    <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;padding-bottom:6px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;"></div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Unit #" data-es="Unidad #">Unit #</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Start HR" data-es="HR Inicio">Start HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="End HR" data-es="HR Fin">End HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Service?" data-es="¿Servicio?">Service?</div>
+    </div>
+
+    <!-- DRILL -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">DRILL</div>
+        <select class="form-input" id="eq-drill-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('drill')">
+          <option value="">Select...</option>
+          <option>D165</option><option>D167</option><option>D168</option><option>D174</option>
+          <option>D176</option><option>D177</option><option>D178</option><option>D180</option>
+          <option>D181</option><option>D182</option><option>D183</option><option>D184</option>
+          <option>D185</option><option>D186</option><option>D187</option><option>D188</option>
+          <option>D189</option><option>D190</option><option>D191</option>
+        </select>
+        <input class="form-input" type="number" id="eq-drill-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-drill-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-drill-svc" onchange="toggleSvcNotes('drill')" /><label for="eq-drill-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-drill"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-drill" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- PICKUP -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">PICKUP</div>
+        <select class="form-input" id="eq-pickup-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('pickup')">
+          <option value="">Select...</option>
+          <option>434</option><option>435</option><option>437</option><option>442</option>
+          <option>443</option><option>445</option><option>446</option><option>447</option>
+          <option>449</option><option>450</option><option>451</option><option>452</option>
+          <option>456</option><option>457</option><option>459</option><option>461</option>
+          <option>463</option><option>464</option><option>465</option><option>466</option>
+        </select>
+        <input class="form-input" type="number" id="eq-pickup-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-pickup-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-pickup-svc" onchange="toggleSvcNotes('pickup')" /><label for="eq-pickup-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-pickup"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-pickup" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- VAC -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">VAC</div>
+        <select class="form-input" id="eq-vac-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('vac')">
+          <option value="">Select...</option>
+          <option>V341</option><option>V343</option><option>V348</option><option>V349</option>
+          <option>V352</option><option>V353</option><option>V354</option><option>V357</option>
+          <option>V358</option><option>V360</option><option>V361</option><option>V362</option>
+          <option>V363</option><option>V364</option><option>V365</option><option>V366</option>
+          <option>623</option><option>624</option><option>625</option><option>626</option>
+          <option>628</option><option>629</option><option>630</option><option>631</option>
+        </select>
+        <input class="form-input" type="number" id="eq-vac-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-vac-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-vac-svc" onchange="toggleSvcNotes('vac')" /><label for="eq-vac-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-vac"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-vac" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- SEMI -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">SEMI</div>
+        <select class="form-input" id="eq-semi-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('semi')">
+          <option value="">Select...</option>
+          <option>520</option><option>523</option><option>529</option><option>531</option>
+          <option>532</option><option>533</option><option>534</option><option>537</option>
+          <option>539</option><option>541</option><option>542</option><option>543</option>
+          <option>544</option><option>545</option><option>546</option>
+        </select>
+        <input class="form-input" type="number" id="eq-semi-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-semi-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-semi-svc" onchange="toggleSvcNotes('semi')" /><label for="eq-semi-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-semi"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-semi" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- TRAILER -->
+    <div style="padding:8px 0;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">TRAILER</div>
+        <select class="form-input" id="eq-trailer-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('trailer')">
+          <option value="">Select...</option>
+          <option>T262</option><option>T263</option><option>T265</option><option>T266</option>
+          <option>T267</option><option>T268</option><option>T270</option><option>T271</option>
+          <option>T272</option><option>T273</option><option>T275</option><option>T276</option>
+          <option>T277</option><option>T278</option><option>T279</option><option>T280</option>
+          <option>T281</option><option>T282</option><option>T283</option><option>T284</option>
+          <option>T285</option><option>T286</option>
+          <option>RT901</option><option>RT902</option><option>RT903</option><option>RT904</option>
+          <option>RT905</option><option>RT906</option><option>RT907</option><option>RT908</option>
+          <option>RT909</option><option>RT910</option><option>RT911</option><option>RT912</option>
+          <option>RT913</option><option>RT914</option>
+        </select>
+        <input class="form-input" type="number" id="eq-trailer-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-trailer-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-trailer-svc" onchange="toggleSvcNotes('trailer')" /><label for="eq-trailer-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-trailer"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-trailer" placeholder="Describe the issue..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- Materials -->
+  <div class="card">
+    <div class="card-title">Job Materials</div>
+    <div class="mat-grid">
+      <div class="mat-item"><label class="mat-label">Bentonite (bags)</label><input class="mat-input" type="number" id="mat-bentonite" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Asphalt Patch (bags)</label><input class="mat-input" type="number" id="mat-asphalt" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Soda Ash (bags)</label><input class="mat-input" type="number" id="mat-sodaash" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">A/B</label><input class="mat-input" id="mat-ab" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Soap (gal)</label><input class="mat-input" type="number" id="mat-soap" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Slurry</label><input class="mat-input" id="mat-slurry" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Polymer (gal)</label><input class="mat-input" type="number" id="mat-polymer" placeholder="0" /></div>
+    </div>
+  </div>
+
+  <!-- Bore Log -->
+  <div class="card">
+    <div class="card-title" data-en="Bore Log" data-es="Registro de Perforación">Bore Log</div>
+    <div id="dl-bore-rows"></div>
+    <button class="add-btn" onclick="addBoreRow()" data-en="+ Add bore" data-es="+ Agregar perforación">+ Add bore</button>
+  </div>
+
+  <!-- Comments -->
+  <div class="card">
+    <div class="card-title" data-en="Comments" data-es="Comentarios">Comments</div>
+    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤 <span data-en="Tap to speak" data-es="Toca para hablar">Tap to speak</span></button>
+    <textarea class="form-input" rows="3" id="dl-comments" placeholder="Notes, issues, instructions..."></textarea>
+  </div>
+
+  <div class="form-group" style="padding:0 0 8px;">
+    <label class="form-label">Invoice #</label>
+    <input class="form-input" id="dl-invoice" placeholder="Optional" />
+  </div>
+
+  <button class="save-btn" onclick="saveDailyLog()">Save Daily Worksheet</button>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — DETAIL SCREEN
+     ============================================================ -->
+<div id="screen-logdetail" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Daily Logs</button>
+  <div id="logDetailContent"></div>
+</div>
+
+
 
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
@@ -1221,12 +1643,17 @@ function requireAdmin(action) {
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const idx = ['profiles','new'].indexOf(name);
+  const el = document.getElementById('screen-'+name);
+  if(el) el.classList.add('active');
+  const navMap = ['profiles','new','dailylog'];
+  const idx = navMap.indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
   if(name==='admin') loadCrews();
-  if(name!=='detail') prevScreen=name;
+  if(name==='dailylog') loadLogs();
+  if(name==='newlog') resetLogForm();
+  if(!['detail','logdetail'].includes(name)) prevScreen=name;
+  applyLang();
 }
 
 function goBack() { showScreen(prevScreen); }
@@ -2355,8 +2782,6 @@ function viewLinkedProfile(profileId) {
 // ============================================================
 setDate();
 addCrossing();
-loadProfiles();
-loadCrews();
 </script>
 </body>
 </html>
