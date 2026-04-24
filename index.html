@@ -186,6 +186,7 @@ body {
   border-radius: 9px;
   background: #fff;
   color: #0F172A;
+  appearance: none;
   -webkit-appearance: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   line-height: 1.4;
@@ -793,9 +794,190 @@ body {
 .hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
 .hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
+
+/* ============================================================
+   DAILY LOG
+   ============================================================ */
+.dl-log-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.dl-log-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-1px); border-color: #CBD5E1; }
+.dl-log-card:active { opacity: 0.92; transform: none; }
+.dl-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.dl-card-title { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; }
+.dl-card-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.dl-card-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.dl-card-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-label { font-size: 12px; font-weight: 700; color: #475569; }
+.equip-row select, .equip-row input { font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.equip-row select:focus, .equip-row input:focus { outline: none; border-color: #1D4ED8; }
+.service-flag { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.service-flag input[type="checkbox"] { width: 16px; height: 16px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+.bore-row-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #FAFBFD;
+}
+.bore-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.bore-row-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+
+.crew-time-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.crew-time-row:last-child { border-bottom: none; }
+.crew-time-row input, .crew-time-row select {
+  font-size: 12px; padding: 7px 8px; border: 1.5px solid #E2E8F0;
+  border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none;
+}
+.crew-time-row input:focus, .crew-time-row select:focus { outline: none; border-color: #1D4ED8; }
+.crew-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  padding: 0 0 6px;
+}
+.crew-col-hdr { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-label { font-size: 11px; font-weight: 600; color: #64748B; }
+.mat-input { font-size: 13px; padding: 9px 11px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.mat-input:focus { outline: none; border-color: #1D4ED8; }
+
+.dl-detail-section { margin-bottom: 14px; }
+.dl-detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F8FAFC; font-size: 13px; }
+.dl-detail-row:last-child { border-bottom: none; }
+.dl-detail-lbl { color: #64748B; font-weight: 500; }
+.dl-detail-val { color: #0F172A; font-weight: 600; text-align: right; max-width: 60%; }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+.login-screen {
+  display: none; position: fixed; inset: 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  z-index: 1000; align-items: center; justify-content: center;
+}
+.login-screen.active { display: flex; }
+.login-box {
+  background: #fff; border-radius: 20px; padding: 32px 28px;
+  width: 340px; max-width: 90vw;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.login-logo { text-align: center; margin-bottom: 8px; font-size: 36px; }
+.login-title { font-size: 20px; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: #94A3B8; text-align: center; margin-bottom: 24px; }
+.login-btn {
+  width: 100%; padding: 14px; background: #1D4ED8; color: #fff;
+  border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 8px; transition: background 0.15s;
+}
+.login-btn:hover { background: #1a44c2; }
+.login-err { font-size: 12px; color: #DC2626; text-align: center; margin-top: 8px; min-height: 18px; }
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 800;
+}
+.status-final { background: #F0FDF4; color: #166534; }
+.status-pending { background: #FFFBEB; color: #92400E; }
+
+/* ============================================================
+   USER PILL IN HEADER
+   ============================================================ */
+.user-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: #fff;
+  cursor: pointer; transition: background 0.15s;
+}
+.user-pill:hover { background: rgba(255,255,255,0.25); }
+
+/* ============================================================
+   SERVICE NOTES
+   ============================================================ */
+.svc-notes {
+  display: none; margin-top: 8px;
+  background: #FFF7ED; border: 1.5px solid #FED7AA;
+  border-radius: 8px; padding: 10px;
+}
+.svc-notes.active { display: block; }
+.svc-notes textarea {
+  width: 100%; font-size: 13px; padding: 8px 10px;
+  border: 1.5px solid #FED7AA; border-radius: 7px;
+  background: #fff; color: #0F172A; resize: none;
+  font-family: inherit;
+}
+.svc-notes textarea:focus { outline: none; border-color: #F97316; }
+
+/* ============================================================
+   VOICE BUTTON
+   ============================================================ */
+.voice-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px; background: #EFF6FF;
+  border: 1.5px solid #93C5FD; border-radius: 9px;
+  font-size: 12px; font-weight: 700; color: #1D4ED8;
+  cursor: pointer; transition: all 0.15s; margin-bottom: 8px;
+}
+.voice-btn:hover { background: #DBEAFE; }
+.voice-btn.recording { background: #FEF2F2; border-color: #FCA5A5; color: #DC2626; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* Pipe pulled banner */
+.pipe-pulled-banner {
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;
+  font-size: 13px; color: #92400E; font-weight: 600;
+  display: none;
+}
+.pipe-pulled-banner.active { display: block; }
 </style>
 </head>
 <body>
+
+<!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+<div class="login-screen active" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🔩</div>
+    <div class="login-title">B-Line</div>
+    <div class="login-sub">Directional Drilling — Phoenix, AZ</div>
+    <div class="form-group"><label class="form-label">Username</label><input class="form-input" id="login-user" placeholder="Username" autocapitalize="none" /></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="login-pass" placeholder="Password" /></div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
 
 <!-- ============================================================
      HEADER
@@ -822,10 +1004,13 @@ body {
   </div>
   <div class="header-right">
     <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('es')">ES</button>
+      <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="lang-es" onclick="setLang('es')">ES</button>
     </div>
-    <button class="gear-btn" onclick="openAdmin()" title="Admin">⚙️</button>
+    <div class="user-pill" id="userPill" onclick="doLogout()" title="Tap to sign out">
+      <span id="userPillName">—</span> <span style="opacity:0.6;">✕</span>
+    </div>
+    <button class="gear-btn" id="gearBtn" onclick="openAdmin()" title="Admin" style="display:none;">⚙️</button>
   </div>
 </div>
 
@@ -833,8 +1018,9 @@ body {
      NAV
      ============================================================ -->
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
-  <button class="nav-btn" onclick="showScreen('new')">+ New</button>
+  <button class="nav-btn active" onclick="showScreen('profiles')" data-en="Profiles" data-es="Perfiles">Profiles</button>
+  <button class="nav-btn" onclick="showScreen('new')" data-en="+ New" data-es="+ Nuevo">+ New</button>
+  <button class="nav-btn" onclick="showScreen('dailylog')" data-en="Worksheets" data-es="Hojas">Worksheets</button>
 </div>
 
 <!-- ============================================================
@@ -1026,8 +1212,264 @@ body {
 </div>
 
 <!-- ============================================================
-     MODALS
+     DAILY LOG — LIST SCREEN
      ============================================================ -->
+<div id="screen-dailylog" class="screen">
+  <div class="section-header">
+    <div class="section-title" data-en="Daily Worksheets" data-es="Hojas Diarias">Daily Worksheets</div>
+    <button class="add-crew-btn" onclick="showScreen('newlog')" data-en="+ New" data-es="+ Nueva">+ New</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="logSearchInput" placeholder="Search customer, foreman, address..." oninput="filterLogs()" />
+  </div>
+  <div id="logsList"><div class="loading">Loading logs...</div></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — NEW ENTRY SCREEN
+     ============================================================ -->
+<div id="screen-newlog" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Back</button>
+  <div class="pipe-pulled-banner" id="pipe-pulled-banner"></div>
+
+  <!-- Job Header -->
+  <div class="card">
+    <div class="card-title">Job Information</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="dl-date" /></div>
+      <div class="form-group">
+        <label class="form-label">Prevailing Wages</label>
+        <select class="form-input" id="dl-prevwage">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="dl-customer" placeholder="Customer name" /></div>
+    <div class="form-group"><label class="form-label">Job Address</label><input class="form-input" id="dl-address" placeholder="Street address" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">City, State &amp; Zip</label><input class="form-input" id="dl-city" placeholder="Phoenix, AZ" /></div>
+      <div class="form-group"><label class="form-label">Production Goal (ft)</label><input class="form-input" type="number" id="dl-goal" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">PO #</label><input class="form-input" id="dl-po" placeholder="Optional" /></div>
+      <div class="form-group"><label class="form-label">Blue Stake #</label><input class="form-input" id="dl-bluestake" placeholder="Optional" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Time On Site</label><input class="form-input" type="time" id="dl-timeon" /></div>
+      <div class="form-group"><label class="form-label">Time Off Site</label><input class="form-input" type="time" id="dl-timeoff" /></div>
+    </div>
+  </div>
+
+  <!-- Crew -->
+  <div class="card">
+    <div class="card-title" data-en="Employees On Site" data-es="Empleados en Sitio">Employees On Site</div>
+    <div id="dl-crew-rows">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Role / Name" data-es="Rol / Nombre">Role / Name</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Employee" data-es="Empleado">Employee</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Approved" data-es="Aprobado">Approved</div>
+      </div>
+      <!-- Drill Operator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="DRILL OPERATOR" data-es="OPERADOR">DRILL OPERATOR</div>
+        <input class="form-input" id="dl-crew-drill" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-drill" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Locator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LOCATOR" data-es="LOCALIZADOR">LOCATOR</div>
+        <input class="form-input" id="dl-crew-locator" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-locator" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Laborers -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 1" data-es="OBRERO 1">LABORER 1</div>
+        <input class="form-input" id="dl-crew-lab1" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab1" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 2" data-es="OBRERO 2">LABORER 2</div>
+        <input class="form-input" id="dl-crew-lab2" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab2" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 3" data-es="OBRERO 3">LABORER 3</div>
+        <input class="form-input" id="dl-crew-lab3" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab3" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Potholer -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="POTHOLER" data-es="PERFORADOR">POTHOLER</div>
+        <input class="form-input" id="dl-crew-potholer" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-potholer" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label" data-en="Job Supervisor" data-es="Supervisor">Job Supervisor</label>
+      <input class="form-input" id="dl-supervisor" placeholder="Supervisor name" />
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="card">
+    <div class="card-title" data-en="Equipment On Site" data-es="Equipo en Sitio">Equipment On Site</div>
+    <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;padding-bottom:6px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;"></div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Unit #" data-es="Unidad #">Unit #</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Start HR" data-es="HR Inicio">Start HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="End HR" data-es="HR Fin">End HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Service?" data-es="¿Servicio?">Service?</div>
+    </div>
+
+    <!-- DRILL -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">DRILL</div>
+        <select class="form-input" id="eq-drill-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('drill')">
+          <option value="">Select...</option>
+          <option>D165</option><option>D167</option><option>D168</option><option>D174</option>
+          <option>D176</option><option>D177</option><option>D178</option><option>D180</option>
+          <option>D181</option><option>D182</option><option>D183</option><option>D184</option>
+          <option>D185</option><option>D186</option><option>D187</option><option>D188</option>
+          <option>D189</option><option>D190</option><option>D191</option>
+        </select>
+        <input class="form-input" type="number" id="eq-drill-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-drill-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-drill-svc" onchange="toggleSvcNotes('drill')" /><label for="eq-drill-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-drill"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-drill" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- PICKUP -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">PICKUP</div>
+        <select class="form-input" id="eq-pickup-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('pickup')">
+          <option value="">Select...</option>
+          <option>434</option><option>435</option><option>437</option><option>442</option>
+          <option>443</option><option>445</option><option>446</option><option>447</option>
+          <option>449</option><option>450</option><option>451</option><option>452</option>
+          <option>456</option><option>457</option><option>459</option><option>461</option>
+          <option>463</option><option>464</option><option>465</option><option>466</option>
+        </select>
+        <input class="form-input" type="number" id="eq-pickup-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-pickup-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-pickup-svc" onchange="toggleSvcNotes('pickup')" /><label for="eq-pickup-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-pickup"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-pickup" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- VAC -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">VAC</div>
+        <select class="form-input" id="eq-vac-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('vac')">
+          <option value="">Select...</option>
+          <option>V341</option><option>V343</option><option>V348</option><option>V349</option>
+          <option>V352</option><option>V353</option><option>V354</option><option>V357</option>
+          <option>V358</option><option>V360</option><option>V361</option><option>V362</option>
+          <option>V363</option><option>V364</option><option>V365</option><option>V366</option>
+          <option>623</option><option>624</option><option>625</option><option>626</option>
+          <option>628</option><option>629</option><option>630</option><option>631</option>
+        </select>
+        <input class="form-input" type="number" id="eq-vac-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-vac-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-vac-svc" onchange="toggleSvcNotes('vac')" /><label for="eq-vac-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-vac"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-vac" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- SEMI -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">SEMI</div>
+        <select class="form-input" id="eq-semi-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('semi')">
+          <option value="">Select...</option>
+          <option>520</option><option>523</option><option>529</option><option>531</option>
+          <option>532</option><option>533</option><option>534</option><option>537</option>
+          <option>539</option><option>541</option><option>542</option><option>543</option>
+          <option>544</option><option>545</option><option>546</option>
+        </select>
+        <input class="form-input" type="number" id="eq-semi-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-semi-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-semi-svc" onchange="toggleSvcNotes('semi')" /><label for="eq-semi-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-semi"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-semi" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- TRAILER -->
+    <div style="padding:8px 0;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">TRAILER</div>
+        <select class="form-input" id="eq-trailer-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('trailer')">
+          <option value="">Select...</option>
+          <option>T262</option><option>T263</option><option>T265</option><option>T266</option>
+          <option>T267</option><option>T268</option><option>T270</option><option>T271</option>
+          <option>T272</option><option>T273</option><option>T275</option><option>T276</option>
+          <option>T277</option><option>T278</option><option>T279</option><option>T280</option>
+          <option>T281</option><option>T282</option><option>T283</option><option>T284</option>
+          <option>T285</option><option>T286</option>
+          <option>RT901</option><option>RT902</option><option>RT903</option><option>RT904</option>
+          <option>RT905</option><option>RT906</option><option>RT907</option><option>RT908</option>
+          <option>RT909</option><option>RT910</option><option>RT911</option><option>RT912</option>
+          <option>RT913</option><option>RT914</option>
+        </select>
+        <input class="form-input" type="number" id="eq-trailer-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-trailer-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-trailer-svc" onchange="toggleSvcNotes('trailer')" /><label for="eq-trailer-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-trailer"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-trailer" placeholder="Describe the issue..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- Materials -->
+  <div class="card">
+    <div class="card-title">Job Materials</div>
+    <div class="mat-grid">
+      <div class="mat-item"><label class="mat-label">Bentonite (bags)</label><input class="mat-input" type="number" id="mat-bentonite" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Asphalt Patch (bags)</label><input class="mat-input" type="number" id="mat-asphalt" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Soda Ash (bags)</label><input class="mat-input" type="number" id="mat-sodaash" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">A/B</label><input class="mat-input" id="mat-ab" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Soap (gal)</label><input class="mat-input" type="number" id="mat-soap" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Slurry</label><input class="mat-input" id="mat-slurry" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Polymer (gal)</label><input class="mat-input" type="number" id="mat-polymer" placeholder="0" /></div>
+    </div>
+  </div>
+
+  <!-- Bore Log -->
+  <div class="card">
+    <div class="card-title" data-en="Bore Log" data-es="Registro de Perforación">Bore Log</div>
+    <div id="dl-bore-rows"></div>
+    <button class="add-btn" onclick="addBoreRow()" data-en="+ Add bore" data-es="+ Agregar perforación">+ Add bore</button>
+  </div>
+
+  <!-- Comments -->
+  <div class="card">
+    <div class="card-title" data-en="Comments" data-es="Comentarios">Comments</div>
+    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤 <span data-en="Tap to speak" data-es="Toca para hablar">Tap to speak</span></button>
+    <textarea class="form-input" rows="3" id="dl-comments" placeholder="Notes, issues, instructions..."></textarea>
+  </div>
+
+  <div class="form-group" style="padding:0 0 8px;">
+    <label class="form-label">Invoice #</label>
+    <input class="form-input" id="dl-invoice" placeholder="Optional" />
+  </div>
+
+  <button class="save-btn" onclick="saveDailyLog()">Save Daily Worksheet</button>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — DETAIL SCREEN
+     ============================================================ -->
+<div id="screen-logdetail" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Daily Logs</button>
+  <div id="logDetailContent"></div>
+</div>
+
+
 
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
@@ -1071,18 +1513,173 @@ const GOOGLE_MAPS_KEY = 'AIzaSyBf3H0wMo7tQI07VjFw1aAaKlzEUGsph7o';
 const ADMIN_PIN = '1234';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// ============================================================
+// STATE
+// ============================================================
 let lang = 'en';
-let crossings = [];
-let crossingCount = 0;
-let currentStage = 1;
+let crossings = [], crossingCount = 0, currentStage = 1;
 let prevScreen = 'profiles';
-let allProfiles = [];
-let allCrews = [];
-let currentProfileId = null;
+let allProfiles = [], allCrews = [], allLogs = [];
+let currentProfileId = null, currentLogId = null;
 let adminAction = null;
 let machineLat = null, machineLng = null, pitLat = null, pitLng = null;
 let unitStates = { footage:'ft', entry:'ft', exit:'ft', actual:'in' };
+let dlBoreCount = 0, dlBoreRows = [];
+let currentUser = null; // { id, email, username, role }
+let voiceRecognition = null, voiceActive = false;
 
+// ============================================================
+// TRANSLATION
+// ============================================================
+const T = {
+  en: {
+    'search_placeholder': 'Search address, customer, foreman...',
+    'no_profiles': 'No profiles yet',
+    'no_profiles_sub': 'Tap + New to create your first bore profile',
+    'pipe_pulled_warning': '⚠ Pipe pulled — a matching bore profile is required before this worksheet can be marked Final.',
+    'status_final': '✓ Final',
+    'status_pending': '⏳ Pending',
+    'save_worksheet': 'Save Daily Worksheet',
+    'saving': 'Saving...',
+    'worksheet_saved': 'Worksheet saved!',
+    'sign_out': 'Sign out',
+  },
+  es: {
+    'search_placeholder': 'Buscar dirección, cliente, capataz...',
+    'no_profiles': 'Sin perfiles aún',
+    'no_profiles_sub': 'Toca + Nuevo para crear tu primer perfil',
+    'pipe_pulled_warning': '⚠ Tubería instalada — se requiere un perfil coincidente antes de marcar como Final.',
+    'status_final': '✓ Final',
+    'status_pending': '⏳ Pendiente',
+    'save_worksheet': 'Guardar Hoja Diaria',
+    'saving': 'Guardando...',
+    'worksheet_saved': '¡Hoja guardada!',
+    'sign_out': 'Cerrar sesión',
+  }
+};
+
+function t(key) { return T[lang]?.[key] || T.en[key] || key; }
+
+function applyLang() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = lang === 'es' ? (el.getAttribute('data-es') || el.getAttribute('data-en')) : el.getAttribute('data-en');
+  });
+  const si = document.getElementById('searchInput');
+  if(si) si.placeholder = t('search_placeholder');
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('lang-en').classList.toggle('active', l==='en');
+  document.getElementById('lang-es').classList.toggle('active', l==='es');
+  applyLang();
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+async function doLogin() {
+  const username = document.getElementById('login-user').value.trim().toLowerCase();
+  const password = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+  if(!username || !password) { errEl.textContent = 'Enter username and password.'; return; }
+
+  // Look up user in app_users table
+  const { data: users, error } = await sb.from('app_users')
+    .select('*').eq('username', username).limit(1);
+
+  if(error || !users?.length) { errEl.textContent = 'Invalid username or password.'; return; }
+  const user = users[0];
+
+  // Simple password check (plaintext for now — upgrade to hashed later)
+  if(user.password !== password) { errEl.textContent = 'Invalid username or password.'; return; }
+
+  currentUser = { id: user.id, username: user.username, role: user.role, display_name: user.display_name || user.username };
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('userPillName').textContent = currentUser.display_name;
+
+  // Show/hide gear based on role
+  const isAdmin = currentUser.role === 'admin';
+  document.getElementById('gearBtn').style.display = isAdmin ? 'block' : 'none';
+
+  // Hide admin-only nav items for foremen
+  applyRoleVisibility();
+  await loadProfiles();
+  await loadCrews();
+  showScreen('profiles');
+}
+
+function doLogout() {
+  if(!confirm('Sign out?')) return;
+  currentUser = null;
+  document.getElementById('loginScreen').classList.add('active');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-err').textContent = '';
+}
+
+function applyRoleVisibility() {
+  const isAdmin = currentUser?.role === 'admin';
+  // Foremen only see their own tab; admin sees all
+  // Nav: hide nothing (foremen see profiles + worksheets, admin sees all + gear)
+}
+
+function requireAdmin(action) {
+  if(currentUser?.role === 'admin') {
+    adminAction = action;
+    if(action === 'delete') document.getElementById('deleteModal').style.display='flex';
+    if(action === 'edit') openEditModal();
+    if(action === 'admin') showScreen('admin');
+    return;
+  }
+  adminAction = action;
+  document.getElementById('adminPinInput').value='';
+  document.getElementById('adminModal').style.display='flex';
+}
+
+// ============================================================
+// SCREEN ROUTING
+// ============================================================
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const el = document.getElementById('screen-'+name);
+  if(el) el.classList.add('active');
+  const navMap = ['profiles','new','dailylog'];
+  const idx = navMap.indexOf(name);
+  if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  if(name==='new') resetForm();
+  if(name==='admin') loadCrews();
+  if(name==='dailylog') loadLogs();
+  if(name==='newlog') resetLogForm();
+  if(!['detail','logdetail'].includes(name)) prevScreen=name;
+  applyLang();
+}
+
+function goBack() { showScreen(prevScreen); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function setDate() {
+  const el = document.getElementById('f-date');
+  if(el) el.value = new Date().toISOString().split('T')[0];
+}
+
+function openAdmin() {
+  if(currentUser?.role === 'admin') { showScreen('admin'); return; }
+  adminAction = 'admin';
+  document.getElementById('adminPinInput').value='';
+  document.getElementById('adminModal').style.display='flex';
+}
+
+// ============================================================
+// BORE PROFILE FORM
+// ============================================================
 function setUnit(field, unit) {
   unitStates[field] = unit;
   ['in','ft'].forEach(u => {
@@ -1098,35 +1695,6 @@ function toInches(val, field) {
   const n = parseFloat(val);
   if(isNaN(n)) return null;
   return unitStates[field]==='ft' ? n*12 : n;
-}
-
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const idx = ['profiles','new'].indexOf(name);
-  if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
-  if(name==='new') resetForm();
-  if(name==='admin') loadCrews();
-  if(name!=='detail') prevScreen=name;
-}
-
-function goBack() { showScreen(prevScreen); }
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-function setDate() {
-  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-}
-
-function openAdmin() {
-  adminAction = 'admin';
-  document.getElementById('adminPinInput').value='';
-  document.getElementById('adminModal').style.display='flex';
 }
 
 function getPin(side) {
@@ -1364,7 +1932,8 @@ function resetForm() {
 }
 
 async function saveProfile() {
-  const btn = document.querySelector('.save-btn');
+  const btn = document.querySelector('#screen-new .save-btn');
+  if(!btn) return;
   btn.textContent='Saving...'; btn.disabled=true;
   const active = crossings.filter(c=>c&&c.type).sort((a,b)=>(parseFloat(a.dist)||0)-(parseFloat(b.dist)||0));
   const finalCrossings = active.map((c,i)=>({
@@ -1376,11 +1945,14 @@ async function saveProfile() {
   const foremanDisplay = selectedCrew
     ? (selectedCrew.crew_number?'Crew '+selectedCrew.crew_number+' — ':'')+selectedCrew.foreman_name
     : foremanSel.options[foremanSel.selectedIndex]?.text||'';
+  const profileDate = document.getElementById('f-date').value;
+  const profileAddr = document.getElementById('f-address').value;
+
   const profile = {
-    date: document.getElementById('f-date').value,
+    date: profileDate,
     job_number: document.getElementById('f-jobno').value,
     customer: document.getElementById('f-customer').value,
-    address: document.getElementById('f-address').value,
+    address: profileAddr,
     foreman: foremanDisplay,
     ticket_811: document.getElementById('f-811').value,
     total_footage: parseFloat(document.getElementById('f-footage').value)||null,
@@ -1397,19 +1969,59 @@ async function saveProfile() {
     longitude: machineLng,
     pit_latitude: pitLat,
     pit_longitude: pitLng,
+    created_by: currentUser?.username || null,
   };
-  const { error } = await sb.from('profiles').insert([profile]);
+
+  const { data: inserted, error } = await sb.from('profiles').insert([profile]).select().single();
   btn.textContent='Save Complete Profile'; btn.disabled=false;
   if(error) { showToast('Error saving — try again'); return; }
-  showToast('Profile saved!');
+
+  // Auto-link: find worksheets on same date with matching address
+  if(inserted?.id && profileDate && profileAddr) {
+    const linkedId = await autoLinkProfileToWorksheet(inserted.id, profileDate, profileAddr);
+    if(linkedId) {
+      // Update worksheet status to final now that profile exists
+      await sb.from('daily_logs').update({ status:'final', linked_profile_id: inserted.id })
+        .eq('id', linkedId);
+      // Update profile with linked worksheet id
+      await sb.from('profiles').update({ linked_worksheet_id: linkedId })
+        .eq('id', inserted.id);
+      showToast('Profile saved & linked to worksheet ✓');
+    } else {
+      showToast('Profile saved!');
+    }
+  } else {
+    showToast('Profile saved!');
+  }
+
   await loadProfiles();
   showScreen('profiles');
 }
 
+async function autoLinkProfileToWorksheet(profileId, date, address) {
+  // Find worksheets on same date that have pipe pulled and no linked profile yet
+  const { data: logs } = await sb.from('daily_logs')
+    .select('id,address,bores,status')
+    .eq('date', date)
+    .is('linked_profile_id', null);
+  if(!logs?.length) return null;
+  const addrNorm = (address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  for(const log of logs) {
+    const logAddr = (log.address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const hasPipe = (log.bores||[]).some(b=>b.pipe_pulled);
+    // Match if address has at least 6 chars in common prefix OR contains each other
+    const minLen = Math.min(addrNorm.length, logAddr.length);
+    const overlap = minLen >= 4 && (addrNorm.slice(0,Math.min(8,minLen)) === logAddr.slice(0,Math.min(8,minLen)));
+    if(overlap && hasPipe) return log.id;
+  }
+  return null;
+}
+
 async function loadProfiles() {
-  const { data, error } = await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  let query = sb.from('profiles').select('*').order('created_at',{ascending:false});
+  const { data, error } = await query;
   if(error) return;
-  allProfiles=data||[];
+  allProfiles = data||[];
   renderProfiles(allProfiles);
 }
 
@@ -1444,7 +2056,7 @@ function getTagClass(type) {
 function renderProfiles(profiles) {
   const list=document.getElementById('profilesList');
   if(!profiles||!profiles.length) {
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No profiles yet</div><div class="empty-sub">Tap + New to create your first bore profile</div></div>`;
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_profiles')}</div><div class="empty-sub">${t('no_profiles_sub')}</div></div>`;
     return;
   }
   list.innerHTML=profiles.map(p=>{
@@ -1486,7 +2098,7 @@ function renderCrews(crews) {
       <div class="crew-card-top">
         <div>
           <div class="crew-name">${c.foreman_name}</div>
-          <div class="crew-num">${c.crew_number?'Crew '+c.crew_number:''} ${c.machine_type?'· '+c.machine_type:''}</div>
+          <div class="crew-num">${c.crew_number?'Crew '+c.crew_number:''} ${c.assigned_drill?'· '+c.assigned_drill:''}</div>
         </div>
       </div>
       ${c.phone?`<div class="crew-meta">📞 ${c.phone}</div>`:''}
@@ -1506,6 +2118,8 @@ function renderCrews(crews) {
 
 function openCrewModal(id) {
   const c = id ? allCrews.find(x=>x.id==id) : null;
+  const drillOpts = ['D165','D167','D168','D174','D176','D177','D178','D180','D181','D182','D183','D184','D185','D186','D187','D188','D189','D190','D191']
+    .map(d=>`<option value="${d}" ${c?.assigned_drill===d?'selected':''}>${d}</option>`).join('');
   const modal = document.createElement('div');
   modal.className='modal-overlay';
   modal.id='crewModal';
@@ -1514,9 +2128,13 @@ function openCrewModal(id) {
       <div class="modal-title">${c?'Edit Crew':'Add Crew'}</div>
       <div class="form-group"><label class="form-label">Crew number</label><input class="form-input" id="crew-num" placeholder="e.g. 1" value="${c?.crew_number||''}" /></div>
       <div class="form-group"><label class="form-label">Foreman name</label><input class="form-input" id="crew-name" placeholder="Full name" value="${c?.foreman_name||''}" /></div>
+      <div class="form-group"><label class="form-label">Assigned Drill Unit</label>
+        <select class="form-input" id="crew-drill">
+          <option value="">None assigned</option>${drillOpts}
+        </select>
+      </div>
       <div class="form-group"><label class="form-label">Phone number</label><input class="form-input" id="crew-phone" placeholder="Optional" value="${c?.phone||''}" /></div>
       <div class="form-group"><label class="form-label">Hire date</label><input class="form-input" type="date" id="crew-hire" value="${c?.hire_date||''}" /></div>
-      <div class="form-group"><label class="form-label">Machine type</label><input class="form-input" id="crew-machine" placeholder="e.g. Vermeer D24x40" value="${c?.machine_type||''}" /></div>
       <div class="modal-btns" style="margin-top:8px;">
         <button class="modal-btn modal-cancel" onclick="closeCrewModal()">Cancel</button>
         <button class="modal-btn modal-confirm" onclick="saveCrew('${id||''}')">${c?'Save changes':'Add crew'}</button>
@@ -1536,9 +2154,9 @@ async function saveCrew(id) {
   const data={
     crew_number: parseInt(document.getElementById('crew-num').value)||null,
     foreman_name: document.getElementById('crew-name').value,
+    assigned_drill: document.getElementById('crew-drill').value||null,
     phone: document.getElementById('crew-phone').value,
     hire_date: document.getElementById('crew-hire').value||null,
-    machine_type: document.getElementById('crew-machine').value,
   };
   let error;
   if(id) {
@@ -1577,6 +2195,7 @@ function showDetail(id) {
     </div>`;
   }).join('');
 
+  const canEdit = currentUser?.role==='admin';
   document.getElementById('detailContent').innerHTML=`
     <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${p.address||'No address'}</div>
     <div style="font-size:12px;color:#888;margin-bottom:14px;">${[p.customer,p.foreman,p.date,p.job_number?'#'+p.job_number:''].filter(Boolean).join(' · ')}</div>
@@ -1590,10 +2209,16 @@ function showDetail(id) {
     ${p.latitude?buildMapCard(p):''}
     ${p.notes?`<div class="card"><div class="card-title">Notes</div><div style="font-size:13px;color:#555;line-height:1.6;">${p.notes}</div></div>`:''}
     ${p.ticket_811?`<div class="card"><div class="card-title">811 Ticket</div><div style="font-size:13px;color:#555;">#${p.ticket_811}</div></div>`:''}
-    <div class="admin-bar">
+    ${p.linked_worksheet_id ? `<div class="card"><div class="card-title">Linked Worksheet</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:13px;color:#555;">Daily worksheet on file</div>
+        <button onclick="viewLinkedWorksheet('${p.linked_worksheet_id}')" style="font-size:12px;font-weight:700;color:#1D4ED8;background:#EFF6FF;border:1.5px solid #93C5FD;border-radius:8px;padding:7px 14px;cursor:pointer;">View Worksheet →</button>
+      </div>
+    </div>` : `<div class="card" style="border-color:#FCD34D;background:#FFFBEB;"><div class="card-title" style="color:#92400E;">No Linked Worksheet</div><div style="font-size:12px;color:#92400E;">No daily worksheet is linked to this profile yet.</div></div>`}
+    ${canEdit?`<div class="admin-bar">
       <button class="edit-btn" onclick="requireAdmin('edit')">Edit Profile</button>
       <button class="delete-btn" onclick="requireAdmin('delete')">Delete</button>
-    </div>`;
+    </div>`:''}`;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-detail').classList.add('active');
   window.scrollTo(0,0);
@@ -1647,12 +2272,6 @@ function buildMapCard(p) {
   </div>`;
 }
 
-function requireAdmin(action) {
-  adminAction=action;
-  document.getElementById('adminPinInput').value='';
-  document.getElementById('adminModal').style.display='flex';
-}
-
 function closeAdminModal() { document.getElementById('adminModal').style.display='none'; }
 function closeDeleteModal() { document.getElementById('deleteModal').style.display='none'; }
 
@@ -1703,16 +2322,11 @@ function openEditModal() {
         <select class="form-input" id="edit-reamersize">
           <option value="">Select...</option>
           <option ${p.bit_size==='Head'?'selected':''}>Head</option>
-          <option ${p.bit_size==='6"'?'selected':''}>6"</option>
-          <option ${p.bit_size==='8"'?'selected':''}>8"</option>
-          <option ${p.bit_size==='10"'?'selected':''}>10"</option>
-          <option ${p.bit_size==='12"'?'selected':''}>12"</option>
-          <option ${p.bit_size==='14"'?'selected':''}>14"</option>
-          <option ${p.bit_size==='16"'?'selected':''}>16"</option>
-          <option ${p.bit_size==='18"'?'selected':''}>18"</option>
-          <option ${p.bit_size==='20"'?'selected':''}>20"</option>
-          <option ${p.bit_size==='22"'?'selected':''}>22"</option>
-          <option ${p.bit_size==='24"'?'selected':''}>24"</option>
+          <option ${p.bit_size==='6"'?'selected':''}>6"</option><option ${p.bit_size==='8"'?'selected':''}>8"</option>
+          <option ${p.bit_size==='10"'?'selected':''}>10"</option><option ${p.bit_size==='12"'?'selected':''}>12"</option>
+          <option ${p.bit_size==='14"'?'selected':''}>14"</option><option ${p.bit_size==='16"'?'selected':''}>16"</option>
+          <option ${p.bit_size==='18"'?'selected':''}>18"</option><option ${p.bit_size==='20"'?'selected':''}>20"</option>
+          <option ${p.bit_size==='22"'?'selected':''}>22"</option><option ${p.bit_size==='24"'?'selected':''}>24"</option>
         </select>
       </div>
       <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="3" id="edit-notes">${p.notes||''}</textarea></div>
@@ -1733,7 +2347,6 @@ async function saveEdit() {
   const btn=document.querySelector('#editModal .modal-confirm');
   btn.textContent='Saving...'; btn.disabled=true;
   const updates={
-    date: document.getElementById('edit-date')?.value,
     job_number: document.getElementById('edit-jobno').value,
     customer: document.getElementById('edit-customer').value,
     address: document.getElementById('edit-address').value,
@@ -1767,15 +2380,409 @@ async function confirmDelete() {
   showScreen('profiles');
 }
 
-function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='es')));
+// ============================================================
+// DAILY WORKSHEET
+// ============================================================
+function toggleSvcNotes(eq) {
+  const cb = document.getElementById('eq-'+eq+'-svc');
+  const notes = document.getElementById('svc-notes-'+eq);
+  if(notes) notes.classList.toggle('active', cb?.checked);
 }
 
+async function autofillEquipHr(eq) {
+  const unit = document.getElementById('eq-'+eq+'-unit')?.value;
+  if(!unit) return;
+  // Find last worksheet that used this unit
+  const { data } = await sb.from('daily_logs')
+    .select('equipment')
+    .not('equipment', 'is', null)
+    .order('date', {ascending:false})
+    .limit(50);
+  if(!data) return;
+  for(const row of data) {
+    const eqData = row.equipment?.[eq];
+    if(eqData?.unit === unit && eqData?.hr_end != null) {
+      const startEl = document.getElementById('eq-'+eq+'-start');
+      if(startEl && !startEl.value) {
+        startEl.value = eqData.hr_end;
+        showToast(`Auto-filled ${unit} start HR: ${eqData.hr_end}`);
+      }
+      return;
+    }
+  }
+}
+
+function toggleVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) { showToast('Voice not supported on this browser'); return; }
+  const btn = document.getElementById('voiceBtn');
+  if(voiceActive) {
+    voiceRecognition?.stop();
+    voiceActive = false;
+    btn.classList.remove('recording');
+    btn.innerHTML = `🎤 <span data-${lang}>${lang==='es'?'Toca para hablar':'Tap to speak'}</span>`;
+    return;
+  }
+  voiceRecognition = new SpeechRecognition();
+  voiceRecognition.lang = lang === 'es' ? 'es-US' : 'en-US';
+  voiceRecognition.continuous = true;
+  voiceRecognition.interimResults = false;
+  voiceRecognition.onresult = e => {
+    const transcript = Array.from(e.results).map(r=>r[0].transcript).join(' ');
+    const ta = document.getElementById('dl-comments');
+    if(ta) ta.value = (ta.value ? ta.value + ' ' : '') + transcript;
+  };
+  voiceRecognition.onend = () => {
+    voiceActive = false;
+    btn.classList.remove('recording');
+    btn.innerHTML = `🎤 <span>${lang==='es'?'Toca para hablar':'Tap to speak'}</span>`;
+  };
+  voiceRecognition.start();
+  voiceActive = true;
+  btn.classList.add('recording');
+  btn.innerHTML = `🔴 <span>${lang==='es'?'Grabando... toca para parar':'Recording... tap to stop'}</span>`;
+}
+
+function resetLogForm() {
+  dlBoreCount = 0; dlBoreRows = [];
+  document.getElementById('dl-bore-rows').innerHTML = '';
+  document.getElementById('dl-date').value = new Date().toISOString().split('T')[0];
+  ['dl-customer','dl-address','dl-city','dl-comments','dl-invoice','dl-po',
+   'dl-bluestake','dl-supervisor','dl-goal','dl-timeon','dl-timeoff'].forEach(id=>{
+    const e=document.getElementById(id); if(e) e.value='';
+  });
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    const n=document.getElementById('dl-crew-'+role); if(n) n.value='';
+    const a=document.getElementById('dl-appr-'+role); if(a) a.value='';
+  });
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    ['unit','start','end'].forEach(f=>{ const e=document.getElementById('eq-'+eq+'-'+f); if(e) e.value=''; });
+    const svc=document.getElementById('eq-'+eq+'-svc'); if(svc) svc.checked=false;
+    const notes=document.getElementById('svc-notes-'+eq); if(notes) notes.classList.remove('active');
+    const txt=document.getElementById('svc-txt-'+eq); if(txt) txt.value='';
+  });
+  ['bentonite','asphalt','sodaash','ab','soap','slurry','polymer'].forEach(m=>{
+    const e=document.getElementById('mat-'+m); if(e) e.value='';
+  });
+  document.getElementById('dl-prevwage').value='no';
+  const banner=document.getElementById('pipe-pulled-banner');
+  if(banner) banner.classList.remove('active');
+
+  // Autofill foreman name if user is a foreman
+  if(currentUser?.role === 'foreman') {
+    const sup = document.getElementById('dl-supervisor');
+    if(sup) sup.value = currentUser.display_name;
+  }
+  addBoreRow();
+}
+
+function addBoreRow() {
+  dlBoreCount++;
+  const i=dlBoreCount;
+  dlBoreRows.push({});
+  const list=document.getElementById('dl-bore-rows');
+  const block=document.createElement('div');
+  block.className='bore-row-block';
+  block.id='dlbore'+i;
+  block.innerHTML=`
+    <div class="bore-row-header">
+      <div class="bore-row-num">Bore ${i}</div>
+      <button class="del-btn" onclick="removeBoreRow(${i})">✕ Remove</button>
+    </div>
+    <div class="form-group"><label class="form-label" data-en="Location of Bore" data-es="Ubicación de Perforación">Location of Bore</label>
+      <input class="form-input" id="dlb-loc${i}" placeholder="e.g. Under Main St crossing" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-en="Product Installing" data-es="Producto a Instalar">Product Installing</label>
+        <input class="form-input" id="dlb-prod${i}" placeholder='e.g. 2" gas' /></div>
+      <div class="form-group"><label class="form-label" data-en="Ground Type" data-es="Tipo de Suelo">Ground Type</label>
+        <select class="form-input" id="dlb-ground${i}">
+          <option value="">Select...</option>
+          <option>Caliche</option><option>Sandy</option><option>Rocky</option><option>Clay</option><option>Mixed</option>
+        </select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-en="Length (ft)" data-es="Longitud (ft)">Length (ft)</label>
+        <input class="form-input" type="number" id="dlb-len${i}" placeholder="0" /></div>
+      <div class="form-group"><label class="form-label" data-en="Pipe Pulled?" data-es="¿Tubería Instalada?">Pipe Pulled?</label>
+        <select class="form-input" id="dlb-pipe${i}" onchange="checkPipePulled()">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select></div>
+    </div>`;
+  list.appendChild(block);
+}
+
+function removeBoreRow(i) {
+  const el=document.getElementById('dlbore'+i); if(el) el.remove();
+  if(dlBoreRows[i-1]) dlBoreRows[i-1]=null;
+  checkPipePulled();
+}
+
+function checkPipePulled() {
+  let anyPipe = false;
+  for(let i=1;i<=dlBoreCount;i++){
+    if(document.getElementById('dlb-pipe'+i)?.value==='yes') { anyPipe=true; break; }
+  }
+  const banner=document.getElementById('pipe-pulled-banner');
+  if(banner) {
+    banner.classList.toggle('active', anyPipe);
+    banner.textContent = anyPipe ? t('pipe_pulled_warning') : '';
+  }
+}
+
+async function determineWorksheetStatus(date, address, bores) {
+  const anyPipe = bores.some(b=>b.pipe_pulled);
+  if(!anyPipe) return { status:'final', profileId: null };
+
+  const { data: profiles } = await sb.from('profiles')
+    .select('id,date,address')
+    .eq('date', date);
+
+  if(!profiles?.length) return { status:'pending', profileId: null };
+
+  const addrNorm = (address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const match = profiles.find(p => {
+    const pNorm = (p.address||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const minLen = Math.min(addrNorm.length, pNorm.length);
+    return minLen >= 4 && addrNorm.slice(0,Math.min(8,minLen)) === pNorm.slice(0,Math.min(8,minLen));
+  });
+  return match
+    ? { status:'final', profileId: match.id }
+    : { status:'pending', profileId: null };
+}
+
+async function saveDailyLog() {
+  const btn=document.querySelector('#screen-newlog .save-btn');
+  if(!btn) return;
+  btn.textContent = t('saving'); btn.disabled=true;
+
+  const crew={};
+  ['drill','locator','lab1','lab2','lab3','potholer'].forEach(role=>{
+    const name = document.getElementById('dl-crew-'+role)?.value||'';
+    if(name) crew[role]={ name, approved: document.getElementById('dl-appr-'+role)?.value||'' };
+  });
+
+  const equipment={};
+  ['drill','pickup','vac','semi','trailer'].forEach(eq=>{
+    const unit = document.getElementById('eq-'+eq+'-unit')?.value||'';
+    if(!unit) return;
+    const start=parseFloat(document.getElementById('eq-'+eq+'-start')?.value)||null;
+    const end=parseFloat(document.getElementById('eq-'+eq+'-end')?.value)||null;
+    const svc=document.getElementById('eq-'+eq+'-svc')?.checked||false;
+    equipment[eq]={
+      unit, hr_start:start, hr_end:end,
+      total_hrs:(start!=null&&end!=null)?Math.round((end-start)*10)/10:null,
+      needs_service:svc,
+      service_notes: svc ? (document.getElementById('svc-txt-'+eq)?.value||'') : ''
+    };
+  });
+
+  const bores=[];
+  for(let i=1;i<=dlBoreCount;i++){
+    const loc=document.getElementById('dlb-loc'+i)?.value;
+    const prod=document.getElementById('dlb-prod'+i)?.value;
+    if(!loc&&!prod) continue;
+    bores.push({
+      location:loc||'', product:prod||'',
+      ground:document.getElementById('dlb-ground'+i)?.value||'',
+      length_ft:parseFloat(document.getElementById('dlb-len'+i)?.value)||null,
+      pipe_pulled:document.getElementById('dlb-pipe'+i)?.value==='yes'
+    });
+  }
+
+  const materials={
+    bentonite:parseFloat(document.getElementById('mat-bentonite')?.value)||null,
+    asphalt_patch:parseFloat(document.getElementById('mat-asphalt')?.value)||null,
+    soda_ash:parseFloat(document.getElementById('mat-sodaash')?.value)||null,
+    ab:document.getElementById('mat-ab')?.value||'',
+    soap:parseFloat(document.getElementById('mat-soap')?.value)||null,
+    slurry:document.getElementById('mat-slurry')?.value||'',
+    polymer:parseFloat(document.getElementById('mat-polymer')?.value)||null
+  };
+
+  const date = document.getElementById('dl-date')?.value||null;
+  const address = document.getElementById('dl-address')?.value||'';
+  const { status, profileId } = await determineWorksheetStatus(date, address, bores);
+
+  const record={
+    date, status,
+    linked_profile_id: profileId || null,
+    prevailing_wages:document.getElementById('dl-prevwage')?.value==='yes',
+    customer:document.getElementById('dl-customer')?.value||'',
+    address, city_state_zip:document.getElementById('dl-city')?.value||'',
+    production_goal_ft:parseFloat(document.getElementById('dl-goal')?.value)||null,
+    po_number:document.getElementById('dl-po')?.value||'',
+    blue_stake:document.getElementById('dl-bluestake')?.value||'',
+    time_on_site:document.getElementById('dl-timeon')?.value||'',
+    time_off_site:document.getElementById('dl-timeoff')?.value||'',
+    supervisor:document.getElementById('dl-supervisor')?.value||'',
+    comments:document.getElementById('dl-comments')?.value||'',
+    invoice_number:document.getElementById('dl-invoice')?.value||'',
+    submitted_by:currentUser?.username||null,
+    crew, equipment, materials, bores
+  };
+
+  const {data: insertedLog, error}=await sb.from('daily_logs').insert([record]).select().single();
+  btn.textContent=t('save_worksheet'); btn.disabled=false;
+  if(error){ showToast('Error: '+error.message); return; }
+
+  // If matched a profile, backlink it
+  if(profileId && insertedLog?.id) {
+    await sb.from('profiles').update({ linked_worksheet_id: insertedLog.id }).eq('id', profileId);
+  }
+
+  showToast(status==='pending' ? '⏳ Saved as Pending — bore profile needed' : t('worksheet_saved'));
+  await loadLogs();
+  showScreen('dailylog');
+}
+
+async function loadLogs() {
+  let query = sb.from('daily_logs').select('*').order('date',{ascending:false});
+  // Foremen only see their own
+  if(currentUser?.role === 'foreman') {
+    query = query.eq('submitted_by', currentUser.username);
+  }
+  const {data,error}=await query;
+  if(error){
+    document.getElementById('logsList').innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Table not set up yet</div><div class="empty-sub">Run the SQL setup in Supabase</div></div>`;
+    return;
+  }
+  allLogs=data||[];
+  renderLogs(allLogs);
+}
+
+function filterLogs() {
+  const q=document.getElementById('logSearchInput').value.toLowerCase();
+  renderLogs(allLogs.filter(l=>
+    (l.customer||'').toLowerCase().includes(q)||
+    (l.address||'').toLowerCase().includes(q)||
+    (l.supervisor||'').toLowerCase().includes(q)||
+    Object.values(l.crew||{}).some(v=>(v.name||'').toLowerCase().includes(q))
+  ));
+}
+
+function renderLogs(logs) {
+  const list=document.getElementById('logsList');
+  if(!logs||!logs.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No worksheets yet</div><div class="empty-sub">Tap + New to create your first daily worksheet</div></div>`;
+    return;
+  }
+  list.innerHTML=logs.map(l=>{
+    const svcFlags=Object.entries(l.equipment||{}).filter(([,v])=>v?.needs_service).map(([k])=>k.toUpperCase());
+    const totalFt=(l.bores||[]).reduce((sum,b)=>sum+(b.length_ft||0),0);
+    const drillName=Object.values(l.crew||{}).find(v=>v?.name)?.name||'';
+    const sub=[drillName,totalFt?totalFt+' ft':null,l.city_state_zip].filter(Boolean).join(' · ');
+    const isFinal = l.status==='final';
+    return `<div class="dl-log-card" onclick="showLogDetail('${l.id}')">
+      <div class="dl-card-top">
+        <div class="dl-card-title">${l.customer||'No customer'} — ${l.address||''}</div>
+        <div class="dl-card-date">${l.date||''}</div>
+      </div>
+      ${sub?`<div class="dl-card-sub">${sub}</div>`:''}
+      <div class="dl-card-tags">
+        <span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>
+        ${l.prevailing_wages?`<span class="tag t-amber">PW</span>`:''}
+        ${svcFlags.map(f=>`<span class="tag t-red">⚠ ${f}</span>`).join('')}
+        ${totalFt?`<span class="tag t-green">${totalFt} ft</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showLogDetail(id) {
+  const l=allLogs.find(x=>x.id===id);
+  if(!l) return;
+  currentLogId=id;
+  const roleLabel={drill:'Drill Operator',locator:'Locator',lab1:'Laborer 1',lab2:'Laborer 2',lab3:'Laborer 3',potholer:'Potholer'};
+  const crewRows=Object.entries(l.crew||{}).filter(([,v])=>v?.name).map(([role,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${roleLabel[role]||role}</div>
+      <div class="dl-detail-val">${v.name}${v.approved?' · '+v.approved:''}</div>
+    </div>`).join('');
+  const equipRows=Object.entries(l.equipment||{}).filter(([,v])=>v?.unit).map(([eq,v])=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">${eq.toUpperCase()} — ${v.unit}</div>
+      <div class="dl-detail-val">${v.hr_start??'—'} → ${v.hr_end??'—'}${v.total_hrs?' ('+v.total_hrs+'h)':''}${v.needs_service?' ⚠':''}</div>
+    </div>
+    ${v.needs_service&&v.service_notes?`<div style="font-size:11px;color:#EA580C;padding:4px 0 8px 0;">Note: ${v.service_notes}</div>`:''}`).join('');
+  const matPairs=[['Bentonite',l.materials?.bentonite],['Soda Ash',l.materials?.soda_ash],['Soap',l.materials?.soap],['Polymer',l.materials?.polymer],['Asphalt Patch',l.materials?.asphalt_patch],['A/B',l.materials?.ab],['Slurry',l.materials?.slurry]];
+  const matRows=matPairs.filter(([,v])=>v).map(([k,v])=>`<div class="dl-detail-row"><div class="dl-detail-lbl">${k}</div><div class="dl-detail-val">${v}</div></div>`).join('');
+  const boreRows=(l.bores||[]).map((b,i)=>`
+    <div class="dl-detail-row">
+      <div class="dl-detail-lbl">Bore ${i+1}${b.location?' — '+b.location:''}</div>
+      <div class="dl-detail-val">${[b.product,b.ground,b.length_ft?b.length_ft+' ft':null,b.pipe_pulled?'✓ Pipe pulled':null].filter(Boolean).join(' · ')}</div>
+    </div>`).join('');
+  const isFinal=l.status==='final';
+  const canDelete=currentUser?.role==='admin';
+  document.getElementById('logDetailContent').innerHTML=`
+    <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${l.customer||'No customer'}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:8px;">${[l.address,l.city_state_zip,l.date].filter(Boolean).join(' · ')}</div>
+    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.submitted_by?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.submitted_by}</span>`:''}</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">Total Footage</div><div class="stat-val">${(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),0)} ft</div></div>
+      <div class="stat-box"><div class="stat-lbl">Bores</div><div class="stat-val">${(l.bores||[]).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Crew</div><div class="stat-val">${Object.values(l.crew||{}).filter(v=>v?.name).length}</div></div>
+      <div class="stat-box"><div class="stat-lbl">Prev. Wages</div><div class="stat-val">${l.prevailing_wages?'Yes':'No'}</div></div>
+    </div>
+    ${crewRows?`<div class="card"><div class="card-title">Crew</div>${crewRows}</div>`:''}
+    ${equipRows?`<div class="card"><div class="card-title">Equipment</div>${equipRows}</div>`:''}
+    ${matRows?`<div class="card"><div class="card-title">Materials</div>${matRows}</div>`:''}
+    ${boreRows?`<div class="card"><div class="card-title">Bore Log</div>${boreRows}</div>`:''}
+    ${l.comments?`<div class="card"><div class="card-title">Comments</div><div style="font-size:13px;color:#555;line-height:1.6;">${l.comments}</div></div>`:''}
+    ${l.po_number||l.blue_stake||l.invoice_number?`<div class="card"><div class="card-title">References</div>
+      ${l.po_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">PO #</div><div class="dl-detail-val">${l.po_number}</div></div>`:''}
+      ${l.blue_stake?`<div class="dl-detail-row"><div class="dl-detail-lbl">Blue Stake #</div><div class="dl-detail-val">${l.blue_stake}</div></div>`:''}
+      ${l.invoice_number?`<div class="dl-detail-row"><div class="dl-detail-lbl">Invoice #</div><div class="dl-detail-val">${l.invoice_number}</div></div>`:''}
+    </div>`:''}
+    ${l.linked_profile_id ? `<div class="card"><div class="card-title">Linked Bore Profile</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:13px;color:#555;">Bore profile on file for this job</div>
+        <button onclick="viewLinkedProfile('${l.linked_profile_id}')" style="font-size:12px;font-weight:700;color:#16A34A;background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:8px;padding:7px 14px;cursor:pointer;">View Profile →</button>
+      </div>
+    </div>` : (l.status==='pending' ? `<div class="card" style="border-color:#FCD34D;background:#FFFBEB;"><div class="card-title" style="color:#92400E;">⏳ Profile Required</div><div style="font-size:12px;color:#92400E;">Pipe was pulled — complete a bore profile to mark this worksheet Final.</div></div>` : '')}
+    ${canDelete?`<div class="admin-bar"><button class="delete-btn" onclick="deleteLog('${id}')">Delete</button></div>`:''}`;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-logdetail').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+async function deleteLog(id) {
+  if(!confirm('Delete this worksheet?')) return;
+  const {error}=await sb.from('daily_logs').delete().eq('id',id);
+  if(error){ showToast('Error deleting'); return; }
+  showToast('Worksheet deleted');
+  allLogs=allLogs.filter(l=>l.id!==id);
+  renderLogs(allLogs);
+  showScreen('dailylog');
+}
+
+function viewLinkedWorksheet(worksheetId) {
+  // Load from allLogs or fetch if needed
+  const log = allLogs.find(l=>l.id===worksheetId);
+  if(log) { showLogDetail(worksheetId); return; }
+  // Not loaded yet — load logs then show
+  loadLogs().then(()=>{
+    const l = allLogs.find(x=>x.id===worksheetId);
+    if(l) showLogDetail(worksheetId);
+    else showToast('Worksheet not found');
+  });
+}
+
+function viewLinkedProfile(profileId) {
+  const p = allProfiles.find(x=>x.id===profileId);
+  if(p) { showDetail(profileId); return; }
+  loadProfiles().then(()=>{
+    const found = allProfiles.find(x=>x.id===profileId);
+    if(found) showDetail(profileId);
+    else showToast('Profile not found');
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
 setDate();
 addCrossing();
-loadProfiles();
-loadCrews();
 </script>
 </body>
 </html>
