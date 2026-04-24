@@ -186,7 +186,6 @@ body {
   border-radius: 9px;
   background: #fff;
   color: #0F172A;
-  appearance: none;
   -webkit-appearance: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   line-height: 1.4;
@@ -794,6 +793,243 @@ body {
 .hit-banner-title { font-size: 11px; font-weight: 800; color: #DC2626; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hit-banner-detail { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
 .hit-banner-photo { margin-top: 10px; max-width: 100%; border-radius: 8px; cursor: pointer; display: block; }
+
+/* ============================================================
+   DAILY LOG
+   ============================================================ */
+.dl-log-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+}
+.dl-log-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-1px); border-color: #CBD5E1; }
+.dl-log-card:active { opacity: 0.92; transform: none; }
+.dl-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.dl-card-title { font-size: 14px; font-weight: 700; color: #0F172A; flex: 1; margin-right: 8px; }
+.dl-card-date { font-size: 11px; color: #94A3B8; white-space: nowrap; font-weight: 500; }
+.dl-card-sub { font-size: 12px; color: #64748B; margin-top: 4px; }
+.dl-card-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-label { font-size: 12px; font-weight: 700; color: #475569; }
+.equip-row select, .equip-row input { font-size: 13px; padding: 8px 10px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.equip-row select:focus, .equip-row input:focus { outline: none; border-color: #1D4ED8; }
+.service-flag { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.service-flag input[type="checkbox"] { width: 16px; height: 16px; accent-color: #DC2626; cursor: pointer; margin: 0; flex-shrink: 0; }
+
+.bore-row-block {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 11px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #FAFBFD;
+}
+.bore-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.bore-row-num { font-size: 13px; font-weight: 700; color: #0F172A; }
+
+.crew-time-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.crew-time-row:last-child { border-bottom: none; }
+.crew-time-row input, .crew-time-row select {
+  font-size: 12px; padding: 7px 8px; border: 1.5px solid #E2E8F0;
+  border-radius: 7px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none;
+}
+.crew-time-row input:focus, .crew-time-row select:focus { outline: none; border-color: #1D4ED8; }
+.crew-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px 70px 80px;
+  gap: 6px;
+  padding: 0 0 6px;
+}
+.crew-col-hdr { font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-label { font-size: 11px; font-weight: 600; color: #64748B; }
+.mat-input { font-size: 13px; padding: 9px 11px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: #fff; color: #0F172A; width: 100%; -webkit-appearance: none; }
+.mat-input:focus { outline: none; border-color: #1D4ED8; }
+
+.dl-detail-section { margin-bottom: 14px; }
+.dl-detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F8FAFC; font-size: 13px; }
+.dl-detail-row:last-child { border-bottom: none; }
+.dl-detail-lbl { color: #64748B; font-weight: 500; }
+.dl-detail-val { color: #0F172A; font-weight: 600; text-align: right; max-width: 60%; }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+.login-screen {
+  display: none; position: fixed; inset: 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  z-index: 1000; align-items: center; justify-content: center;
+}
+.login-screen.active { display: flex; }
+.login-box {
+  background: #fff; border-radius: 20px; padding: 32px 28px;
+  width: 340px; max-width: 90vw;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.login-logo { text-align: center; margin-bottom: 8px; font-size: 36px; }
+.login-title { font-size: 20px; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: #94A3B8; text-align: center; margin-bottom: 24px; }
+.login-btn {
+  width: 100%; padding: 14px; background: #1D4ED8; color: #fff;
+  border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 8px; transition: background 0.15s;
+}
+.login-btn:hover { background: #1a44c2; }
+.login-err { font-size: 12px; color: #DC2626; text-align: center; margin-top: 8px; min-height: 18px; }
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 800;
+}
+.status-final { background: #F0FDF4; color: #166534; }
+.status-pending { background: #FFFBEB; color: #92400E; }
+
+/* ============================================================
+   USER PILL IN HEADER
+   ============================================================ */
+.user-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: #fff;
+  cursor: pointer; transition: background 0.15s;
+}
+.user-pill:hover { background: rgba(255,255,255,0.25); }
+
+/* ============================================================
+   SERVICE NOTES
+   ============================================================ */
+.svc-notes {
+  display: none; margin-top: 8px;
+  background: #FFF7ED; border: 1.5px solid #FED7AA;
+  border-radius: 8px; padding: 10px;
+}
+.svc-notes.active { display: block; }
+.svc-notes textarea {
+  width: 100%; font-size: 13px; padding: 8px 10px;
+  border: 1.5px solid #FED7AA; border-radius: 7px;
+  background: #fff; color: #0F172A; resize: none;
+  font-family: inherit;
+}
+.svc-notes textarea:focus { outline: none; border-color: #F97316; }
+
+/* ============================================================
+   VOICE BUTTON
+   ============================================================ */
+.voice-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px; background: #EFF6FF;
+  border: 1.5px solid #93C5FD; border-radius: 9px;
+  font-size: 12px; font-weight: 700; color: #1D4ED8;
+  cursor: pointer; transition: all 0.15s; margin-bottom: 8px;
+}
+.voice-btn:hover { background: #DBEAFE; }
+.voice-btn.recording { background: #FEF2F2; border-color: #FCA5A5; color: #DC2626; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* ============================================================
+   VIEW TOGGLE (admin profile grid/list)
+   ============================================================ */
+.view-toggle-btn {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #fff;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.view-toggle-btn.active { background: #1D4ED8; color: #fff; border-color: #1D4ED8; }
+.view-toggle-btn:hover:not(.active) { background: #F8FAFC; }
+
+/* ============================================================
+   FOREMAN GRID VIEW (admin only)
+   ============================================================ */
+.foreman-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.foreman-grid-card {
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.foreman-grid-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #93C5FD; }
+.foreman-grid-avatar {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #fff; font-weight: 800;
+}
+.foreman-grid-name { font-size: 13px; font-weight: 700; color: #0F172A; line-height: 1.3; }
+.foreman-grid-count { font-size: 11px; color: #64748B; font-weight: 500; }
+
+/* ============================================================
+   ARCHIVE ACCORDION
+   ============================================================ */
+.archive-toggle-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  margin-bottom: 8px;
+}
+.archive-toggle-btn:hover { background: #EFF6FF; border-color: #93C5FD; color: #1D4ED8; }
+.archive-toggle-btn.open { border-color: #93C5FD; color: #1D4ED8; background: #EFF6FF; }
+
+
+.pipe-pulled-banner {
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;
+  font-size: 13px; color: #92400E; font-weight: 600;
+  display: none;
+}
+.pipe-pulled-banner.active { display: block; }
 </style>
 </head>
 <body>
@@ -831,10 +1067,7 @@ body {
       onerror="this.style.display='none'"
     />
     <div class="header-logo-fallback" id="brand-logo-fallback">🔩</div>
-    <div>
-      <div class="header-title">B-Line Bore Profiles</div>
-      <div class="header-sub">Phoenix, AZ</div>
-    </div>
+
   </div>
   <div class="header-right">
     <div class="lang-toggle">
@@ -852,19 +1085,35 @@ body {
      NAV
      ============================================================ -->
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('profiles')">Profiles</button>
-  <button class="nav-btn" onclick="showScreen('new')">+ New</button>
+  <button class="nav-btn active" onclick="showScreen('profiles')" data-en="Profiles" data-es="Perfiles">Profiles</button>
+  <button class="nav-btn" onclick="showScreen('dailylog')" data-en="Worksheets" data-es="Hojas">Worksheets</button>
 </div>
 
 <!-- ============================================================
      PROFILES SCREEN
      ============================================================ -->
 <div id="screen-profiles" class="screen active">
+  <div class="section-header">
+    <div class="section-title" data-en="Bore Profiles" data-es="Perfiles de Perforación">Bore Profiles</div>
+    <button class="add-crew-btn" onclick="showScreen('new')" data-en="+ New Profile" data-es="+ Nuevo Perfil">+ New Profile</button>
+  </div>
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input class="search-input" id="searchInput" placeholder="Search address, customer, foreman..." oninput="filterProfiles()" />
   </div>
+  <!-- View toggle (admin only) -->
+  <div id="profileViewToggle" style="display:none;margin-bottom:14px;gap:8px;">
+    <button class="view-toggle-btn active" id="viewListBtn" onclick="setProfileView('list')">☰ List</button>
+    <button class="view-toggle-btn" id="viewGridBtn" onclick="setProfileView('grid')">⊞ By Foreman</button>
+  </div>
   <div id="profilesList"><div class="loading">Loading profiles...</div></div>
+  <!-- Archived profiles accordion -->
+  <div id="archivedSection" style="display:none;margin-top:8px;">
+    <button class="archive-toggle-btn" onclick="toggleArchive()" id="archiveToggleBtn">
+      📦 Older profiles (1+ months) <span id="archiveCount"></span> ▼
+    </button>
+    <div id="archivedList" style="display:none;"></div>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -916,7 +1165,7 @@ body {
         <div class="form-group">
           <label class="form-label">Total footage</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-footage" placeholder="0" />
+            <input type="number" id="f-footage" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn active" id="footageUnitFt" onclick="setUnit('footage','ft')">ft</button>
             </div>
@@ -940,7 +1189,7 @@ body {
         <div class="form-group">
           <label class="form-label">Entry depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-entrydepth" placeholder="0" />
+            <input type="number" id="f-entrydepth" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn" id="entryUnitIn" onclick="setUnit('entry','in')">in</button>
               <button class="unit-btn active" id="entryUnitFt" onclick="setUnit('entry','ft')">ft</button>
@@ -950,7 +1199,7 @@ body {
         <div class="form-group">
           <label class="form-label">Exit depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-exitdepth" placeholder="0" />
+            <input type="number" id="f-exitdepth" placeholder="0 FEET" />
             <div class="unit-toggle">
               <button class="unit-btn" id="exitUnitIn" onclick="setUnit('exit','in')">in</button>
               <button class="unit-btn active" id="exitUnitFt" onclick="setUnit('exit','ft')">ft</button>
@@ -993,7 +1242,7 @@ body {
         <div class="form-group">
           <label class="form-label">Max bore depth</label>
           <div class="depth-input-wrap">
-            <input type="number" id="f-actualdepth" placeholder="0" oninput="updatePathViz()" />
+            <input type="number" id="f-actualdepth" placeholder="0 INCHES" oninput="updatePathViz()" />
             <div class="unit-toggle">
               <button class="unit-btn active" id="actualUnitIn" onclick="setUnit('actual','in')">in</button>
               <button class="unit-btn" id="actualUnitFt" onclick="setUnit('actual','ft')">ft</button>
@@ -1047,6 +1296,262 @@ body {
 <!-- ============================================================
      DAILY LOG — LIST SCREEN
      ============================================================ -->
+<div id="screen-dailylog" class="screen">
+  <div class="section-header">
+    <div class="section-title" data-en="Daily Worksheets" data-es="Hojas Diarias">Daily Worksheets</div>
+    <button class="add-crew-btn" onclick="showScreen('newlog')" data-en="+ New" data-es="+ Nueva">+ New</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="logSearchInput" placeholder="Search customer, foreman, address..." oninput="filterLogs()" />
+  </div>
+  <div id="logsList"><div class="loading">Loading logs...</div></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — NEW ENTRY SCREEN
+     ============================================================ -->
+<div id="screen-newlog" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Back</button>
+  <div class="pipe-pulled-banner" id="pipe-pulled-banner"></div>
+
+  <!-- Job Header -->
+  <div class="card">
+    <div class="card-title">Job Information</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="dl-date" /></div>
+      <div class="form-group">
+        <label class="form-label">Prevailing Wages</label>
+        <select class="form-input" id="dl-prevwage">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Customer</label><input class="form-input" id="dl-customer" placeholder="Customer name" /></div>
+    <div class="form-group"><label class="form-label">Job Address</label><input class="form-input" id="dl-address" placeholder="Street address" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">City, State &amp; Zip</label><input class="form-input" id="dl-city" placeholder="Phoenix, AZ" /></div>
+      <div class="form-group"><label class="form-label">Production Goal (ft)</label><input class="form-input" type="number" id="dl-goal" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">PO #</label><input class="form-input" id="dl-po" placeholder="Optional" /></div>
+      <div class="form-group"><label class="form-label">Blue Stake #</label><input class="form-input" id="dl-bluestake" placeholder="Optional" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Time On Site</label><input class="form-input" type="time" id="dl-timeon" /></div>
+      <div class="form-group"><label class="form-label">Time Off Site</label><input class="form-input" type="time" id="dl-timeoff" /></div>
+    </div>
+  </div>
+
+  <!-- Crew -->
+  <div class="card">
+    <div class="card-title" data-en="Employees On Site" data-es="Empleados en Sitio">Employees On Site</div>
+    <div id="dl-crew-rows">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Role / Name" data-es="Rol / Nombre">Role / Name</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Employee" data-es="Empleado">Employee</div>
+        <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Approved" data-es="Aprobado">Approved</div>
+      </div>
+      <!-- Drill Operator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="DRILL OPERATOR" data-es="OPERADOR">DRILL OPERATOR</div>
+        <input class="form-input" id="dl-crew-drill" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-drill" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Locator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LOCATOR" data-es="LOCALIZADOR">LOCATOR</div>
+        <input class="form-input" id="dl-crew-locator" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-locator" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Laborers -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 1" data-es="OBRERO 1">LABORER 1</div>
+        <input class="form-input" id="dl-crew-lab1" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab1" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 2" data-es="OBRERO 2">LABORER 2</div>
+        <input class="form-input" id="dl-crew-lab2" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab2" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="LABORER 3" data-es="OBRERO 3">LABORER 3</div>
+        <input class="form-input" id="dl-crew-lab3" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-lab3" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+      <!-- Potholer -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;padding:7px 0;align-items:center;">
+        <div style="font-size:11px;font-weight:700;color:#475569;" data-en="POTHOLER" data-es="PERFORADOR">POTHOLER</div>
+        <input class="form-input" id="dl-crew-potholer" placeholder="Name" style="padding:8px 10px;font-size:13px;" />
+        <select class="form-input" id="dl-appr-potholer" style="padding:8px 6px;font-size:13px;"><option value="">—</option><option>✓</option><option>✗</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label" data-en="Job Supervisor" data-es="Supervisor">Job Supervisor</label>
+      <input class="form-input" id="dl-supervisor" placeholder="Supervisor name" />
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="card">
+    <div class="card-title" data-en="Equipment On Site" data-es="Equipo en Sitio">Equipment On Site</div>
+    <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;padding-bottom:6px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;"></div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Unit #" data-es="Unidad #">Unit #</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Start HR" data-es="HR Inicio">Start HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="End HR" data-es="HR Fin">End HR</div>
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;" data-en="Service?" data-es="¿Servicio?">Service?</div>
+    </div>
+
+    <!-- DRILL -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">DRILL</div>
+        <select class="form-input" id="eq-drill-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('drill')">
+          <option value="">Select...</option>
+          <option>D165</option><option>D167</option><option>D168</option><option>D174</option>
+          <option>D176</option><option>D177</option><option>D178</option><option>D180</option>
+          <option>D181</option><option>D182</option><option>D183</option><option>D184</option>
+          <option>D185</option><option>D186</option><option>D187</option><option>D188</option>
+          <option>D189</option><option>D190</option><option>D191</option>
+        </select>
+        <input class="form-input" type="number" id="eq-drill-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-drill-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-drill-svc" onchange="toggleSvcNotes('drill')" /><label for="eq-drill-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-drill"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-drill" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- PICKUP -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">PICKUP</div>
+        <select class="form-input" id="eq-pickup-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('pickup')">
+          <option value="">Select...</option>
+          <option>434</option><option>435</option><option>437</option><option>442</option>
+          <option>443</option><option>445</option><option>446</option><option>447</option>
+          <option>449</option><option>450</option><option>451</option><option>452</option>
+          <option>456</option><option>457</option><option>459</option><option>461</option>
+          <option>463</option><option>464</option><option>465</option><option>466</option>
+        </select>
+        <input class="form-input" type="number" id="eq-pickup-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-pickup-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-pickup-svc" onchange="toggleSvcNotes('pickup')" /><label for="eq-pickup-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-pickup"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-pickup" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- VAC -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">VAC</div>
+        <select class="form-input" id="eq-vac-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('vac')">
+          <option value="">Select...</option>
+          <option>V341</option><option>V343</option><option>V348</option><option>V349</option>
+          <option>V352</option><option>V353</option><option>V354</option><option>V357</option>
+          <option>V358</option><option>V360</option><option>V361</option><option>V362</option>
+          <option>V363</option><option>V364</option><option>V365</option><option>V366</option>
+          <option>623</option><option>624</option><option>625</option><option>626</option>
+          <option>628</option><option>629</option><option>630</option><option>631</option>
+        </select>
+        <input class="form-input" type="number" id="eq-vac-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-vac-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-vac-svc" onchange="toggleSvcNotes('vac')" /><label for="eq-vac-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-vac"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-vac" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- SEMI -->
+    <div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">SEMI</div>
+        <select class="form-input" id="eq-semi-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('semi')">
+          <option value="">Select...</option>
+          <option>520</option><option>523</option><option>529</option><option>531</option>
+          <option>532</option><option>533</option><option>534</option><option>537</option>
+          <option>539</option><option>541</option><option>542</option><option>543</option>
+          <option>544</option><option>545</option><option>546</option>
+        </select>
+        <input class="form-input" type="number" id="eq-semi-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-semi-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-semi-svc" onchange="toggleSvcNotes('semi')" /><label for="eq-semi-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-semi"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-semi" placeholder="Describe the issue..."></textarea></div>
+    </div>
+
+    <!-- TRAILER -->
+    <div style="padding:8px 0;">
+      <div style="display:grid;grid-template-columns:72px 1fr 90px 90px 90px;gap:6px;align-items:center;">
+        <div class="equip-label">TRAILER</div>
+        <select class="form-input" id="eq-trailer-unit" style="font-size:12px;padding:8px 8px;" onchange="autofillEquipHr('trailer')">
+          <option value="">Select...</option>
+          <option>T262</option><option>T263</option><option>T265</option><option>T266</option>
+          <option>T267</option><option>T268</option><option>T270</option><option>T271</option>
+          <option>T272</option><option>T273</option><option>T275</option><option>T276</option>
+          <option>T277</option><option>T278</option><option>T279</option><option>T280</option>
+          <option>T281</option><option>T282</option><option>T283</option><option>T284</option>
+          <option>T285</option><option>T286</option>
+          <option>RT901</option><option>RT902</option><option>RT903</option><option>RT904</option>
+          <option>RT905</option><option>RT906</option><option>RT907</option><option>RT908</option>
+          <option>RT909</option><option>RT910</option><option>RT911</option><option>RT912</option>
+          <option>RT913</option><option>RT914</option>
+        </select>
+        <input class="form-input" type="number" id="eq-trailer-start" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <input class="form-input" type="number" id="eq-trailer-end" placeholder="0" style="font-size:13px;padding:8px 8px;" />
+        <div class="service-flag"><input type="checkbox" id="eq-trailer-svc" onchange="toggleSvcNotes('trailer')" /><label for="eq-trailer-svc" style="font-size:12px;color:#DC2626;font-weight:600;" data-en="Flag" data-es="Marca">Flag</label></div>
+      </div>
+      <div class="svc-notes" id="svc-notes-trailer"><label style="font-size:10px;font-weight:700;color:#EA580C;display:block;margin-bottom:4px;" data-en="What needs service?" data-es="¿Qué necesita servicio?">What needs service?</label><textarea rows="2" id="svc-txt-trailer" placeholder="Describe the issue..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- Materials -->
+  <div class="card">
+    <div class="card-title">Job Materials</div>
+    <div class="mat-grid">
+      <div class="mat-item"><label class="mat-label">Bentonite (bags)</label><input class="mat-input" type="number" id="mat-bentonite" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Asphalt Patch (bags)</label><input class="mat-input" type="number" id="mat-asphalt" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Soda Ash (bags)</label><input class="mat-input" type="number" id="mat-sodaash" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">A/B</label><input class="mat-input" id="mat-ab" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Soap (gal)</label><input class="mat-input" type="number" id="mat-soap" placeholder="0" /></div>
+      <div class="mat-item"><label class="mat-label">Slurry</label><input class="mat-input" id="mat-slurry" placeholder="" /></div>
+      <div class="mat-item"><label class="mat-label">Polymer (gal)</label><input class="mat-input" type="number" id="mat-polymer" placeholder="0" /></div>
+    </div>
+  </div>
+
+  <!-- Bore Log -->
+  <div class="card">
+    <div class="card-title" data-en="Bore Log" data-es="Registro de Perforación">Bore Log</div>
+    <div id="dl-bore-rows"></div>
+    <button class="add-btn" onclick="addBoreRow()" data-en="+ Add bore" data-es="+ Agregar perforación">+ Add bore</button>
+  </div>
+
+  <!-- Comments -->
+  <div class="card">
+    <div class="card-title" data-en="Comments" data-es="Comentarios">Comments</div>
+    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤 <span data-en="Tap to speak" data-es="Toca para hablar">Tap to speak</span></button>
+    <textarea class="form-input" rows="3" id="dl-comments" placeholder="Notes, issues, instructions..."></textarea>
+  </div>
+
+  <div class="form-group" style="padding:0 0 8px;">
+    <label class="form-label">Invoice #</label>
+    <input class="form-input" id="dl-invoice" placeholder="Optional" />
+  </div>
+
+  <button class="save-btn" onclick="saveDailyLog()">Save Daily Worksheet</button>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ============================================================
+     DAILY LOG — DETAIL SCREEN
+     ============================================================ -->
+<div id="screen-logdetail" class="screen">
+  <button class="back-btn" onclick="showScreen('dailylog')">← Daily Logs</button>
+  <div id="logDetailContent"></div>
+</div>
+
+
 
 <!-- Pin Modal -->
 <div class="modal-overlay" id="pinModal" style="display:none;">
@@ -1111,8 +1616,9 @@ let voiceRecognition = null, voiceActive = false;
 const T = {
   en: {
     'search_placeholder': 'Search address, customer, foreman...',
+    'log_search_placeholder': 'Search customer, foreman, address...',
     'no_profiles': 'No profiles yet',
-    'no_profiles_sub': 'Tap + New to create your first bore profile',
+    'no_profiles_sub': 'Tap + New Profile to create your first bore profile',
     'pipe_pulled_warning': '⚠ Pipe pulled — a matching bore profile is required before this worksheet can be marked Final.',
     'status_final': '✓ Final',
     'status_pending': '⏳ Pending',
@@ -1120,11 +1626,43 @@ const T = {
     'saving': 'Saving...',
     'worksheet_saved': 'Worksheet saved!',
     'sign_out': 'Sign out',
+    'bore_profiles': 'Bore Profiles',
+    'new_profile': '+ New Profile',
+    'profiles_tab': 'Profiles',
+    'worksheets_tab': 'Worksheets',
+    'project_info': 'Project Information',
+    'date_label': 'Date',
+    'job_no': 'Job no.',
+    'customer': 'Customer',
+    'address': 'Address / Location',
+    'crew_foreman': 'Crew / Foreman',
+    'ticket_811': '811 Ticket #',
+    'gps_pins': 'GPS Pins',
+    'machine_side': 'Machine side (start)',
+    'pit_side': 'Pit side (end)',
+    'capture_machine': '📍 Tap to capture machine location',
+    'capture_pit': '📍 Tap to capture pit location',
+    'bore_details': 'Bore Details',
+    'total_footage': 'Total footage',
+    'product_installed': 'Product installed',
+    'direction': 'Direction',
+    'ground_type': 'Ground type',
+    'entry_depth': 'Entry depth',
+    'exit_depth': 'Exit depth',
+    'next_potholes': 'Next — Log Potholes →',
+    'next_finalize': 'Next — Finalize Profile →',
+    'save_profile': 'Save Complete Profile',
+    'no_worksheets': 'No worksheets yet',
+    'no_worksheets_sub': 'Tap + New to create your first daily worksheet',
+    'older_profiles': '📦 Older profiles (1+ months)',
+    'by_foreman': '⊞ By Foreman',
+    'list_view': '☰ List',
   },
   es: {
     'search_placeholder': 'Buscar dirección, cliente, capataz...',
+    'log_search_placeholder': 'Buscar cliente, capataz, dirección...',
     'no_profiles': 'Sin perfiles aún',
-    'no_profiles_sub': 'Toca + Nuevo para crear tu primer perfil',
+    'no_profiles_sub': 'Toca + Nuevo Perfil para crear tu primer perfil',
     'pipe_pulled_warning': '⚠ Tubería instalada — se requiere un perfil coincidente antes de marcar como Final.',
     'status_final': '✓ Final',
     'status_pending': '⏳ Pendiente',
@@ -1132,17 +1670,92 @@ const T = {
     'saving': 'Guardando...',
     'worksheet_saved': '¡Hoja guardada!',
     'sign_out': 'Cerrar sesión',
+    'bore_profiles': 'Perfiles de Perforación',
+    'new_profile': '+ Nuevo Perfil',
+    'profiles_tab': 'Perfiles',
+    'worksheets_tab': 'Hojas',
+    'project_info': 'Información del Proyecto',
+    'date_label': 'Fecha',
+    'job_no': 'N° de Trabajo',
+    'customer': 'Cliente',
+    'address': 'Dirección / Ubicación',
+    'crew_foreman': 'Cuadrilla / Capataz',
+    'ticket_811': 'Boleto 811 #',
+    'gps_pins': 'Pines GPS',
+    'machine_side': 'Lado máquina (inicio)',
+    'pit_side': 'Lado pozo (fin)',
+    'capture_machine': '📍 Toca para capturar ubicación de máquina',
+    'capture_pit': '📍 Toca para capturar ubicación del pozo',
+    'bore_details': 'Detalles de Perforación',
+    'total_footage': 'Metraje total',
+    'product_installed': 'Producto instalado',
+    'direction': 'Dirección',
+    'ground_type': 'Tipo de suelo',
+    'entry_depth': 'Profundidad de entrada',
+    'exit_depth': 'Profundidad de salida',
+    'next_potholes': 'Siguiente — Registrar Baches →',
+    'next_finalize': 'Siguiente — Finalizar Perfil →',
+    'save_profile': 'Guardar Perfil Completo',
+    'no_worksheets': 'Sin hojas aún',
+    'no_worksheets_sub': 'Toca + Nueva para crear tu primera hoja diaria',
+    'older_profiles': '📦 Perfiles más antiguos (1+ mes)',
+    'by_foreman': '⊞ Por Capataz',
+    'list_view': '☰ Lista',
   }
 };
 
 function t(key) { return T[lang]?.[key] || T.en[key] || key; }
 
 function applyLang() {
+  // Handle data-en/data-es tagged elements
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = lang === 'es' ? (el.getAttribute('data-es') || el.getAttribute('data-en')) : el.getAttribute('data-en');
   });
+
+  // Placeholders
   const si = document.getElementById('searchInput');
   if(si) si.placeholder = t('search_placeholder');
+  const lsi = document.getElementById('logSearchInput');
+  if(lsi) lsi.placeholder = t('log_search_placeholder');
+
+  // Profiles screen header
+  const profTitle = document.querySelector('#screen-profiles .section-title');
+  if(profTitle) profTitle.textContent = t('bore_profiles');
+  const newProfBtn = document.querySelector('#screen-profiles .add-crew-btn');
+  if(newProfBtn) newProfBtn.textContent = t('new_profile');
+
+  // View toggle buttons
+  const listBtn = document.getElementById('viewListBtn');
+  if(listBtn) listBtn.textContent = t('list_view');
+  const gridBtn = document.getElementById('viewGridBtn');
+  if(gridBtn) gridBtn.textContent = t('by_foreman');
+
+  // Archive toggle
+  const archBtn = document.getElementById('archiveToggleBtn');
+  if(archBtn) {
+    const count = document.getElementById('archiveCount');
+    const countText = count ? count.textContent : '';
+    archBtn.innerHTML = `${t('older_profiles')} <span id="archiveCount">${countText}</span> ${archBtn.innerHTML.includes('▲')?'▲':'▼'}`;
+  }
+
+  // Nav tabs
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const navKeys = ['profiles_tab','worksheets_tab'];
+  navBtns.forEach((btn,i) => { if(navKeys[i]) btn.textContent = t(navKeys[i]); });
+
+  // New profile form buttons
+  const nextPoth = document.querySelector('#stage1 .next-btn');
+  if(nextPoth) nextPoth.textContent = t('next_potholes');
+  const nextFin = document.querySelector('#stage2 .next-btn');
+  if(nextFin) nextFin.textContent = t('next_finalize');
+  const saveProf = document.querySelector('#screen-new .save-btn');
+  if(saveProf) saveProf.textContent = t('save_profile');
+
+  // Pin buttons (only if not already captured)
+  const mb = document.getElementById('pinMachineBtn');
+  if(mb && !mb.classList.contains('pinned')) mb.textContent = t('capture_machine');
+  const pb = document.getElementById('pinPitBtn');
+  if(pb && !pb.classList.contains('pinned')) pb.textContent = t('capture_pit');
 }
 
 function setLang(l) {
@@ -1198,8 +1811,11 @@ function doLogout() {
 
 function applyRoleVisibility() {
   const isAdmin = currentUser?.role === 'admin';
-  // Foremen only see their own tab; admin sees all
-  // Nav: hide nothing (foremen see profiles + worksheets, admin sees all + gear)
+  // Show grid/list view toggle only for admins
+  const toggle = document.getElementById('profileViewToggle');
+  if(toggle) toggle.style.display = isAdmin ? 'flex' : 'none';
+  // Also trigger a re-render so foreman filtering applies immediately
+  renderProfiles(allProfiles);
 }
 
 function requireAdmin(action) {
@@ -1221,12 +1837,17 @@ function requireAdmin(action) {
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const idx = ['profiles','new'].indexOf(name);
+  const el = document.getElementById('screen-'+name);
+  if(el) el.classList.add('active');
+  const navMap = ['profiles','dailylog'];
+  const idx = navMap.indexOf(name);
   if(idx>=0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
   if(name==='new') resetForm();
   if(name==='admin') loadCrews();
-  if(name!=='detail') prevScreen=name;
+  if(name==='dailylog') loadLogs();
+  if(name==='newlog') resetLogForm();
+  if(!['detail','logdetail'].includes(name)) prevScreen=name;
+  applyLang();
 }
 
 function goBack() { showScreen(prevScreen); }
@@ -1259,6 +1880,13 @@ function setUnit(field, unit) {
     const btn = document.getElementById(id);
     if(btn) btn.classList.toggle('active', u===unit);
   });
+  // Update placeholder text to reflect selected unit
+  const inputMap = { footage:'f-footage', entry:'f-entrydepth', exit:'f-exitdepth', actual:'f-actualdepth' };
+  const inputEl = document.getElementById(inputMap[field]);
+  if(inputEl) {
+    if(unit === 'in') inputEl.placeholder = '0 INCHES';
+    else if(unit === 'ft') inputEl.placeholder = '0 FEET';
+  }
   if(field==='actual') updatePathViz();
 }
 
@@ -1303,9 +1931,27 @@ function closePinModal() { document.getElementById('pinModal').style.display='no
 function populateCrewDropdown() {
   const sel = document.getElementById('f-foreman');
   if(!sel) return;
-  sel.innerHTML = allCrews.length
-    ? allCrews.map(c=>`<option value="${c.id}">${c.crew_number ? 'Crew '+c.crew_number+' — ' : ''}${c.foreman_name}</option>`).join('')
-    : '<option value="">No crews — add in admin</option>';
+
+  if(currentUser?.role === 'foreman') {
+    // Auto-select this foreman's crew — find by matching display_name
+    const myCrew = allCrews.find(c => c.foreman_name === currentUser.display_name)
+      || allCrews.find(c => c.foreman_name?.toLowerCase() === currentUser.username?.toLowerCase());
+    if(myCrew) {
+      sel.innerHTML = `<option value="${myCrew.id}">${myCrew.crew_number ? 'Crew '+myCrew.crew_number+' — ' : ''}${myCrew.foreman_name}</option>`;
+    } else {
+      sel.innerHTML = `<option value="">${currentUser.display_name}</option>`;
+    }
+    sel.disabled = true;
+    sel.style.opacity = '0.7';
+    sel.style.background = '#F8FAFC';
+  } else {
+    sel.disabled = false;
+    sel.style.opacity = '';
+    sel.style.background = '';
+    sel.innerHTML = allCrews.length
+      ? allCrews.map(c=>`<option value="${c.id}">${c.crew_number ? 'Crew '+c.crew_number+' — ' : ''}${c.foreman_name}</option>`).join('')
+      : '<option value="">No crews — add in admin</option>';
+  }
 }
 
 function addCrossing() {
@@ -1591,6 +2237,10 @@ async function autoLinkProfileToWorksheet(profileId, date, address) {
 
 async function loadProfiles() {
   let query = sb.from('profiles').select('*').order('created_at',{ascending:false});
+  // Foremen only see profiles they created
+  if(currentUser?.role === 'foreman') {
+    query = query.eq('created_by', currentUser.username);
+  }
   const { data, error } = await query;
   if(error) return;
   allProfiles = data||[];
@@ -1625,13 +2275,91 @@ function getTagClass(type) {
   return 't-gray';
 }
 
+let currentProfileView = 'list';
+
+function setProfileView(view) {
+  currentProfileView = view;
+  document.getElementById('viewListBtn').classList.toggle('active', view==='list');
+  document.getElementById('viewGridBtn').classList.toggle('active', view==='grid');
+  renderProfiles(allProfiles);
+}
+
+function toggleArchive() {
+  const list = document.getElementById('archivedList');
+  const btn = document.getElementById('archiveToggleBtn');
+  const isOpen = list.style.display !== 'none';
+  list.style.display = isOpen ? 'none' : 'block';
+  btn.classList.toggle('open', !isOpen);
+  btn.innerHTML = btn.innerHTML.replace(/[▼▲]/, isOpen ? '▼' : '▲');
+}
+
+function isOlderThanOneMonth(dateStr) {
+  if(!dateStr) return false;
+  const d = new Date(dateStr);
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - 1);
+  return d < cutoff;
+}
+
 function renderProfiles(profiles) {
-  const list=document.getElementById('profilesList');
-  if(!profiles||!profiles.length) {
+  const list = document.getElementById('profilesList');
+  const isAdmin = currentUser?.role === 'admin';
+
+  if(!profiles || !profiles.length) {
     list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_profiles')}</div><div class="empty-sub">${t('no_profiles_sub')}</div></div>`;
+    document.getElementById('archivedSection').style.display='none';
     return;
   }
-  list.innerHTML=profiles.map(p=>{
+
+  const recent = profiles.filter(p => !isOlderThanOneMonth(p.date));
+  const archived = profiles.filter(p => isOlderThanOneMonth(p.date));
+
+  // Grid view (admin only)
+  if(isAdmin && currentProfileView === 'grid') {
+    // Group by foreman
+    const groups = {};
+    profiles.forEach(p => {
+      const key = p.foreman || 'Unassigned';
+      if(!groups[key]) groups[key] = [];
+      groups[key].push(p);
+    });
+    const cards = Object.entries(groups).map(([foreman, profs]) => {
+      const initials = foreman.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase() || '?';
+      return `<div class="foreman-grid-card" onclick="filterByForeman('${foreman.replace(/'/g,"\\'")}')">
+        <div class="foreman-grid-avatar">${initials}</div>
+        <div class="foreman-grid-name">${foreman}</div>
+        <div class="foreman-grid-count">${profs.length} profile${profs.length!==1?'s':''}</div>
+      </div>`;
+    }).join('');
+    list.innerHTML = `<div class="foreman-grid">${cards}</div>`;
+    document.getElementById('archivedSection').style.display='none';
+    return;
+  }
+
+  // List view
+  list.innerHTML = renderProfileCards(recent);
+
+  // Archived section
+  if(archived.length) {
+    document.getElementById('archivedSection').style.display='block';
+    document.getElementById('archiveCount').textContent = `(${archived.length})`;
+    document.getElementById('archivedList').innerHTML = renderProfileCards(archived);
+  } else {
+    document.getElementById('archivedSection').style.display='none';
+  }
+}
+
+function filterByForeman(foreman) {
+  currentProfileView = 'list';
+  document.getElementById('viewListBtn').classList.add('active');
+  document.getElementById('viewGridBtn').classList.remove('active');
+  document.getElementById('searchInput').value = foreman;
+  filterProfiles();
+}
+
+function renderProfileCards(profiles) {
+  if(!profiles.length) return `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_profiles')}</div></div>`;
+  return profiles.map(p=>{
     const hasHit=(p.crossings||[]).some(c=>c&&c.hit);
     const tags=(p.crossings||[]).slice(0,3).map(c=>`<span class="tag ${getTagClass(c.type)}">${c.type||'Unknown'}${c.bot?' '+c.bot+'"':''}</span>`).join('');
     const sub=[p.foreman,p.total_footage?p.total_footage+' ft':null,p.product].filter(Boolean).join(' · ');
@@ -2187,10 +2915,9 @@ async function saveDailyLog() {
     blue_stake:document.getElementById('dl-bluestake')?.value||'',
     time_on_site:document.getElementById('dl-timeon')?.value||'',
     time_off_site:document.getElementById('dl-timeoff')?.value||'',
-    supervisor:document.getElementById('dl-supervisor')?.value||'',
+    supervisor:document.getElementById('dl-supervisor')?.value||currentUser?.display_name||'',
     comments:document.getElementById('dl-comments')?.value||'',
     invoice_number:document.getElementById('dl-invoice')?.value||'',
-    submitted_by:currentUser?.username||null,
     crew, equipment, materials, bores
   };
 
@@ -2209,17 +2936,34 @@ async function saveDailyLog() {
 }
 
 async function loadLogs() {
+  const listEl = document.getElementById('logsList');
+  if(listEl) listEl.innerHTML = '<div class="loading">Loading worksheets...</div>';
+
   let query = sb.from('daily_logs').select('*').order('date',{ascending:false});
-  // Foremen only see their own
+  // Foremen only see their own submitted worksheets
   if(currentUser?.role === 'foreman') {
-    query = query.eq('submitted_by', currentUser.username);
+    query = query.eq('supervisor', currentUser.display_name);
   }
-  const {data,error}=await query;
-  if(error){
-    document.getElementById('logsList').innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Table not set up yet</div><div class="empty-sub">Run the SQL setup in Supabase</div></div>`;
+
+  const {data, error} = await query;
+
+  if(error) {
+    console.error('loadLogs error:', error);
+    // Show the real error so it can be diagnosed, not a generic "setup" message
+    const isPermission = error.code === 'PGRST301' || error.message?.toLowerCase().includes('permission') || error.message?.toLowerCase().includes('policy');
+    const msg = isPermission
+      ? 'Permission error — check Supabase RLS policies for daily_logs'
+      : (error.message || 'Unknown error loading worksheets');
+    if(listEl) listEl.innerHTML=`<div class="empty-state">
+      <div class="empty-icon">⚠️</div>
+      <div class="empty-text">Could not load worksheets</div>
+      <div class="empty-sub" style="color:#DC2626;font-size:12px;margin-top:6px;">${msg}</div>
+      <button onclick="loadLogs()" style="margin-top:14px;padding:10px 20px;background:#1D4ED8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Retry</button>
+    </div>`;
     return;
   }
-  allLogs=data||[];
+
+  allLogs = data || [];
   renderLogs(allLogs);
 }
 
@@ -2236,7 +2980,7 @@ function filterLogs() {
 function renderLogs(logs) {
   const list=document.getElementById('logsList');
   if(!logs||!logs.length){
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No worksheets yet</div><div class="empty-sub">Tap + New to create your first daily worksheet</div></div>`;
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">${t('no_worksheets')}</div><div class="empty-sub">${t('no_worksheets_sub')}</div></div>`;
     return;
   }
   list.innerHTML=logs.map(l=>{
@@ -2289,7 +3033,7 @@ function showLogDetail(id) {
   document.getElementById('logDetailContent').innerHTML=`
     <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:2px;">${l.customer||'No customer'}</div>
     <div style="font-size:12px;color:#888;margin-bottom:8px;">${[l.address,l.city_state_zip,l.date].filter(Boolean).join(' · ')}</div>
-    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.submitted_by?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.submitted_by}</span>`:''}</div>
+    <div style="margin-bottom:14px;"><span class="status-badge ${isFinal?'status-final':'status-pending'}">${isFinal?t('status_final'):t('status_pending')}</span>${l.supervisor?` <span style="font-size:11px;color:#94A3B8;margin-left:8px;">by ${l.supervisor}</span>`:''}</div>
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-lbl">Total Footage</div><div class="stat-val">${(l.bores||[]).reduce((s,b)=>s+(b.length_ft||0),0)} ft</div></div>
       <div class="stat-box"><div class="stat-lbl">Bores</div><div class="stat-val">${(l.bores||[]).length}</div></div>
@@ -2355,8 +3099,6 @@ function viewLinkedProfile(profileId) {
 // ============================================================
 setDate();
 addCrossing();
-loadProfiles();
-loadCrews();
 </script>
 </body>
 </html>
